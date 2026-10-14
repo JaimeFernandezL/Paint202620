@@ -8,6 +8,35 @@ Paint202620 es un proyecto académico desarrollado en Java como parte de la asig
 
 El proyecto se desarrolla de manera grupal, utilizando Git y GitHub para gestionar las versiones del código fuente, colaborar entre los integrantes y dar seguimiento a los cambios realizados durante el desarrollo.
 
+## Roles del proyecto
+Liderazgo Central (2 personas)
+
+1 Coordinador General: Organiza las entregas, reparte las tareas y representa al grupo ante el profesor.
+
+1 Encargado de Código: Es el guardián del proyecto. Revisa las partes de todos antes de unirlas para asegurar que el programa principal no explote.
+
+Los 5 Equipos
+(Cada equipo internamente tendrá un líder que coordine, programadores, y alguien encargado de probar y buscar errores en su módulo).
+
+Equipo 1: Pincel y Lienzo: Programan el área central de dibujo, el lápiz para trazo libre y la goma de borrar.
+
+Equipo 2: Figuras Geométricas: Hacen la matemática de las líneas, rectángulos, círculos y la opción de ponerles relleno.
+
+Equipo 3: Diseño e Interfaz: Arman la ventana principal, acomodan los botones visuales y conectan la paleta de colores.
+
+Equipo 4: Archivos: Programan el menú superior para poder Guardar el dibujo, Abrir imágenes y crear un Nuevo documento en blanco.
+
+Equipo 5: Herramientas Avanzadas: Le dan el toque profesional haciendo que funcione el Deshacer/Rehacer y el cambio de grosor del pincel.
+
+** 3 Reglas para que esto funcione:
+
+- Nadie toca el trabajo del otro: Si el Equipo 3 hace el botón del rectángulo, el Equipo 2 hace la lógica para que se dibuje. Funcionamos como piezas de un rompecabezas.
+
+- Unión segura: Todo se unirá en un solo lugar (como GitHub). Nadie mete código a la versión final sin que el Encargado de Código lo apruebe.
+
+- Reunión rápida: Los líderes de cada equipo hablan 15 minutos a la semana para asegurarse de que las partes van a encajar bien.
+
+  
 ## Objetivos del proyecto
 
 * Desarrollar una aplicación gráfica utilizando Java.
