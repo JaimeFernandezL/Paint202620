@@ -30,11 +30,13 @@ Equipo 5: Herramientas Avanzadas: Le dan el toque profesional haciendo que funci
 
 ** 3 Reglas para que esto funcione:
 
-- Nadie toca el trabajo del otro: Si el Equipo 3 hace el botón del rectángulo, el Equipo 2 hace la lógica para que se dibuje. Funcionamos como piezas de un rompecabezas.
+- Nadie toca el trabajo del otro:
+- Para las figuras: Crear la clase, agregarle el boton a la barra de herramientas y hacer que se dibuje en el panel. (EJEMPLO).
+- Para figuras rellenables: Crear las clases "FiguraRellenable", que herede de Figura();
 
 - Unión segura: Todo se unirá en un solo lugar (como GitHub). Nadie mete código a la versión final sin que el Encargado de Código lo apruebe.
 
-- Reunión rápida: Los líderes de cada equipo hablan 15 minutos a la semana para asegurarse de que las partes van a encajar bien.
+- Reunión rápida: Los líderes de cada equipo hablan 15 minutos a la 3 veces a la semana para asegurarse de que las partes van a encajar bien.
 
   
 ## Objetivos del proyecto
@@ -108,13 +110,16 @@ Este proyecto se desarrolla en equipo. Para mantener un historial organizado y r
 Flujo de trabajo recomendado:
 
 1. Actualizar el proyecto local.
-2. Crear una rama para la tarea asignada.
+2. Crear una rama para la tarea asignada basada en la rama "desarrollo".
 3. Implementar y probar los cambios.
 4. Registrar los cambios mediante un commit descriptivo.
-5. Subir la rama a GitHub.
-6. Crear un Pull Request para revisar los cambios antes de incorporarlos a `main`.
+5. Fusionar la rama "desarrollo" con la rama local.
+6. Resolver conflictos, Si los hay y hacer el commit de la resolucion.
+7. Subir la rama a GitHub.
+8. Crear un Pull Request para revisar los cambios antes de incorporarlos a `main`.
 
 La rama `main` se utilizará como rama principal del proyecto.
+La rama "desarrollo" sera la base de desarrollo y los cambios que se realicen sera sobre la misma.
 
 ## Estado del proyecto
 
