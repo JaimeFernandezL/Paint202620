@@ -83,27 +83,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         btnTrazo = new javax.swing.JToggleButton();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator1 = new javax.swing.JSeparator();
         btnLinea = new javax.swing.JToggleButton();
-        jSeparator2 = new javax.swing.JSeparator();
         btnRectangulo = new javax.swing.JToggleButton();
-        jSeparator3 = new javax.swing.JSeparator();
         chkRelleno = new javax.swing.JCheckBox();
-        jSeparator4 = new javax.swing.JSeparator();
+        btnDeshacer2 = new javax.swing.JButton();
+        btnRehacer2 = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JToggleButton();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jSeparator9 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
-        jSeparator11 = new javax.swing.JSeparator();
+        jPanel2 = new javax.swing.JPanel();
+        sliderGrosor = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        btnDeshacer1 = new javax.swing.JMenuItem();
+        btnRehacer1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,36 +111,48 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(filler1);
 
         btnTrazo.setText("Trazo");
         btnTrazo.addActionListener(this::btnTrazoActionPerformed);
         jPanel1.add(btnTrazo);
-        jPanel1.add(jSeparator5);
-        jPanel1.add(jSeparator1);
 
         btnLinea.setText("Linea");
         jPanel1.add(btnLinea);
-        jPanel1.add(jSeparator2);
 
         btnRectangulo.setText("Rectangulo");
         jPanel1.add(btnRectangulo);
-        jPanel1.add(jSeparator3);
 
         chkRelleno.setText("Relleno");
         jPanel1.add(chkRelleno);
-        jPanel1.add(jSeparator4);
+
+        btnDeshacer2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/deshacer32x32.png"))); // NOI18N
+        btnDeshacer2.setFocusable(false);
+        btnDeshacer2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnDeshacer2.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel1.add(btnDeshacer2);
+
+        btnRehacer2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/rehacer32x32.png"))); // NOI18N
+        btnRehacer2.setFocusable(false);
+        btnRehacer2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnRehacer2.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel1.add(btnRehacer2);
 
         btnLimpiar.setText("Limpiar");
         jPanel1.add(btnLimpiar);
-        jPanel1.add(jSeparator6);
-        jPanel1.add(jSeparator7);
-        jPanel1.add(jSeparator8);
-        jPanel1.add(jSeparator9);
-        jPanel1.add(jSeparator10);
-        jPanel1.add(jSeparator11);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        sliderGrosor.setMaximum(50);
+        sliderGrosor.setMinimum(1);
+        sliderGrosor.setOrientation(javax.swing.JSlider.VERTICAL);
+        sliderGrosor.setToolTipText("");
+        sliderGrosor.setValue(3);
+        jPanel2.add(sliderGrosor, java.awt.BorderLayout.LINE_START);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
         jMenu1.setText("Archivo");
 
@@ -157,6 +163,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
+
+        btnDeshacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnDeshacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/deshacer16x16.png"))); // NOI18N
+        btnDeshacer1.setText("Deshacer");
+        jMenu2.add(btnDeshacer1);
+
+        btnRehacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnRehacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/rehacer16x16.png"))); // NOI18N
+        btnRehacer1.setText("Rehacer");
+        jMenu2.add(btnRehacer1);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Ayuda");
@@ -206,28 +223,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnDeshacer1;
+    private javax.swing.JButton btnDeshacer2;
     private javax.swing.JToggleButton btnLimpiar;
     private javax.swing.JToggleButton btnLinea;
     private javax.swing.JToggleButton btnRectangulo;
+    private javax.swing.JMenuItem btnRehacer1;
+    private javax.swing.JButton btnRehacer2;
     private javax.swing.JToggleButton btnTrazo;
     private javax.swing.JCheckBox chkRelleno;
-    private javax.swing.Box.Filler filler1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSlider sliderGrosor;
     // End of variables declaration//GEN-END:variables
 }
