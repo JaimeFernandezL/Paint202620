@@ -5,71 +5,55 @@
 package ui;
 
 import java.awt.BorderLayout;
+import javax.swing.*;
 //import javax.swing.JButton;
 
 /**
  *
  * @author josearielpereyra
  */
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipal extends JFrame {
+    private static final java.util.logging.Logger logger
+            = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
+    private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
+    private final JToggleButton btnCirculo = new JToggleButton("Círculo");
 
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
 
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
 
         add(panelDeDibujo, BorderLayout.CENTER);
 
-        btnTrazo.setFocusPainted(false);
-        btnLinea.setFocusPainted(false);
-        btnRectangulo.setFocusPainted(false);
+        int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
+        jPanel1.add(btnOvalo, posicionRelleno);
+        jPanel1.add(btnCirculo, posicionRelleno + 1);
+
+        ButtonGroup grupoHerramientas = new ButtonGroup();
+        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo};
+        for (JToggleButton boton : botones) {
+            boton.setFocusPainted(false);
+            grupoHerramientas.add(boton);
+        }
         chkRelleno.setFocusPainted(false);
         btnLimpiar.setFocusPainted(false);
-        //Agrupacion de botones
-        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
-        grupoHerramientas.add(btnTrazo);
-        grupoHerramientas.add(btnLinea);
-        grupoHerramientas.add(btnRectangulo);
-
-        // Trazo seleccionado por defecto al abrir
         btnTrazo.setSelected(true);
 
-        // lógica (Listeners)
         btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
         btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
         btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-
+        btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
+        btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
         chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+        btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
+        btnLimpiar.setSelected(false);
+        });
 
-        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
-
-//        JToolBar barra = new JToolBar();
-//        barra.setFloatable(false);
-//
-//        JButton btnTrazo = new JButton("Trazo Libre");
-//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-//
-//        JButton btnLinea = new JButton("Línea");
-//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-//
-//        JButton btnRectangulo = new JButton("Rectángulo");
-//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-//
-//        JCheckBox chkRelleno = new JCheckBox("Relleno");
-//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-//
-//        barra.add(btnTrazo);
-//        barra.add(btnLinea);
-//        barra.add(btnRectangulo);
-//        barra.addSeparator();
-//        barra.add(chkRelleno);
-        //add(barra, BorderLayout.NORTH);
+        setSize(720, 480);
         setLocationRelativeTo(null);
     }
 

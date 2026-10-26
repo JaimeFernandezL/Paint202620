@@ -5,43 +5,35 @@
 package figuras;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
  *
  * @author josearielpereyra
  */
-public class Linea extends Figura{
-    private Point puntoInicial;
-    private Point puntoFinal;
 
+public class Linea extends Figura {
     public Linea() {
         this(new Point(), new Point());
     }
 
-    
     public Linea(Point puntoInicial) {
         this(puntoInicial, puntoInicial);
     }
 
     public Linea(Point puntoInicial, Point puntoFinal) {
-        this.puntoInicial = puntoInicial;
-        this.puntoFinal = puntoFinal;
-    }
-    
-    @Override
-    public void dibujar(Graphics g) {
-        if(puntoInicial != null && puntoFinal != null) {
-            g.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
-        }
+        super(puntoInicial, false);
+        actualizar(puntoFinal);
     }
 
     @Override
-    public void actualizar(Point puntoActual) {
-        puntoFinal = puntoActual;
+    public void dibujar(Graphics g) {
+        Graphics2D copia = prepararGraficos(g);
+        try {
+            copia.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
+        } finally {
+            copia.dispose();
+        }
     }
-    
-    
-    
-    
 }
