@@ -26,6 +26,7 @@ public class PanelDeDibujo extends JPanel {
     }
 
     ArrayList<Figura> figuras = new ArrayList<>();
+    ArrayList<Figura> figurasRehacer = new ArrayList<>();
     Figura figuraActual;
 
     private TipoFigura tipoActual = TipoFigura.TRAZO;
@@ -50,6 +51,7 @@ public class PanelDeDibujo extends JPanel {
                         break;
                 }
                 figuras.add(figuraActual);
+                figurasRehacer.clear();
                 repaint();
             }
 
@@ -83,12 +85,23 @@ public class PanelDeDibujo extends JPanel {
 
     public void Limpiar() {
         figuras.clear();
+        figurasRehacer.clear();
         repaint();
     }
     
     public void deshacer(){
         if(figuras != null && !figuras.isEmpty()){
-            figuras.remove(figuras.size()-1);
+            //figuras.remove(figuras.size()-1);
+            Figura ultimaFigura = figuras.remove(figuras.size()-1);
+            figurasRehacer.add(ultimaFigura);
+            repaint();
+        }
+    }
+    
+    public void rehacer(){
+        if(figurasRehacer != null && !figurasRehacer.isEmpty()){
+            Figura figuraARestaurar = figurasRehacer.remove(figurasRehacer.size()-1);
+            figuras.add(figuraARestaurar);
             repaint();
         }
     }

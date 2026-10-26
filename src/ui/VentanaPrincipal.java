@@ -136,6 +136,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnRehacer2.setFocusable(false);
         btnRehacer2.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnRehacer2.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnRehacer2.addActionListener(this::btnRehacer2ActionPerformed);
         jPanel1.add(btnRehacer2);
 
         btnLimpiar.setText("Limpiar");
@@ -174,6 +175,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnRehacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         btnRehacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/rehacer16x16.png"))); // NOI18N
         btnRehacer1.setText("Rehacer");
+        btnRehacer1.addActionListener(this::btnRehacer1ActionPerformed);
         jMenu2.add(btnRehacer1);
 
         jMenuBar1.add(jMenu2);
@@ -207,8 +209,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
         if(panelDeDibujo != null){
             panelDeDibujo.deshacer();// TODO add your handling code here:
+        }
     }//GEN-LAST:event_btnDeshacer2ActionPerformed
-    }
+
+    private void btnRehacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer1ActionPerformed
+        if(panelDeDibujo != null){
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer1ActionPerformed
+
+    private void btnRehacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer2ActionPerformed
+        if(panelDeDibujo != null){
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer2ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
