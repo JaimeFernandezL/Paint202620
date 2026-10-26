@@ -129,6 +129,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnDeshacer2.setFocusable(false);
         btnDeshacer2.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnDeshacer2.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnDeshacer2.addActionListener(this::btnDeshacer2ActionPerformed);
         jPanel1.add(btnDeshacer2);
 
         btnRehacer2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/rehacer32x32.png"))); // NOI18N
@@ -167,6 +168,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnDeshacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         btnDeshacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/deshacer16x16.png"))); // NOI18N
         btnDeshacer1.setText("Deshacer");
+        btnDeshacer1.addActionListener(this::btnDeshacer1ActionPerformed);
         jMenu2.add(btnDeshacer1);
 
         btnRehacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -197,6 +199,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTrazoActionPerformed
 
+    private void btnDeshacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer1ActionPerformed
+              if(panelDeDibujo != null){
+                  panelDeDibujo.deshacer();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeshacer1ActionPerformed
+    }
+    private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
+        if(panelDeDibujo != null){
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeshacer2ActionPerformed
+    }
     /**
      * @param args the command line arguments
      */

@@ -85,4 +85,11 @@ public class PanelDeDibujo extends JPanel {
         figuras.clear();
         repaint();
     }
+    
+    public void deshacer(){
+        if(figuras != null && !figuras.isEmpty()){
+            figuras.remove(figuras.size()-1);
+            repaint();
+        }
+    }
 }
