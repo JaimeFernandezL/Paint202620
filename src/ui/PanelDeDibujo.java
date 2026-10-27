@@ -29,6 +29,8 @@ public class PanelDeDibujo extends JPanel {
     ArrayList<Figura> figurasRehacer = new ArrayList<>();
     Figura figuraActual;
 
+    private int grosorActual = 3;
+
     private TipoFigura tipoActual = TipoFigura.TRAZO;
     private boolean rellenarFigura = false;
 
@@ -50,6 +52,7 @@ public class PanelDeDibujo extends JPanel {
                         figuraActual = new Trazo();
                         break;
                 }
+                figuraActual.setGrosor(grosorActual);
                 figuras.add(figuraActual);
                 figurasRehacer.clear();
                 repaint();
@@ -61,6 +64,10 @@ public class PanelDeDibujo extends JPanel {
                 repaint();
             }
 
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                figuraActual = null; // Suelta la figura al terminar de dibujar
+            }
         };
         addMouseListener(manejador);
         addMouseMotionListener(manejador);
@@ -83,26 +90,31 @@ public class PanelDeDibujo extends JPanel {
         this.rellenarFigura = rellenar;
     }
 
+    public void setGrosorActual(int grosor) {
+        this.grosorActual = grosor;
+    }
+
     public void Limpiar() {
         figuras.clear();
         figurasRehacer.clear();
         repaint();
     }
-    
-    public void deshacer(){
-        if(figuras != null && !figuras.isEmpty()){
+
+    public void deshacer() {
+        if (figuras != null && !figuras.isEmpty()) {
             //figuras.remove(figuras.size()-1);
-            Figura ultimaFigura = figuras.remove(figuras.size()-1);
+            Figura ultimaFigura = figuras.remove(figuras.size() - 1);
             figurasRehacer.add(ultimaFigura);
             repaint();
         }
     }
-    
-    public void rehacer(){
-        if(figurasRehacer != null && !figurasRehacer.isEmpty()){
-            Figura figuraARestaurar = figurasRehacer.remove(figurasRehacer.size()-1);
+
+    public void rehacer() {
+        if (figurasRehacer != null && !figurasRehacer.isEmpty()) {
+            Figura figuraARestaurar = figurasRehacer.remove(figurasRehacer.size() - 1);
             figuras.add(figuraARestaurar);
             repaint();
         }
+
     }
 }

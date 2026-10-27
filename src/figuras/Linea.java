@@ -4,14 +4,17 @@
  */
 package figuras;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
  *
  * @author josearielpereyra
  */
-public class Linea extends Figura{
+public class Linea extends Figura {
+
     private Point puntoInicial;
     private Point puntoFinal;
 
@@ -19,7 +22,6 @@ public class Linea extends Figura{
         this(new Point(), new Point());
     }
 
-    
     public Linea(Point puntoInicial) {
         this(puntoInicial, puntoInicial);
     }
@@ -28,20 +30,19 @@ public class Linea extends Figura{
         this.puntoInicial = puntoInicial;
         this.puntoFinal = puntoFinal;
     }
-    
+
     @Override
     public void dibujar(Graphics g) {
-        if(puntoInicial != null && puntoFinal != null) {
-            g.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
-        }
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        
+        g2d.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
+        
     }
 
     @Override
     public void actualizar(Point puntoActual) {
         puntoFinal = puntoActual;
     }
-    
-    
-    
-    
+
 }

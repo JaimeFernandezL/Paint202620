@@ -22,7 +22,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-        
 
         add(panelDeDibujo, BorderLayout.CENTER);
 
@@ -49,27 +48,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
 
-//        JToolBar barra = new JToolBar();
-//        barra.setFloatable(false);
-//
-//        JButton btnTrazo = new JButton("Trazo Libre");
-//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-//
-//        JButton btnLinea = new JButton("Línea");
-//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-//
-//        JButton btnRectangulo = new JButton("Rectángulo");
-//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-//
-//        JCheckBox chkRelleno = new JCheckBox("Relleno");
-//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-//
-//        barra.add(btnTrazo);
-//        barra.add(btnLinea);
-//        barra.add(btnRectangulo);
-//        barra.addSeparator();
-//        barra.add(chkRelleno);
-        //add(barra, BorderLayout.NORTH);
+        sliderGrosor.addChangeListener(e -> {
+            int grosorSeleccionado = sliderGrosor.getValue();
+            panelDeDibujo.setGrosorActual(grosorSeleccionado);
+        });
+
         setLocationRelativeTo(null);
     }
 
@@ -152,6 +135,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         sliderGrosor.setOrientation(javax.swing.JSlider.VERTICAL);
         sliderGrosor.setToolTipText("");
         sliderGrosor.setValue(3);
+        sliderGrosor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sliderGrosorMouseClicked(evt);
+            }
+        });
         jPanel2.add(sliderGrosor, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
@@ -202,28 +190,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTrazoActionPerformed
 
     private void btnDeshacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer1ActionPerformed
-              if(panelDeDibujo != null){
-                  panelDeDibujo.deshacer();// TODO add your handling code here:
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
     }//GEN-LAST:event_btnDeshacer1ActionPerformed
     }
     private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
-        if(panelDeDibujo != null){
+        if (panelDeDibujo != null) {
             panelDeDibujo.deshacer();// TODO add your handling code here:
         }
     }//GEN-LAST:event_btnDeshacer2ActionPerformed
 
     private void btnRehacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer1ActionPerformed
-        if(panelDeDibujo != null){
+        if (panelDeDibujo != null) {
             panelDeDibujo.rehacer();
         }
     }//GEN-LAST:event_btnRehacer1ActionPerformed
 
     private void btnRehacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer2ActionPerformed
-        if(panelDeDibujo != null){
+        if (panelDeDibujo != null) {
             panelDeDibujo.rehacer();
         }
     }//GEN-LAST:event_btnRehacer2ActionPerformed
-    
+
+    private void sliderGrosorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderGrosorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sliderGrosorMouseClicked
+
     /**
      * @param args the command line arguments
      */
