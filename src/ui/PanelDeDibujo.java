@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  */
 public class PanelDeDibujo extends JPanel {
     public enum TipoFigura {
-        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO
     }
 
     private final ArrayList<Figura> figuras = new ArrayList<>();
@@ -47,6 +47,12 @@ public class PanelDeDibujo extends JPanel {
                         break;
                     case CIRCULO:
                         figuraActual = new Circulo(e.getPoint(), rellenarFigura);
+                        break;
+                    case ROMBO:
+                        figuraActual = new Rombo(e.getPoint(), rellenarFigura);
+                        break;
+                    case PENTAGONO:
+                        figuraActual = new Pentagono(e.getPoint(), rellenarFigura);
                         break;
                     case TRAZO:
                     default:

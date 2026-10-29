@@ -19,6 +19,9 @@ public class VentanaPrincipal extends JFrame {
     private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
+    private final JToggleButton btnRombo = new JToggleButton("Rombo");
+    private final JToggleButton btnPentagono = new JToggleButton("Pentagono");
+    
 
 
     /**
@@ -32,9 +35,11 @@ public class VentanaPrincipal extends JFrame {
         int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
         jPanel1.add(btnOvalo, posicionRelleno);
         jPanel1.add(btnCirculo, posicionRelleno + 1);
+        jPanel1.add(btnRombo, posicionRelleno + 2);
+        jPanel1.add(btnPentagono, posicionRelleno + 3);
 
         ButtonGroup grupoHerramientas = new ButtonGroup();
-        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo};
+        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono};
         for (JToggleButton boton : botones) {
             boton.setFocusPainted(false);
             grupoHerramientas.add(boton);
@@ -48,6 +53,8 @@ public class VentanaPrincipal extends JFrame {
         btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
         btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
         btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
+        btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
+        btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
         chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
         btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
         btnLimpiar.setSelected(false);
@@ -148,7 +155,7 @@ public class VentanaPrincipal extends JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 573, 428);
+        setBounds(0, 0, 543, 452);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
