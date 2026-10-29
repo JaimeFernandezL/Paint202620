@@ -6,6 +6,7 @@ package ui;
 
 import java.awt.BorderLayout;
 //import javax.swing.JButton;
+//import javax.swing.ButtonGroup;
 
 /**
  *
@@ -16,39 +17,57 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    
 
+    // TODO clases por crear, por quien le corresponda:
+    //private final ButtonGroup grupoHerramientas = new ButtonGroup();
+    
+//    private final PanelHerramientas herramientas = new PanelHerramientas();
+//    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
+//    private final PanelOpciones opciones = new PanelOpciones(panelDeDibujo);
+//    private final PanelColores colores = new PanelColores(panelDeDibujo);
+//    private final BarraEstado estado = new BarraEstado();
+    
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
 
+        //Delimitar cada clase en su zona
+//        zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
+//        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
+//        zonaFiguras.add(figuras, BorderLayout.CENTER);
+//        zonaOpciones.add(opciones, BorderLayout.CENTER);
+//        zonaColores.add(colores, BorderLayout.CENTER);
+//        zonaEstado.add(estado, BorderLayout.CENTER);
+//        grupoHerramientas.add(herramientas.btnLapiz);
+//        grupoHerramientas.add(herramientas.btnBorrador);
+        setSize(1000, 700);
         add(panelDeDibujo, BorderLayout.CENTER);
 
-        btnTrazo.setFocusPainted(false);
-        btnLinea.setFocusPainted(false);
-        btnRectangulo.setFocusPainted(false);
-        chkRelleno.setFocusPainted(false);
-        btnLimpiar.setFocusPainted(false);
-        //Agrupacion de botones
-        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
-        grupoHerramientas.add(btnTrazo);
-        grupoHerramientas.add(btnLinea);
-        grupoHerramientas.add(btnRectangulo);
-
-        // Trazo seleccionado por defecto al abrir
-        btnTrazo.setSelected(true);
-
-        // lógica (Listeners)
-        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-
-        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-
-        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
-
+//        btnTrazo.setFocusPainted(false);
+//        btnLinea.setFocusPainted(false);
+//        btnRectangulo.setFocusPainted(false);
+//        chkRelleno.setFocusPainted(false);
+//        btnLimpiar.setFocusPainted(false);
+//        //Agrupacion de botones
+//        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
+//        grupoHerramientas.add(btnTrazo);
+//        grupoHerramientas.add(btnLinea);
+//        grupoHerramientas.add(btnRectangulo);
+//
+//        // Trazo seleccionado por defecto al abrir
+//        btnTrazo.setSelected(true);
+//
+//        // lógica (Listeners)
+//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+//
+//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+//
+//        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
 //        JToolBar barra = new JToolBar();
 //        barra.setFloatable(false);
 //
@@ -82,24 +101,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        btnTrazo = new javax.swing.JToggleButton();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator1 = new javax.swing.JSeparator();
-        btnLinea = new javax.swing.JToggleButton();
-        jSeparator2 = new javax.swing.JSeparator();
-        btnRectangulo = new javax.swing.JToggleButton();
-        jSeparator3 = new javax.swing.JSeparator();
-        chkRelleno = new javax.swing.JCheckBox();
-        jSeparator4 = new javax.swing.JSeparator();
-        btnLimpiar = new javax.swing.JToggleButton();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jSeparator9 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
-        jSeparator11 = new javax.swing.JSeparator();
+        PanelCinta = new javax.swing.JPanel();
+        zonaHerramientas = new javax.swing.JPanel();
+        PanelCentral = new javax.swing.JPanel();
+        zonaFiguras = new javax.swing.JPanel();
+        zonaEstadoFiguras = new javax.swing.JPanel();
+        panelDerecho = new javax.swing.JPanel();
+        zonaEstadoColor = new javax.swing.JPanel();
+        zonaColores = new javax.swing.JPanel();
+        ZonaLienzo = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -109,6 +119,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin Nombre - Paint");
         setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
+        setMinimumSize(new java.awt.Dimension(800, 600));
         setSize(new java.awt.Dimension(0, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -116,37 +127,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(filler1);
+        PanelCinta.setLayout(new java.awt.BorderLayout());
 
-        btnTrazo.setText("Trazo");
-        btnTrazo.addActionListener(this::btnTrazoActionPerformed);
-        jPanel1.add(btnTrazo);
-        jPanel1.add(jSeparator5);
-        jPanel1.add(jSeparator1);
+        zonaHerramientas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
+        zonaHerramientas.setLayout(new java.awt.BorderLayout());
+        PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
 
-        btnLinea.setText("Linea");
-        jPanel1.add(btnLinea);
-        jPanel1.add(jSeparator2);
+        PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanelCentral.setLayout(new java.awt.BorderLayout());
 
-        btnRectangulo.setText("Rectangulo");
-        jPanel1.add(btnRectangulo);
-        jPanel1.add(jSeparator3);
+        zonaFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanelCentral.add(zonaFiguras, java.awt.BorderLayout.CENTER);
 
-        chkRelleno.setText("Relleno");
-        jPanel1.add(chkRelleno);
-        jPanel1.add(jSeparator4);
+        zonaEstadoFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaEstadoFiguras.setPreferredSize(new java.awt.Dimension(100, 90));
+        PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.LINE_END);
 
-        btnLimpiar.setText("Limpiar");
-        jPanel1.add(btnLimpiar);
-        jPanel1.add(jSeparator6);
-        jPanel1.add(jSeparator7);
-        jPanel1.add(jSeparator8);
-        jPanel1.add(jSeparator9);
-        jPanel1.add(jSeparator10);
-        jPanel1.add(jSeparator11);
+        PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        panelDerecho.setLayout(new java.awt.BorderLayout());
+
+        zonaEstadoColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaEstadoColor.setPreferredSize(new java.awt.Dimension(100, 90));
+        zonaEstadoColor.setLayout(new java.awt.BorderLayout());
+        panelDerecho.add(zonaEstadoColor, java.awt.BorderLayout.LINE_START);
+
+        zonaColores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaColores.setPreferredSize(new java.awt.Dimension(290, 100));
+        zonaColores.setLayout(new java.awt.BorderLayout());
+        panelDerecho.add(zonaColores, java.awt.BorderLayout.LINE_END);
+
+        PanelCinta.add(panelDerecho, java.awt.BorderLayout.EAST);
+
+        getContentPane().add(PanelCinta, java.awt.BorderLayout.PAGE_START);
+        PanelCinta.getAccessibleContext().setAccessibleDescription("");
+
+        ZonaLienzo.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("Archivo");
 
@@ -164,7 +182,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 573, 428);
+        setBounds(0, 0, 879, 428);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -175,10 +193,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
-
-    private void btnTrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTrazoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,28 +220,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnLimpiar;
-    private javax.swing.JToggleButton btnLinea;
-    private javax.swing.JToggleButton btnRectangulo;
-    private javax.swing.JToggleButton btnTrazo;
-    private javax.swing.JCheckBox chkRelleno;
-    private javax.swing.Box.Filler filler1;
+    private javax.swing.JPanel PanelCentral;
+    private javax.swing.JPanel PanelCinta;
+    private javax.swing.JPanel ZonaLienzo;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JPanel panelDerecho;
+    private javax.swing.JPanel zonaColores;
+    private javax.swing.JPanel zonaEstadoColor;
+    private javax.swing.JPanel zonaEstadoFiguras;
+    private javax.swing.JPanel zonaFiguras;
+    private javax.swing.JPanel zonaHerramientas;
     // End of variables declaration//GEN-END:variables
 }
