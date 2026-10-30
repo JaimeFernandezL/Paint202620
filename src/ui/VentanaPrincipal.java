@@ -21,6 +21,10 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
     private final JToggleButton btnRombo = new JToggleButton("Rombo");
     private final JToggleButton btnPentagono = new JToggleButton("Pentagono");
+    private final JToggleButton btnCorazon = new JToggleButton("Corazon");
+    private final JToggleButton btnFlecha = new JToggleButton("Flecha");
+
+
     
 
 
@@ -37,9 +41,14 @@ public class VentanaPrincipal extends JFrame {
         jPanel1.add(btnCirculo, posicionRelleno + 1);
         jPanel1.add(btnRombo, posicionRelleno + 2);
         jPanel1.add(btnPentagono, posicionRelleno + 3);
+        jPanel1.add(btnCorazon, posicionRelleno + 4);
+        jPanel1.add(btnFlecha, posicionRelleno + 5);
+
+
+        
 
         ButtonGroup grupoHerramientas = new ButtonGroup();
-        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono};
+        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha};
         for (JToggleButton boton : botones) {
             boton.setFocusPainted(false);
             grupoHerramientas.add(boton);
@@ -55,12 +64,14 @@ public class VentanaPrincipal extends JFrame {
         btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
         btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
         btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
+        btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
+        btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
         chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
         btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
         btnLimpiar.setSelected(false);
         });
 
-        setSize(720, 480);
+        setSize(875, 480);
         setLocationRelativeTo(null);
     }
 
