@@ -23,7 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // TODO clases por crear, por quien le corresponda:
     //private final ButtonGroup grupoHerramientas = new ButtonGroup();
     
-//    private final PanelHerramientas herramientas = new PanelHerramientas();
+    private final PanelHerramientas herramientas = new PanelHerramientas();
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
 //    private final PanelOpciones opciones = new PanelOpciones(panelDeDibujo);
 //    private final PanelColores colores = new PanelColores(panelDeDibujo);
@@ -36,16 +36,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
 
         //Delimitar cada clase en su zona
-//        zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
-//        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
+
+
+        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
 //        zonaOpciones.add(opciones, BorderLayout.CENTER);
 //        zonaColores.add(colores, BorderLayout.CENTER);
 //        zonaEstado.add(estado, BorderLayout.CENTER);
+
 //        grupoHerramientas.add(herramientas.btnLapiz);
 //        grupoHerramientas.add(herramientas.btnBorrador);
+
         setSize(1000, 700);
-        add(panelDeDibujo, BorderLayout.CENTER);
+        ZonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
+        panelDeDibujo.setBackground(java.awt.Color.WHITE);
+
 
 //        btnTrazo.setFocusPainted(false);
 //        btnLinea.setFocusPainted(false);
@@ -90,6 +95,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //        barra.addSeparator();
 //        barra.add(chkRelleno);
         //add(barra, BorderLayout.NORTH);
+        
         setLocationRelativeTo(null);
     }
 
@@ -111,6 +117,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         zonaEstadoColor = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         ZonaLienzo = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -166,6 +174,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         ZonaLienzo.setLayout(new java.awt.BorderLayout());
         getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
+
+        jLabel1.setText("jLabel1");
+        jPanel1.add(jLabel1);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jMenu1.setText("Archivo");
 
@@ -224,11 +237,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
     private javax.swing.JPanel zonaEstadoColor;
