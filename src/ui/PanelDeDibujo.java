@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  */
 public class PanelDeDibujo extends JPanel {
     public enum TipoFigura {
-        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO,CORAZON,FLECHA
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA
     }
 
     private final ArrayList<Figura> figuras = new ArrayList<>();
@@ -64,6 +64,12 @@ public class PanelDeDibujo extends JPanel {
                     default:
                         figuraActual = new Trazo(e.getPoint());
                         break;
+                    case HEXAGONO:
+                        figuraActual = new Hexagono(e.getPoint(), rellenarFigura);
+                        break;
+                    case ESTRELLA:
+                         figuraActual = new Estrella(e.getPoint(), rellenarFigura);
+                         break;
                         
                         
                 }

@@ -23,6 +23,8 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnPentagono = new JToggleButton("Pentagono");
     private final JToggleButton btnCorazon = new JToggleButton("Corazon");
     private final JToggleButton btnFlecha = new JToggleButton("Flecha");
+    private final JToggleButton btnHexagono = new JToggleButton("Hexágono");
+    private final JToggleButton btnEstrella = new JToggleButton("Estrella");
 
 
     
@@ -43,12 +45,14 @@ public class VentanaPrincipal extends JFrame {
         jPanel1.add(btnPentagono, posicionRelleno + 3);
         jPanel1.add(btnCorazon, posicionRelleno + 4);
         jPanel1.add(btnFlecha, posicionRelleno + 5);
+        jPanel1.add(btnHexagono, posicionRelleno + 6);
+        jPanel1.add(btnEstrella, posicionRelleno + 7);
 
 
         
 
         ButtonGroup grupoHerramientas = new ButtonGroup();
-        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha};
+        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella};
         for (JToggleButton boton : botones) {
             boton.setFocusPainted(false);
             grupoHerramientas.add(boton);
@@ -66,12 +70,14 @@ public class VentanaPrincipal extends JFrame {
         btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
         btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
         btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
+        btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
+        btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
         chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
         btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
         btnLimpiar.setSelected(false);
         });
 
-        setSize(875, 480);
+        setSize(1000, 500);
         setLocationRelativeTo(null);
     }
 
