@@ -24,53 +24,67 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         
 
-        add(panelDeDibujo, BorderLayout.CENTER);
 
-        btnTrazo.setFocusPainted(false);
-        btnLinea.setFocusPainted(false);
-        btnRectangulo.setFocusPainted(false);
-        chkRelleno.setFocusPainted(false);
-        btnLimpiar.setFocusPainted(false);
-        //Agrupacion de botones
-        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
-        grupoHerramientas.add(btnTrazo);
-        grupoHerramientas.add(btnLinea);
-        grupoHerramientas.add(btnRectangulo);
+add(panelDeDibujo, BorderLayout.CENTER);
 
-        // Trazo seleccionado por defecto al abrir
-        btnTrazo.setSelected(true);
+btnTrazo.setFocusPainted(false);
+btnLinea.setFocusPainted(false);
+btnRectangulo.setFocusPainted(false);
+chkRelleno.setFocusPainted(false);
+btnLimpiar.setFocusPainted(false);
 
-        // lógica (Listeners)
-        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+// Crear los nuevos botones
+javax.swing.JToggleButton btnTriangulo =
+        new javax.swing.JToggleButton("Triangulo");
 
-        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+javax.swing.JToggleButton btnParalelogramo =
+        new javax.swing.JToggleButton("Paralelogramo");
 
-        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
+btnTriangulo.setFocusPainted(false);
+btnParalelogramo.setFocusPainted(false);
 
-//        JToolBar barra = new JToolBar();
-//        barra.setFloatable(false);
-//
-//        JButton btnTrazo = new JButton("Trazo Libre");
-//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-//
-//        JButton btnLinea = new JButton("Línea");
-//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-//
-//        JButton btnRectangulo = new JButton("Rectángulo");
-//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-//
-//        JCheckBox chkRelleno = new JCheckBox("Relleno");
-//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-//
-//        barra.add(btnTrazo);
-//        barra.add(btnLinea);
-//        barra.add(btnRectangulo);
-//        barra.addSeparator();
-//        barra.add(chkRelleno);
-        //add(barra, BorderLayout.NORTH);
-        setLocationRelativeTo(null);
+// Agregar los botones a la barra
+jPanel1.add(btnTriangulo, 7);
+jPanel1.add(btnParalelogramo, 8);
+
+jPanel1.revalidate();
+jPanel1.repaint();
+
+// Agrupar las herramientas
+javax.swing.ButtonGroup grupoHerramientas =
+        new javax.swing.ButtonGroup();
+
+grupoHerramientas.add(btnTrazo);
+grupoHerramientas.add(btnLinea);
+grupoHerramientas.add(btnRectangulo);
+grupoHerramientas.add(btnTriangulo);
+grupoHerramientas.add(btnParalelogramo);
+
+btnTrazo.setSelected(true);
+
+// Acciones de los botones
+btnTrazo.addActionListener(e ->
+        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+
+btnLinea.addActionListener(e ->
+        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+
+btnRectangulo.addActionListener(e ->
+        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+
+btnTriangulo.addActionListener(e ->
+        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRIANGULO));
+
+btnParalelogramo.addActionListener(e ->
+        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PARALELOGRAMO));
+
+chkRelleno.addActionListener(e ->
+        panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+
+btnLimpiar.addActionListener(e ->
+        panelDeDibujo.Limpiar());
+
+setLocationRelativeTo(null);
     }
 
     /**
