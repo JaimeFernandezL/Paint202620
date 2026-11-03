@@ -4,7 +4,9 @@
  */
 package figuras;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
@@ -25,20 +27,21 @@ public class Rectangulo extends Figura {
 
     @Override
     public void dibujar(Graphics g) {
-        if (puntoInicial != null && puntoFinal != null) {
-            // Se calcula el origen y las dimensiones dinamicamente para 
-            //permitir arrastrar en cualquier dirección
-            int x = Math.min(puntoInicial.x, puntoFinal.x);
-            int y = Math.min(puntoInicial.y, puntoFinal.y);
-            int ancho = Math.abs(puntoInicial.x - puntoFinal.x);
-            int alto = Math.abs(puntoInicial.y - puntoFinal.y);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-            if (relleno) {
-                g.fillRect(x, y, ancho, alto);
-            } else {
-                g.drawRect(x, y, ancho, alto);
-            }
+        // La matemática para que el rectángulo se dibuje hacia cualquier lado
+        int x = Math.min(puntoInicial.x, puntoFinal.x);
+        int y = Math.min(puntoInicial.y, puntoFinal.y);
+        int ancho = Math.abs(puntoInicial.x - puntoFinal.x);
+        int alto = Math.abs(puntoInicial.y - puntoFinal.y);
+
+        if (relleno) {
+            g2d.fillRect(x, y, ancho, alto);
+        } else {
+            g2d.drawRect(x, y, ancho, alto);
         }
+
     }
 
     @Override

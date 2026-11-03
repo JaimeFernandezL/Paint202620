@@ -6,8 +6,12 @@ package ui;
 //hola
 
 import java.awt.BorderLayout;
-//import javax.swing.JButton;
-//import javax.swing.ButtonGroup;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -17,40 +21,54 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
-    
+    PanelDeDibujo panelDeDibujo = new PanelDeDibujo() {
+        @Override
+        protected void processMouseMotionEvent(java.awt.event.MouseEvent e) {
+            if (e.getID() == java.awt.event.MouseEvent.MOUSE_DRAGGED) {
+                int x = Math.max(0, Math.min(getWidth() - 1, e.getX()));
+                int y = Math.max(0, Math.min(getHeight() - 1, e.getY()));
+                e = new java.awt.event.MouseEvent(this, e.getID(), e.getWhen(),
+                        e.getModifiersEx(), x, y, e.getClickCount(),
+                        e.isPopupTrigger(), e.getButton());
+            }
+            super.processMouseMotionEvent(e);
+        }
+    };
 
-    // TODO clases por crear, por quien le corresponda:
-    //private final ButtonGroup grupoHerramientas = new ButtonGroup();
-    
+    private final ButtonGroup grupoHerramientas = new ButtonGroup();
     private final PanelHerramientas herramientas = new PanelHerramientas();
+
+// TODO clases por crear, por quien le corresponda:
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
-//    private final PanelOpciones opciones = new PanelOpciones(panelDeDibujo);
 //    private final PanelColores colores = new PanelColores(panelDeDibujo);
 //    private final BarraEstado estado = new BarraEstado();
-    
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
 
-        //Delimitar cada clase en su zona
-
-
+        jMenuBar1.add(herramientas.btnDeshacer, 3);
+        jMenuBar1.add(herramientas.btnRehacer, 4);
+        jMenuBar1.add(herramientas.btnLimpiar, 5);
+        
         zonaHerramientas.add(herramientas, BorderLayout.CENTER);
+        zonaGrosor.setLayout(new BorderLayout());          // slider de grosor a un lado del lienzo
+        zonaGrosor.setPreferredSize(new Dimension(56, 100));
+        zonaGrosor.add(herramientas.getPanelGrosor(), BorderLayout.CENTER);
+
+        grupoHerramientas.add(herramientas.btnLapiz);
+        grupoHerramientas.add(herramientas.btnBorrador);
+        herramientas.btnLapiz.setSelected(true);
+        herramientas.conectar(panelDeDibujo);
+
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
 //        zonaOpciones.add(opciones, BorderLayout.CENTER);
 //        zonaColores.add(colores, BorderLayout.CENTER);
 //        zonaEstado.add(estado, BorderLayout.CENTER);
-
-//        grupoHerramientas.add(herramientas.btnLapiz);
-//        grupoHerramientas.add(herramientas.btnBorrador);
-
         setSize(1000, 700);
         ZonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
         panelDeDibujo.setBackground(java.awt.Color.WHITE);
-
 
 //        btnTrazo.setFocusPainted(false);
 //        btnLinea.setFocusPainted(false);
@@ -95,7 +113,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //        barra.addSeparator();
 //        barra.add(chkRelleno);
         //add(barra, BorderLayout.NORTH);
-        
+//        sliderGrosor.addChangeListener(e -> {
+//            int grosorSeleccionado = sliderGrosor.getValue();
+//            panelDeDibujo.setGrosorActual(grosorSeleccionado);
+//        });
         setLocationRelativeTo(null);
     }
 
@@ -117,12 +138,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         zonaEstadoColor = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         ZonaLienzo = new javax.swing.JPanel();
+        zonaGrosor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        btnDeshacer1 = new javax.swing.JMenuItem();
+        btnRehacer1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -173,9 +197,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         PanelCinta.getAccessibleContext().setAccessibleDescription("");
 
         ZonaLienzo.setLayout(new java.awt.BorderLayout());
+        ZonaLienzo.add(zonaGrosor, java.awt.BorderLayout.LINE_START);
+
         getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("jLabel2");
         jPanel1.add(jLabel1);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
@@ -189,6 +215,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
+
+        btnDeshacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnDeshacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/deshacer16x16.png"))); // NOI18N
+        btnDeshacer1.setText("Deshacer");
+        btnDeshacer1.addActionListener(this::btnDeshacer1ActionPerformed);
+        jMenu2.add(btnDeshacer1);
+
+        btnRehacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnRehacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/rehacer16x16.png"))); // NOI18N
+        btnRehacer1.setText("Rehacer");
+        btnRehacer1.addActionListener(this::btnRehacer1ActionPerformed);
+        jMenu2.add(btnRehacer1);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Ayuda");
@@ -237,6 +276,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private javax.swing.JMenuItem btnDeshacer1;
+    private javax.swing.JMenuItem btnRehacer1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -249,6 +290,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel zonaEstadoColor;
     private javax.swing.JPanel zonaEstadoFiguras;
     private javax.swing.JPanel zonaFiguras;
+    private javax.swing.JPanel zonaGrosor;
     private javax.swing.JPanel zonaHerramientas;
     // End of variables declaration//GEN-END:variables
+
+    private void btnRehacer1ActionPerformed(ActionEvent e) {
+        panelDeDibujo.rehacer();
+    }
+
+    private void btnDeshacer1ActionPerformed(ActionEvent e) {
+        panelDeDibujo.deshacer();
+    }
 }

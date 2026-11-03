@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ui;
- 
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
@@ -20,11 +17,12 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
- 
+
 /**
  * Grupo "Herramientas" al estilo del Paint de Windows: iconos arriba y la
  * etiqueta del grupo abajo. Responsable: Juana (Equipo 3).
@@ -32,73 +30,116 @@ import javax.swing.UIManager;
  * La lógica real (limpiar, borrador, grosor) la implementan los Equipos 1 y 5.
  */
 public class PanelHerramientas extends JPanel {
- 
-    private static final int TAM_BOTON = 40;
- 
+
+    private static final int TAM_BOTON = 36;
+
     public final JToggleButton btnLapiz = new JToggleButton(new IconoLapiz());
     public final JToggleButton btnBorrador = new JToggleButton(new IconoBorrador());
     public final JButton btnLimpiar = new JButton(new IconoLimpiar());
-    // Rango PROVISIONAL (1-50) hasta que el Equipo 5 confirme el suyo.
-    public final JSlider sliderGrosor = new JSlider(1, 50, 3);
-    public final JLabel lblGrosor = new JLabel("3");
- 
+    public final JButton btnDeshacer = new JButton(new IconoDeshacer(false));
+    public final JButton btnRehacer = new JButton(new IconoDeshacer(true));
+
+    // Grosor: slider VERTICAL, como en el Paint. Rango 1-50 (el mismo del Equipo 5).
+    // NO va dentro de este panel: VentanaPrincipal lo pone en zonaGrosor
+    // con getPanelGrosor().
+    public final JSlider sliderGrosor = new JSlider(JSlider.VERTICAL, 1, 50, 3);
+    public final JLabel lblGrosor = new JLabel("3", SwingConstants.CENTER);
+    private final JPanel panelGrosor = new JPanel(new BorderLayout(0, 4));
+
     public PanelHerramientas() {
         setLayout(new BorderLayout(0, 2));
         Color borde = UIManager.getColor("controlShadow");
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(0, 0, 0, 1, borde != null ? borde : Color.GRAY),
                 BorderFactory.createEmptyBorder(4, 6, 2, 8)));
- 
+
         configurar(btnLapiz, "Lápiz");
         configurar(btnBorrador, "Borrador");
         configurar(btnLimpiar, "Limpiar lienzo");
- 
+        configurar(btnDeshacer, "Deshacer (Ctrl+Z)");
+        configurar(btnRehacer, "Rehacer (Ctrl+Y)");
+
         JPanel filaIconos = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
         filaIconos.add(btnLapiz);
         filaIconos.add(btnBorrador);
         filaIconos.add(btnLimpiar);
- 
-        sliderGrosor.setPreferredSize(new Dimension(110, 24));
-        JPanel filaGrosor = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
-        filaGrosor.add(new JLabel("Grosor"));
-        filaGrosor.add(sliderGrosor);
-        filaGrosor.add(lblGrosor);
- 
-        JPanel contenido = new JPanel(new BorderLayout(0, 4));
-        contenido.add(filaIconos, BorderLayout.CENTER);
-        contenido.add(filaGrosor, BorderLayout.SOUTH);
- 
-        JLabel etiqueta = new JLabel("Herramientas", SwingConstants.CENTER);
- 
-        add(contenido, BorderLayout.CENTER);
-        add(etiqueta, BorderLayout.SOUTH);
- 
+        JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
+        separador.setPreferredSize(new Dimension(6, 28));
+        filaIconos.add(separador);
+        filaIconos.add(btnDeshacer);   // deshacer / rehacer: mismos métodos que el menú Edición
+        filaIconos.add(btnRehacer);
+
+        add(filaIconos, BorderLayout.CENTER);
+        add(new JLabel("Herramientas", SwingConstants.CENTER), BorderLayout.SOUTH);
+
+        armarPanelGrosor();
+    }
+
+    /** Panel del grosor (etiqueta, slider vertical y valor) para ponerlo en zonaGrosor. */
+    public JPanel getPanelGrosor() {
+        return panelGrosor;
+    }
+
+    private void armarPanelGrosor() {
+        sliderGrosor.setToolTipText("Grosor del trazo");
+        panelGrosor.setBorder(BorderFactory.createEmptyBorder(6, 4, 6, 4));
+        panelGrosor.add(new JLabel("Grosor", SwingConstants.CENTER), BorderLayout.NORTH);
+        panelGrosor.add(sliderGrosor, BorderLayout.CENTER);
+        panelGrosor.add(lblGrosor, BorderLayout.SOUTH);
+
+        // Solo actualiza el número que se ve junto al slider.
         sliderGrosor.addChangeListener(e
                 -> lblGrosor.setText(String.valueOf(sliderGrosor.getValue())));
     }
- 
+
+    /**
+     * Conecta mis controles con los métodos públicos de PanelDeDibujo.
+     * Si el Equipo 1 cambia un nombre, solo se ajusta AQUÍ.
+     */
+    public void conectar(PanelDeDibujo lienzo) {
+        // Lápiz = trazo libre
+        btnLapiz.addActionListener(e
+                -> lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+
+        // Limpiar
+        btnLimpiar.addActionListener(e -> lienzo.Limpiar());
+
+        // Deshacer / Rehacer (los mismos que usa el menú Edición)
+        btnDeshacer.addActionListener(e -> lienzo.deshacer());
+        btnRehacer.addActionListener(e -> lienzo.rehacer());
+
+        // Grosor: cada cambio del slider llega al lienzo
+        sliderGrosor.addChangeListener(e
+                -> lienzo.setGrosorActual(sliderGrosor.getValue()));
+        lienzo.setGrosorActual(sliderGrosor.getValue()); // sincroniza al abrir
+
+        // TODO Equipo 1: el borrador aún no existe en PanelDeDibujo.
+        btnBorrador.setEnabled(false);
+        btnBorrador.setToolTipText("Borrador (pendiente del Equipo 1)");
+    }
+
     private static void configurar(javax.swing.AbstractButton b, String tooltip) {
         b.setToolTipText(tooltip);
         b.setFocusPainted(false);
         b.setMargin(new java.awt.Insets(0, 0, 0, 0));
         b.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
     }
- 
+
     // ---------------------------------------------------------------
     // Iconos dibujados con Java2D (24x24)
     // ---------------------------------------------------------------
     private abstract static class IconoBase implements Icon {
- 
+
         @Override
         public int getIconWidth() {
             return 24;
         }
- 
+
         @Override
         public int getIconHeight() {
             return 24;
         }
- 
+
         @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g.create();
@@ -108,17 +149,17 @@ public class PanelHerramientas extends JPanel {
             dibujar(g2, trazo(c));
             g2.dispose();
         }
- 
+
         private static Color trazo(Component c) {
             Color fg = c != null ? c.getForeground() : null;
             return fg != null ? fg : Color.DARK_GRAY;
         }
- 
+
         abstract void dibujar(Graphics2D g2, Color trazo);
     }
- 
+
     private static class IconoLapiz extends IconoBase {
- 
+
         @Override
         void dibujar(Graphics2D g2, Color trazo) {
             g2.translate(12, 12);
@@ -139,9 +180,9 @@ public class PanelHerramientas extends JPanel {
             g2.draw(punta);
         }
     }
- 
+
     private static class IconoBorrador extends IconoBase {
- 
+
         @Override
         void dibujar(Graphics2D g2, Color trazo) {
             g2.translate(12, 12);
@@ -156,9 +197,9 @@ public class PanelHerramientas extends JPanel {
             g2.drawLine(0, -5, 0, 5);
         }
     }
- 
+
     private static class IconoLimpiar extends IconoBase {
- 
+
         @Override
         void dibujar(Graphics2D g2, Color trazo) {
             Path2D cubo = new Path2D.Double();
@@ -176,6 +217,34 @@ public class PanelHerramientas extends JPanel {
             g2.drawLine(10, 11, 10, 18);
             g2.drawLine(12, 11, 12, 18);
             g2.drawLine(14, 11, 14, 18);
+        }
+    }
+
+    /** Flecha curva de deshacer; con invertido = true es la de rehacer (espejo). */
+    private static class IconoDeshacer extends IconoBase {
+
+        private final boolean invertido;
+
+        IconoDeshacer(boolean invertido) {
+            this.invertido = invertido;
+        }
+
+        @Override
+        void dibujar(Graphics2D g2, Color trazo) {
+            if (invertido) {
+                g2.translate(24, 0);
+                g2.scale(-1, 1);
+            }
+            Color azul = new Color(0x3F7FC1);
+            g2.setColor(azul);
+            g2.setStroke(new BasicStroke(2.4f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2.draw(new Arc2D.Double(5, 6, 14, 14, 0, 180, Arc2D.OPEN));   // arco
+            Path2D punta = new Path2D.Double();                              // cabeza de la flecha
+            punta.moveTo(1.5, 13);
+            punta.lineTo(8.5, 13);
+            punta.lineTo(5, 18);
+            punta.closePath();
+            g2.fill(punta);
         }
     }
 }
