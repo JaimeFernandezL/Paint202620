@@ -5,6 +5,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import archivos.ServicioNuevoDocumento;
+
 //import javax.swing.JButton;
 
 /**
@@ -16,6 +18,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    private ServicioNuevoDocumento servicioNuevoDocumento;
 
     /**
      * Creates new form VentanaPrincipal
@@ -24,67 +27,55 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         
 
+        add(panelDeDibujo, BorderLayout.CENTER);
+        servicioNuevoDocumento =
+        new ServicioNuevoDocumento(panelDeDibujo);
 
-add(panelDeDibujo, BorderLayout.CENTER);
+        btnTrazo.setFocusPainted(false);
+        btnLinea.setFocusPainted(false);
+        btnRectangulo.setFocusPainted(false);
+        chkRelleno.setFocusPainted(false);
+        btnLimpiar.setFocusPainted(false);
+        //Agrupacion de botones
+        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
+        grupoHerramientas.add(btnTrazo);
+        grupoHerramientas.add(btnLinea);
+        grupoHerramientas.add(btnRectangulo);
 
-btnTrazo.setFocusPainted(false);
-btnLinea.setFocusPainted(false);
-btnRectangulo.setFocusPainted(false);
-chkRelleno.setFocusPainted(false);
-btnLimpiar.setFocusPainted(false);
+        // Trazo seleccionado por defecto al abrir
+        btnTrazo.setSelected(true);
 
-// Crear los nuevos botones
-javax.swing.JToggleButton btnTriangulo =
-        new javax.swing.JToggleButton("Triangulo");
+        // lógica (Listeners)
+        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
 
-javax.swing.JToggleButton btnParalelogramo =
-        new javax.swing.JToggleButton("Paralelogramo");
+        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
 
-btnTriangulo.setFocusPainted(false);
-btnParalelogramo.setFocusPainted(false);
+        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
 
-// Agregar los botones a la barra
-jPanel1.add(btnTriangulo, 7);
-jPanel1.add(btnParalelogramo, 8);
-
-jPanel1.revalidate();
-jPanel1.repaint();
-
-// Agrupar las herramientas
-javax.swing.ButtonGroup grupoHerramientas =
-        new javax.swing.ButtonGroup();
-
-grupoHerramientas.add(btnTrazo);
-grupoHerramientas.add(btnLinea);
-grupoHerramientas.add(btnRectangulo);
-grupoHerramientas.add(btnTriangulo);
-grupoHerramientas.add(btnParalelogramo);
-
-btnTrazo.setSelected(true);
-
-// Acciones de los botones
-btnTrazo.addActionListener(e ->
-        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-
-btnLinea.addActionListener(e ->
-        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-
-btnRectangulo.addActionListener(e ->
-        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-
-btnTriangulo.addActionListener(e ->
-        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRIANGULO));
-
-btnParalelogramo.addActionListener(e ->
-        panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PARALELOGRAMO));
-
-chkRelleno.addActionListener(e ->
-        panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-
-btnLimpiar.addActionListener(e ->
-        panelDeDibujo.Limpiar());
-
-setLocationRelativeTo(null);
+//        JToolBar barra = new JToolBar();
+//        barra.setFloatable(false);
+//
+//        JButton btnTrazo = new JButton("Trazo Libre");
+//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+//
+//        JButton btnLinea = new JButton("Línea");
+//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+//
+//        JButton btnRectangulo = new JButton("Rectángulo");
+//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+//
+//        JCheckBox chkRelleno = new JCheckBox("Relleno");
+//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+//
+//        barra.add(btnTrazo);
+//        barra.add(btnLinea);
+//        barra.add(btnRectangulo);
+//        barra.addSeparator();
+//        barra.add(chkRelleno);
+        //add(barra, BorderLayout.NORTH);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -117,6 +108,7 @@ setLocationRelativeTo(null);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -168,6 +160,10 @@ setLocationRelativeTo(null);
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setText("Nuevo");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
@@ -193,6 +189,11 @@ setLocationRelativeTo(null);
     private void btnTrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTrazoActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        servicioNuevoDocumento.nuevoDocumento();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +232,7 @@ setLocationRelativeTo(null);
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
