@@ -5,18 +5,39 @@
 package figuras;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Objects;
 
 /**
  *
  * @author josearielpereyra
  */
 public abstract class Figura {
+    protected Point puntoInicial;
+    protected Point puntoFinal;
+    protected boolean relleno;
     protected int grosor = 1; //El grosor por default
-    
+    protected Figura() {
+        this(new Point(), false);
+    }
+
+    protected Figura(Point puntoInicial, boolean relleno) {
+        this.puntoInicial = new Point(Objects.requireNonNull(puntoInicial));
+        this.puntoFinal = new Point(puntoInicial);
+        this.relleno = relleno;
+    }
+
+    // Cada figura utiliza una copia independiente del contexto grafico.
+    protected Graphics2D prepararGraficos(Graphics g) {
+        return (Graphics2D) g.create();
+    }
+
     public abstract void dibujar(Graphics g);
-    public abstract void actualizar(Point puntoActual);
-    
+
+    public void actualizar(Point puntoActual) {
+        puntoFinal = new Point(Objects.requireNonNull(puntoActual));
+    }
     public void setGrosor(int grosor)
     {
         this.grosor=grosor;

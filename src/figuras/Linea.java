@@ -13,11 +13,8 @@ import java.awt.Point;
  *
  * @author josearielpereyra
  */
+
 public class Linea extends Figura {
-
-    private Point puntoInicial;
-    private Point puntoFinal;
-
     public Linea() {
         this(new Point(), new Point());
     }
@@ -27,22 +24,17 @@ public class Linea extends Figura {
     }
 
     public Linea(Point puntoInicial, Point puntoFinal) {
-        this.puntoInicial = puntoInicial;
-        this.puntoFinal = puntoFinal;
+        super(puntoInicial, false);
+        actualizar(puntoFinal);
     }
 
     @Override
     public void dibujar(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        
-        g2d.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
-        
+        Graphics2D copia = prepararGraficos(g);
+        try {
+            copia.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
+        } finally {
+            copia.dispose();
+        }
     }
-
-    @Override
-    public void actualizar(Point puntoActual) {
-        puntoFinal = puntoActual;
-    }
-
 }

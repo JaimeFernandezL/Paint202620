@@ -4,35 +4,47 @@
  */
 package figuras;
 
-import java.awt.BasicStroke;
+/**
+ *
+ * @author josearielpereyra
+ */
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
-/**
- *
- * @author josearielpereyra
- */
 public class Trazo extends Figura {
+    private final ArrayList<Point> puntos = new ArrayList<>();
 
-    ArrayList<Point> puntos = new ArrayList<>();
+    public Trazo() {
+        super();
+    }
+
+    public Trazo(Point puntoInicial) {
+        super(puntoInicial, false);
+        puntos.add(new Point(puntoInicial));
+    }
 
     @Override
     public void dibujar(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g; 
-        g2d.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        
-        for (int i = 1; i < puntos.size(); i++) {
-            Linea l = new Linea(puntos.get(i - 1), puntos.get(i));
-            l.setGrosor(this.grosor); 
-            l.dibujar(g2d);
+        Graphics2D copia = prepararGraficos(g);
+        try {
+            for (int i = 1; i < puntos.size(); i++) {
+                Point anterior = puntos.get(i - 1);
+                Point actual = puntos.get(i);
+                copia.drawLine(anterior.x, anterior.y, actual.x, actual.y);
+            }
+        } finally {
+            copia.dispose();
         }
     }
 
     @Override
     public void actualizar(Point puntoActual) {
-        puntos.add(puntoActual);
+        super.actualizar(puntoActual);
+        if (puntos.isEmpty()) {
+            puntoInicial = new Point(puntoActual);
+        }
+        puntos.add(new Point(puntoActual));
     }
-
 }

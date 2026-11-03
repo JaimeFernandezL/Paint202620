@@ -6,6 +6,7 @@ package ui;
 //hola
 
 import java.awt.BorderLayout;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,9 +18,18 @@ import javax.swing.JToggleButton;
  *
  * @author josearielpereyra
  */
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipal extends JFrame {
+    private static final java.util.logging.Logger logger
+            = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
+    private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
+    private final JToggleButton btnCirculo = new JToggleButton("Círculo");
+    private final JToggleButton btnRombo = new JToggleButton("Rombo");
+    private final JToggleButton btnPentagono = new JToggleButton("Pentagono");
+    private final JToggleButton btnCorazon = new JToggleButton("Corazon");
+    private final JToggleButton btnFlecha = new JToggleButton("Flecha");
+    private final JToggleButton btnHexagono = new JToggleButton("Hexágono");
+    private final JToggleButton btnEstrella = new JToggleButton("Estrella");
 
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo() {
         @Override
@@ -61,6 +71,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         grupoHerramientas.add(herramientas.btnBorrador);
         herramientas.btnLapiz.setSelected(true);
         herramientas.conectar(panelDeDibujo);
+
+        //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
+//        jPanel1.add(btnOvalo, posicionRelleno);
+//        jPanel1.add(btnCirculo, posicionRelleno + 1);
+//        jPanel1.add(btnRombo, posicionRelleno + 2);
+//        jPanel1.add(btnPentagono, posicionRelleno + 3);
+//        jPanel1.add(btnCorazon, posicionRelleno + 4);
+//        jPanel1.add(btnFlecha, posicionRelleno + 5);
+//        jPanel1.add(btnHexagono, posicionRelleno + 6);
+//        jPanel1.add(btnEstrella, posicionRelleno + 7);
+
+
+        
+
+//        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella};
+//        for (JToggleButton boton : botones) {
+//            boton.setFocusPainted(false);
+//            grupoHerramientas.add(boton);
+//        }
+        //chkRelleno.setFocusPainted(false);
+        //btnLimpiar.setFocusPainted(false);
+        //btnTrazo.setSelected(true);
+
+        //btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+        //btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+        //btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+        btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
+        btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
+        btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
+        btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
+        btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
+        btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
+        btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
+        btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
+        //chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+        //btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
+        //btnLimpiar.setSelected(false);});
 
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
 //        zonaOpciones.add(opciones, BorderLayout.CENTER);

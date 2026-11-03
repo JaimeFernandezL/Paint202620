@@ -4,16 +4,14 @@
  */
 package ui;
 
-import figuras.Figura;
-import figuras.Linea;
-import figuras.Trazo;
-import figuras.Rectangulo;
+import figuras.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -22,24 +20,23 @@ import javax.swing.JPanel;
 public class PanelDeDibujo extends JPanel {
 
     public enum TipoFigura {
-        LINEA, TRAZO, RECTANGULO
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA
     }
 
-    ArrayList<Figura> figuras = new ArrayList<>();
-    ArrayList<Figura> figurasRehacer = new ArrayList<>();
-    Figura figuraActual;
-
-    private int grosorActual = 3;
-
+    private final ArrayList<Figura> figuras = new ArrayList<>();
+    private Figura figuraActual;
     private TipoFigura tipoActual = TipoFigura.TRAZO;
     private boolean rellenarFigura = false;
-
+    ArrayList<Figura> figurasRehacer = new ArrayList<>();
+    private int grosorActual = 3;
     public PanelDeDibujo() {
         setBackground(Color.LIGHT_GRAY);
         MouseAdapter manejador = new MouseAdapter() {
-
             @Override
             public void mousePressed(MouseEvent e) {
+                if (!SwingUtilities.isLeftMouseButton(e)) {
+                    return;
+                }
                 switch (tipoActual) {
                     case LINEA:
                         figuraActual = new Linea(e.getPoint());
@@ -47,26 +44,57 @@ public class PanelDeDibujo extends JPanel {
                     case RECTANGULO:
                         figuraActual = new Rectangulo(e.getPoint(), rellenarFigura);
                         break;
+                    case OVALO:
+                        figuraActual = new Ovalo(e.getPoint(), rellenarFigura);
+                        break;
+                    case CIRCULO:
+                        figuraActual = new Circulo(e.getPoint(), rellenarFigura);
+                        break;
+                    case ROMBO:
+                        figuraActual = new Rombo(e.getPoint(), rellenarFigura);
+                        break;
+                    case PENTAGONO:
+                        figuraActual = new Pentagono(e.getPoint(), rellenarFigura);
+                        break;
+                    case CORAZON:
+                        figuraActual = new Corazon(e.getPoint(), rellenarFigura);
+                        break;
+                    case FLECHA:
+                        figuraActual = new Flecha(e.getPoint(), rellenarFigura);
+                        break;
                     case TRAZO:
                     default:
-                        figuraActual = new Trazo();
+                        figuraActual = new Trazo(e.getPoint());
                         break;
+                    case HEXAGONO:
+                        figuraActual = new Hexagono(e.getPoint(), rellenarFigura);
+                        break;
+                    case ESTRELLA:
+                        figuraActual = new Estrella(e.getPoint(), rellenarFigura);
+                        break;
+
                 }
-                figuraActual.setGrosor(grosorActual);
                 figuras.add(figuraActual);
+                figuraActual.setGrosor(grosorActual);
                 figurasRehacer.clear();
                 repaint();
             }
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                figuraActual.actualizar(e.getPoint());
-                repaint();
+                if (figuraActual != null) {
+                    figuraActual.actualizar(e.getPoint());
+                    repaint();
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                figuraActual = null; // Suelta la figura al terminar de dibujar
+                if (SwingUtilities.isLeftMouseButton(e) && figuraActual != null) {
+                    figuraActual.actualizar(e.getPoint());
+                    figuraActual = null;
+                    repaint();
+                }
             }
         };
         addMouseListener(manejador);
@@ -76,18 +104,17 @@ public class PanelDeDibujo extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         for (Figura figura : figuras) {
             figura.dibujar(g);
         }
     }
 
     public void setTipoActual(TipoFigura tipo) {
-        this.tipoActual = tipo;
+        tipoActual = java.util.Objects.requireNonNull(tipo);
     }
 
     public void setRellenarFigura(boolean rellenar) {
-        this.rellenarFigura = rellenar;
+        rellenarFigura = rellenar;
     }
 
     public void setGrosorActual(int grosor) {
@@ -96,7 +123,7 @@ public class PanelDeDibujo extends JPanel {
 
     public void Limpiar() {
         figuras.clear();
-        figurasRehacer.clear();
+        figuraActual = null;
         repaint();
     }
 
