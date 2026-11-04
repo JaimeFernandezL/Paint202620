@@ -59,6 +59,7 @@ public class PanelDeDibujo extends JPanel {
                         break;
                     case FLECHA:
                         figuraActual = new Flecha(e.getPoint(), rellenarFigura);
+                         break; 
                     case TRIANGULO:
                         figuraActual = new Triangulo(e.getPoint(), rellenarFigura);
                          break;                           
