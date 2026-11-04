@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  */
 public class PanelDeDibujo extends JPanel {
     public enum TipoFigura {
-        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO,PARALELOGRAMO
     }
 
     private final ArrayList<Figura> figuras = new ArrayList<>();
@@ -59,8 +59,15 @@ public class PanelDeDibujo extends JPanel {
                         break;
                     case FLECHA:
                         figuraActual = new Flecha(e.getPoint(), rellenarFigura);
-                        break;    
-                    case TRAZO:
+                    case TRIANGULO:
+                        figuraActual = new Triangulo(e.getPoint(), rellenarFigura);
+                         break;                           
+                     case PARALELOGRAMO:
+                         figuraActual = new Paralelogramo(e.getPoint(), rellenarFigura);
+      
+                          break; 
+
+                     case TRAZO:
                     default:
                         figuraActual = new Trazo(e.getPoint());
                         break;
