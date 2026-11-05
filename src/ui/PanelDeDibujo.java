@@ -169,10 +169,27 @@ public class PanelDeDibujo extends JPanel {
     }
 
     /**
-     * Limpia la lista dinámica de figuras y refresca el lienzo.
+     * Limpia completamente el lienzo de dibujo.
+     * Vacía el historial de figuras almacenadas, reinicia la figura en progreso
+     * y solicita el repintado de la interfaz gráfica.
+     */
+    public void limpiarLienzo() {
+        
+        // Vacía la lista dinámica que contiene todas las figuras y trazos dibujados
+        this.figuras.clear();
+        
+        // Reinicia la referencia de la figura actual para evitar incongruencias
+        this.figuraActual = null;
+        
+        // Invalida la vista actual y solicita a Swing la ejecución de paintComponent
+        this.repaint();
+    }
+
+    /**
+     * Método de compatibilidad para mantener soporte con las llamadas existentes.
+     * Redirige la ejecución hacia limpiarLienzo().
      */
     public void Limpiar() {
-        figuras.clear();
-        repaint();
+        limpiarLienzo();
     }
 }
