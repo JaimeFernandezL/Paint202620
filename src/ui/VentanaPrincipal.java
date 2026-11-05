@@ -10,8 +10,6 @@ import archivos.ServicioGuardarImagen;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
 import java.awt.BorderLayout;
 import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
@@ -19,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
 /**
@@ -47,19 +44,7 @@ public class VentanaPrincipal extends JFrame {
     private final ButtonGroup grupoHerramientas = new ButtonGroup();
     private final PanelHerramientas herramientas = new PanelHerramientas();
 
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo() {
-        @Override
-        protected void processMouseMotionEvent(java.awt.event.MouseEvent e) {
-            if (e.getID() == java.awt.event.MouseEvent.MOUSE_DRAGGED) {
-                int x = Math.max(0, Math.min(getWidth() - 1, e.getX()));
-                int y = Math.max(0, Math.min(getHeight() - 1, e.getY()));
-                e = new java.awt.event.MouseEvent(this, e.getID(), e.getWhen(),
-                        e.getModifiersEx(), x, y, e.getClickCount(),
-                        e.isPopupTrigger(), e.getButton());
-            }
-            super.processMouseMotionEvent(e);
-        }
-    };
+    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
 
 //    TODO clases por crear, por quien le corresponda:
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
@@ -85,6 +70,7 @@ public class VentanaPrincipal extends JFrame {
         grupoHerramientas.add(herramientas.btnBorrador);
         herramientas.btnLapiz.setSelected(true);
         herramientas.conectar(panelDeDibujo);
+        panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
 
         //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
 //        jPanel1.add(btnOvalo, posicionRelleno);

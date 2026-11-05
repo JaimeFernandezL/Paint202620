@@ -130,10 +130,13 @@ public class PanelHerramientas extends JPanel {
         btnRehacer.addActionListener(e -> lienzo.rehacer());
 
         // Grosor: cada cambio del slider llega al lienzo
-        sliderGrosor.addChangeListener(e
-                -> lienzo.setGrosorActual(sliderGrosor.getValue()));
-        lienzo.setGrosorActual(sliderGrosor.getValue()); // sincroniza al abrir
-
+        sliderGrosor.addChangeListener(e -> {
+            int grosor = sliderGrosor.getValue();
+            lienzo.setGrosorActual(grosor);
+            lblGrosor.setText(String.valueOf(grosor));
+        });
+        lienzo.setGrosorActual(sliderGrosor.getValue());
+        
         // TODO Equipo 1: el borrador aún no existe en PanelDeDibujo.
         btnBorrador.setEnabled(false);
         btnBorrador.setToolTipText("Borrador (pendiente del Equipo 1)");
