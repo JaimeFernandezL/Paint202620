@@ -1,30 +1,59 @@
+
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Clase: Trazo
+ * Descripción: Esta clase permite crear y dibujar trazos
+ * mediante una serie de puntos conectados entre sí.
  */
+
 package figuras;
 
+// Importación de las clases necesarias.
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
 /**
+ * Clase Trazo.
  *
- * @author josearielpereyra
+ * Hereda de la clase Figura y permite representar
+ * un dibujo formado por varias líneas consecutivas.
  */
-public class Trazo extends Figura{
+public class Trazo extends Figura {
+
+    // Lista que almacena todos los puntos que forman el trazo.
     ArrayList<Point> puntos = new ArrayList<>();
-    
+
+    /**
+     * Método dibujar.
+     * Se encarga de unir los puntos almacenados mediante líneas
+     * para representar el trazo en la pantalla.
+     *
+     * @param g Objeto Graphics utilizado para dibujar.
+     */
     @Override
     public void dibujar(Graphics g) {
+
+        // Recorre la lista de puntos comenzando desde el segundo.
         for (int i = 1; i < puntos.size(); i++) {
+
+            // Une el punto anterior con el punto actual
+            // creando una línea entre ambos.
             new Linea(puntos.get(i - 1), puntos.get(i)).dibujar(g);
         }
     }
 
+    /**
+     * Método actualizar.
+     * Agrega un nuevo punto a la lista cada vez que se actualiza
+     * la posición del trazo.
+     *
+     * @param puntoActual Punto que se va a agregar al trazo.
+     */
     @Override
     public void actualizar(Point puntoActual) {
+
+        // Guarda el nuevo punto en la lista.
         puntos.add(puntoActual);
     }
-    
+
 }
