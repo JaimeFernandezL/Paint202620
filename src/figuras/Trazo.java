@@ -55,5 +55,4 @@ public class Trazo extends Figura {
         // Guarda el nuevo punto en la lista.
         puntos.add(puntoActual);
     }
-
 }
