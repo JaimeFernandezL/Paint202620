@@ -5,6 +5,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import archivos.ServicioNuevoDocumento;
+
 //import javax.swing.JButton;
 //import javax.swing.ButtonGroup;
 
@@ -15,7 +17,7 @@ import java.awt.BorderLayout;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
-
+    private javax.swing.JMenuItem jMenuItem2;
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     
 
@@ -114,6 +116,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -175,6 +178,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setText("Nuevo");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
@@ -197,6 +204,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
+    if (panelDeDibujo != null) {
+        panelDeDibujo.Limpiar();
+    }
+}
     /**
      * @param args the command line arguments
      */
