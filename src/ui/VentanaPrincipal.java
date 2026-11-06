@@ -26,7 +26,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
 //    private final PanelOpciones opciones = new PanelOpciones(panelDeDibujo);
 //    private final PanelColores colores = new PanelColores(panelDeDibujo);
-//    private final BarraEstado estado = new BarraEstado();
+    private final BarraEstado estado = new BarraEstado();
     
     /**
      * Creates new form VentanaPrincipal
@@ -44,7 +44,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //        grupoHerramientas.add(herramientas.btnLapiz);
 //        grupoHerramientas.add(herramientas.btnBorrador);
         setSize(1000, 700);
-        add(panelDeDibujo, BorderLayout.CENTER);
+        ZonaLienzo.add(panelDeDibujo, BorderLayout.CENTER);
 
 //        btnTrazo.setFocusPainted(false);
 //        btnLinea.setFocusPainted(false);
@@ -110,6 +110,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         zonaEstadoColor = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         ZonaLienzo = new javax.swing.JPanel();
+        barraEstadoBottom = new ui.BarraEstado();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -164,6 +165,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         PanelCinta.getAccessibleContext().setAccessibleDescription("");
 
         ZonaLienzo.setLayout(new java.awt.BorderLayout());
+        ZonaLienzo.add(barraEstadoBottom, java.awt.BorderLayout.PAGE_END);
+
         getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("Archivo");
@@ -223,6 +226,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private ui.BarraEstado barraEstadoBottom;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
