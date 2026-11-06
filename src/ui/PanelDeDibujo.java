@@ -30,6 +30,7 @@ public class PanelDeDibujo extends JPanel {
 
     private TipoFigura tipoActual = TipoFigura.TRAZO;
     private boolean rellenarFigura = false;
+    private float opacidadActual = 1.0f;
 
     public PanelDeDibujo() {
         setBackground(Color.LIGHT_GRAY);
@@ -39,14 +40,14 @@ public class PanelDeDibujo extends JPanel {
             public void mousePressed(MouseEvent e) {
                 switch (tipoActual) {
                     case LINEA:
-                        figuraActual = new Linea(e.getPoint());
+                        figuraActual = new Linea(e.getPoint(), opacidadActual);
                         break;
                     case RECTANGULO:
-                        figuraActual = new Rectangulo(e.getPoint(), rellenarFigura);
+                        figuraActual = new Rectangulo(e.getPoint(), rellenarFigura, opacidadActual);
                         break;
                     case TRAZO:
                     default:
-                        figuraActual = new Trazo();
+                        figuraActual = new Trazo(opacidadActual);
                         break;
                 }
                 figuras.add(figuraActual);
@@ -79,6 +80,10 @@ public class PanelDeDibujo extends JPanel {
 
     public void setRellenarFigura(boolean rellenar) {
         this.rellenarFigura = rellenar;
+    }
+
+    public void setOpacidad(int opacidad) {
+        this.opacidadActual = opacidad / 100.0f;
     }
 
     public void Limpiar() {

@@ -31,6 +31,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnRectangulo.setFocusPainted(false);
         chkRelleno.setFocusPainted(false);
         btnLimpiar.setFocusPainted(false);
+
+        javax.swing.JLabel lblOpacidad = new javax.swing.JLabel("Opacidad:");
+        javax.swing.JSlider sliderOpacidad = new javax.swing.JSlider(0, 100, 100);
+        sliderOpacidad.setToolTipText("Opacidad de las figuras: 0-100 %");
+        sliderOpacidad.addChangeListener(e -> panelDeDibujo.setOpacidad(sliderOpacidad.getValue()));
+        jPanel1.add(lblOpacidad);
+        jPanel1.add(sliderOpacidad);
+
         //Agrupacion de botones
         javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
         grupoHerramientas.add(btnTrazo);

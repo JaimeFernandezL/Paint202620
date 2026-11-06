@@ -5,6 +5,7 @@
 package figuras;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
@@ -18,6 +19,11 @@ public class Rectangulo extends Figura {
     final private boolean relleno;
 
     public Rectangulo(Point puntoInicial, boolean relleno) {
+        this(puntoInicial, relleno, 1.0f);
+    }
+
+    public Rectangulo(Point puntoInicial, boolean relleno, float opacidad) {
+        super(opacidad);
         this.puntoInicial = puntoInicial;
         this.puntoFinal = puntoInicial;
         this.relleno = relleno;
@@ -26,6 +32,7 @@ public class Rectangulo extends Figura {
     @Override
     public void dibujar(Graphics g) {
         if (puntoInicial != null && puntoFinal != null) {
+            Graphics2D graphics2D = crearGraphicsConOpacidad(g);
             // Se calcula el origen y las dimensiones dinamicamente para 
             //permitir arrastrar en cualquier dirección
             int x = Math.min(puntoInicial.x, puntoFinal.x);
@@ -34,10 +41,11 @@ public class Rectangulo extends Figura {
             int alto = Math.abs(puntoInicial.y - puntoFinal.y);
 
             if (relleno) {
-                g.fillRect(x, y, ancho, alto);
+                graphics2D.fillRect(x, y, ancho, alto);
             } else {
-                g.drawRect(x, y, ancho, alto);
+                graphics2D.drawRect(x, y, ancho, alto);
             }
+            graphics2D.dispose();
         }
     }
 

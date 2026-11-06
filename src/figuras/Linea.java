@@ -5,6 +5,7 @@
 package figuras;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
@@ -24,7 +25,16 @@ public class Linea extends Figura{
         this(puntoInicial, puntoInicial);
     }
 
+    public Linea(Point puntoInicial, float opacidad) {
+        this(puntoInicial, puntoInicial, opacidad);
+    }
+
     public Linea(Point puntoInicial, Point puntoFinal) {
+        this(puntoInicial, puntoFinal, 1.0f);
+    }
+
+    public Linea(Point puntoInicial, Point puntoFinal, float opacidad) {
+        super(opacidad);
         this.puntoInicial = puntoInicial;
         this.puntoFinal = puntoFinal;
     }
@@ -32,7 +42,9 @@ public class Linea extends Figura{
     @Override
     public void dibujar(Graphics g) {
         if(puntoInicial != null && puntoFinal != null) {
-            g.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
+            Graphics2D graphics2D = crearGraphicsConOpacidad(g);
+            graphics2D.drawLine(puntoInicial.x, puntoInicial.y, puntoFinal.x, puntoFinal.y);
+            graphics2D.dispose();
         }
     }
 
