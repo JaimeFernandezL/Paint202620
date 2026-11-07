@@ -5,6 +5,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import archivos.ServicioNuevoDocumento;
+
 import javax.swing.*;
 //import javax.swing.JButton;
 
@@ -29,6 +31,8 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnParalelogramo = new JToggleButton("Paralelogramo");
 
 
+    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    private ServicioNuevoDocumento servicioNuevoDocumento;
         
 
     
@@ -41,6 +45,8 @@ public class VentanaPrincipal extends JFrame {
         initComponents();
 
         add(panelDeDibujo, BorderLayout.CENTER);
+        servicioNuevoDocumento =
+        new ServicioNuevoDocumento(panelDeDibujo);
 
         int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
         jPanel1.add(btnOvalo, posicionRelleno);
@@ -118,6 +124,7 @@ public class VentanaPrincipal extends JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -169,6 +176,10 @@ public class VentanaPrincipal extends JFrame {
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setText("Nuevo");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
@@ -194,6 +205,11 @@ public class VentanaPrincipal extends JFrame {
     private void btnTrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTrazoActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        servicioNuevoDocumento.nuevoDocumento();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,6 +248,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
