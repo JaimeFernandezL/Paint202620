@@ -1,6 +1,7 @@
 
 package ui;
 
+import figuras.*;
 import figuras.Figura;
 import figuras.Linea;
 import figuras.Trazo;
@@ -13,16 +14,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class PanelDeDibujo extends JPanel {
-
     public enum TipoFigura {
-        LINEA, TRAZO, RECTANGULO, TRIANGULO, PARALELOGRAMO
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO,PARALELOGRAMO
     }
 
-    ArrayList<Figura> figuras = new ArrayList<>();
-    Figura figuraActual;
-
+    private final ArrayList<Figura> figuras = new ArrayList<>();
+    private Figura figuraActual;
     private TipoFigura tipoActual = TipoFigura.TRAZO;
     private boolean rellenarFigura = false;
 
@@ -32,6 +32,9 @@ public class PanelDeDibujo extends JPanel {
         MouseAdapter manejador = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                if (!SwingUtilities.isLeftMouseButton(e)) {
+                    return;
+                }
                 switch (tipoActual) {
                     case LINEA:
                         figuraActual = new Linea(e.getPoint());
@@ -47,8 +50,16 @@ public class PanelDeDibujo extends JPanel {
                         break;
                     case TRAZO:
                     default:
-                        figuraActual = new Trazo();
+                        figuraActual = new Trazo(e.getPoint());
                         break;
+                    case HEXAGONO:
+                        figuraActual = new Hexagono(e.getPoint(), rellenarFigura);
+                        break;
+                    case ESTRELLA:
+                         figuraActual = new Estrella(e.getPoint(), rellenarFigura);
+                         break;
+                        
+                        
                 }
 
                 figuras.add(figuraActual);
@@ -71,22 +82,22 @@ public class PanelDeDibujo extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         for (Figura figura : figuras) {
             figura.dibujar(g);
         }
     }
 
     public void setTipoActual(TipoFigura tipo) {
-        this.tipoActual = tipo;
+        tipoActual = java.util.Objects.requireNonNull(tipo);
     }
 
     public void setRellenarFigura(boolean rellenar) {
-        this.rellenarFigura = rellenar;
+        rellenarFigura = rellenar;
     }
 
     public void Limpiar() {
         figuras.clear();
+        figuraActual = null;
         repaint();
     }
 }
