@@ -193,4 +193,3 @@ public class PanelDeDibujo extends JPanel {
         limpiarLienzo();
     }
 }
-
