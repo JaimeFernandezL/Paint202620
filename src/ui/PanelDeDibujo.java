@@ -1,9 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ui;
 
+import figuras.Figura;
+import figuras.Linea;
+import figuras.Trazo;
+import figuras.Rectangulo;
+import figuras.Triangulo;
+import figuras.Paralelogramo;
 import figuras.*;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,10 +16,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author josearielpereyra
- */
 public class PanelDeDibujo extends JPanel {
     public enum TipoFigura {
         LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO,PARALELOGRAMO
@@ -81,6 +80,7 @@ public class PanelDeDibujo extends JPanel {
                         
                         
                 }
+
                 figuras.add(figuraActual);
                 repaint();
             }
@@ -102,6 +102,7 @@ public class PanelDeDibujo extends JPanel {
                 }
             }
         };
+
         addMouseListener(manejador);
         addMouseMotionListener(manejador);
     }
@@ -128,3 +129,5 @@ public class PanelDeDibujo extends JPanel {
         repaint();
     }
 }
+
+
