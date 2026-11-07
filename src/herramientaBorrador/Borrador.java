@@ -47,7 +47,7 @@ public class Borrador {
     Point posicion;
     boolean activo = false;
     int grosor = 10;
-   // Cursor cursorInvisible;
+   
 
     public Borrador(PanelDeDibujo panel) {
         this.panel = panel;

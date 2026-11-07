@@ -5,6 +5,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import herramientaborrador.Borrador;
+
 //import javax.swing.JButton;
 
 /**
@@ -16,6 +18,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    
+    
 
     /**
      * Creates new form VentanaPrincipal
@@ -31,11 +35,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnRectangulo.setFocusPainted(false);
         chkRelleno.setFocusPainted(false);
         btnLimpiar.setFocusPainted(false);
+    
+        
         //Agrupacion de botones
         javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
         grupoHerramientas.add(btnTrazo);
         grupoHerramientas.add(btnLinea);
         grupoHerramientas.add(btnRectangulo);
+        
+        //Borrador
+        javax.swing.JToggleButton btnBorrador = new javax.swing.JToggleButton("Borrador");
+        btnBorrador.setFocusPainted(false);
+        jPanel1.add(btnBorrador);
+        grupoHerramientas.add(btnBorrador);
+
+        Borrador borrador = new Borrador(panelDeDibujo);
+        borrador.vincularBoton(btnBorrador);
+        borrador.vincularLimpiar(btnLimpiar);
 
         // Trazo seleccionado por defecto al abrir
         btnTrazo.setSelected(true);
@@ -48,6 +64,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
 
         btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
+        
+        
+        
+        
+        
+        
 
 //        JToolBar barra = new JToolBar();
 //        barra.setFloatable(false);
