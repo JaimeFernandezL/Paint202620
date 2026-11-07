@@ -29,15 +29,8 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnEstrella = new JToggleButton("Estrella");
     private final JToggleButton btnTriangulo = new JToggleButton("Triángulo");
     private final JToggleButton btnParalelogramo = new JToggleButton("Paralelogramo");
-
-
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private ServicioNuevoDocumento servicioNuevoDocumento;
-        
-
     
-
-
     /**
      * Creates new form VentanaPrincipal
      */
