@@ -260,13 +260,8 @@ public class PanelDeDibujo extends JPanel {
     
     public void setOpacidad(int opacidad) {
         this.opacidadActual = opacidad / 100.0f;
-        
         if (this.figuraActual != null) {
-            System.out.println("\nNo es nula\n");
             this.figuraActual.setOpacidad(this.opacidadActual);
-        }
-        else {
-            System.out.println("\nEs nula\n");
         }
     }
 }
