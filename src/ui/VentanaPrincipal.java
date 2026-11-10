@@ -5,13 +5,18 @@
 package ui;
 //hola
 
+import archivos.ServicioAbrirImagen;
+import archivos.ServicioGuardarImagen;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.awt.BorderLayout;
+import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
 /**
@@ -19,6 +24,7 @@ import javax.swing.JToggleButton;
  * @author josearielpereyra
  */
 public class VentanaPrincipal extends JFrame {
+
     private static final java.util.logging.Logger logger
             = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
@@ -30,25 +36,17 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnFlecha = new JToggleButton("Flecha");
     private final JToggleButton btnHexagono = new JToggleButton("Hexágono");
     private final JToggleButton btnEstrella = new JToggleButton("Estrella");
+    //
+    private ContenedorLienzo contenedorLienzo;
+    //
 
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo() {
-        @Override
-        protected void processMouseMotionEvent(java.awt.event.MouseEvent e) {
-            if (e.getID() == java.awt.event.MouseEvent.MOUSE_DRAGGED) {
-                int x = Math.max(0, Math.min(getWidth() - 1, e.getX()));
-                int y = Math.max(0, Math.min(getHeight() - 1, e.getY()));
-                e = new java.awt.event.MouseEvent(this, e.getID(), e.getWhen(),
-                        e.getModifiersEx(), x, y, e.getClickCount(),
-                        e.isPopupTrigger(), e.getButton());
-            }
-            super.processMouseMotionEvent(e);
-        }
-    };
-
+    private ServicioNuevoDocumento servicioNuevoDocumento;
     private final ButtonGroup grupoHerramientas = new ButtonGroup();
     private final PanelHerramientas herramientas = new PanelHerramientas();
 
-// TODO clases por crear, por quien le corresponda:
+    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+
+//    TODO clases por crear, por quien le corresponda:
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
 //    private final PanelColores colores = new PanelColores(panelDeDibujo);
 //    private final BarraEstado estado = new BarraEstado();
@@ -58,19 +56,21 @@ public class VentanaPrincipal extends JFrame {
     public VentanaPrincipal() {
         initComponents();
 
-        jMenuBar1.add(herramientas.btnDeshacer, 3);
-        jMenuBar1.add(herramientas.btnRehacer, 4);
-        jMenuBar1.add(herramientas.btnLimpiar, 5);
-        
+        jMenuBar1.add(herramientas.btnGuardar, 3);
+        jMenuBar1.add(herramientas.btnDeshacer, 4);
+        jMenuBar1.add(herramientas.btnRehacer, 5);
+        jMenuBar1.add(herramientas.btnLimpiar, 6);
+
         zonaHerramientas.add(herramientas, BorderLayout.CENTER);
         zonaGrosor.setLayout(new BorderLayout());          // slider de grosor a un lado del lienzo
-        zonaGrosor.setPreferredSize(new Dimension(56, 100));
+        zonaGrosor.setPreferredSize(new Dimension(110, 100));
         zonaGrosor.add(herramientas.getPanelGrosor(), BorderLayout.CENTER);
 
         grupoHerramientas.add(herramientas.btnLapiz);
         grupoHerramientas.add(herramientas.btnBorrador);
         herramientas.btnLapiz.setSelected(true);
         herramientas.conectar(panelDeDibujo);
+        panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
 
         //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
 //        jPanel1.add(btnOvalo, posicionRelleno);
@@ -81,18 +81,8 @@ public class VentanaPrincipal extends JFrame {
 //        jPanel1.add(btnFlecha, posicionRelleno + 5);
 //        jPanel1.add(btnHexagono, posicionRelleno + 6);
 //        jPanel1.add(btnEstrella, posicionRelleno + 7);
-
-
-        
-
-//        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella};
-//        for (JToggleButton boton : botones) {
-//            boton.setFocusPainted(false);
-//            grupoHerramientas.add(boton);
-//        }
-        //chkRelleno.setFocusPainted(false);
-        //btnLimpiar.setFocusPainted(false);
-        //btnTrazo.setSelected(true);
+        servicioNuevoDocumento
+                = new ServicioNuevoDocumento(panelDeDibujo);
 
         //btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
         //btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
@@ -114,7 +104,12 @@ public class VentanaPrincipal extends JFrame {
 //        zonaColores.add(colores, BorderLayout.CENTER);
 //        zonaEstado.add(estado, BorderLayout.CENTER);
         setSize(1000, 700);
-        ZonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
+        contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
+        ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
+
+        herramientas.instalarMenuArchivo(jMenu1, jMenuItem2, jMenuItem1,
+                panelDeDibujo, contenedorLienzo, this);
+
         panelDeDibujo.setBackground(java.awt.Color.WHITE);
 
 //        btnTrazo.setFocusPainted(false);
@@ -191,6 +186,7 @@ public class VentanaPrincipal extends JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         btnDeshacer1 = new javax.swing.JMenuItem();
         btnRehacer1 = new javax.swing.JMenuItem();
@@ -259,6 +255,10 @@ public class VentanaPrincipal extends JFrame {
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setText("Nuevo");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
@@ -293,6 +293,43 @@ public class VentanaPrincipal extends JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnTrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTrazoActionPerformed
+
+    private void btnDeshacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeshacer1ActionPerformed
+    }
+    
+    private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnDeshacer2ActionPerformed
+
+    private void btnRehacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer1ActionPerformed
+
+    private void btnRehacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer2ActionPerformed
+
+    private void sliderGrosorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderGrosorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sliderGrosorMouseClicked
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        servicioNuevoDocumento.nuevoDocumento();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,6 +368,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
@@ -341,11 +379,4 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel zonaHerramientas;
     // End of variables declaration//GEN-END:variables
 
-    private void btnRehacer1ActionPerformed(ActionEvent e) {
-        panelDeDibujo.rehacer();
-    }
-
-    private void btnDeshacer1ActionPerformed(ActionEvent e) {
-        panelDeDibujo.deshacer();
-    }
 }
