@@ -176,7 +176,16 @@ public class VentanaPrincipal extends JFrame {
         btnLinea = new javax.swing.JButton();
         btnTrazo = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        zonaEstadoFiguras = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
@@ -210,10 +219,10 @@ public class VentanaPrincipal extends JFrame {
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
 
         btnLapiz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lapiz.png"))); // NOI18N
-        btnLapiz.setToolTipText("");
+        btnLapiz.setToolTipText("Lapiz");
 
-        btnBorrador.setText("Borra");
-        btnBorrador.setToolTipText("");
+        btnBorrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrador.png"))); // NOI18N
+        btnBorrador.setToolTipText("Borrador");
 
         javax.swing.GroupLayout zonaHerramientasLayout = new javax.swing.GroupLayout(zonaHerramientas);
         zonaHerramientas.setLayout(zonaHerramientasLayout);
@@ -224,7 +233,7 @@ public class VentanaPrincipal extends JFrame {
                 .addComponent(btnLapiz)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBorrador)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
         zonaHerramientasLayout.setVerticalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +253,7 @@ public class VentanaPrincipal extends JFrame {
         zonaFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnLinea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/linea-diagonal_1.png"))); // NOI18N
-        btnLinea.setToolTipText("");
+        btnLinea.setToolTipText("Trazo");
 
         btnTrazo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/acento-circunflejo.png"))); // NOI18N
         btnTrazo.setToolTipText("");
@@ -252,35 +261,95 @@ public class VentanaPrincipal extends JFrame {
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rectangulo.png"))); // NOI18N
         jButton6.setToolTipText("");
 
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuadrado.png"))); // NOI18N
+        jButton7.setToolTipText("");
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/circulo.png"))); // NOI18N
+        jButton8.setToolTipText("");
+
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ovalo.png"))); // NOI18N
+        jButton9.setToolTipText("");
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/corazon.png"))); // NOI18N
+        jButton10.setToolTipText("");
+
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estrella-vacia.png"))); // NOI18N
+        jButton11.setToolTipText("");
+
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hexagono.png"))); // NOI18N
+        jButton12.setToolTipText("");
+
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pentagono.png"))); // NOI18N
+        jButton13.setToolTipText("");
+
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rombo.png"))); // NOI18N
+        jButton14.setToolTipText("");
+
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/triangulo.png"))); // NOI18N
+        jButton15.setToolTipText("");
+
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flecha-correcta.png"))); // NOI18N
+        jButton16.setToolTipText("");
+
         javax.swing.GroupLayout zonaFigurasLayout = new javax.swing.GroupLayout(zonaFiguras);
         zonaFiguras.setLayout(zonaFigurasLayout);
         zonaFigurasLayout.setHorizontalGroup(
             zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaFigurasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnLinea)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTrazo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(zonaFigurasLayout.createSequentialGroup()
+                        .addComponent(btnLinea)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTrazo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton15))
+                    .addGroup(zonaFigurasLayout.createSequentialGroup()
+                        .addComponent(jButton11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton16)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         zonaFigurasLayout.setVerticalGroup(
             zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaFigurasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton9)
+                    .addComponent(jButton8)
+                    .addComponent(jButton7)
                     .addComponent(jButton6)
                     .addComponent(btnTrazo)
-                    .addComponent(btnLinea))
-                .addContainerGap(67, Short.MAX_VALUE))
+                    .addComponent(btnLinea)
+                    .addComponent(jButton15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton11)
+                    .addComponent(jButton12)
+                    .addComponent(jButton13)
+                    .addComponent(jButton14)
+                    .addComponent(jButton10)
+                    .addComponent(jButton16))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         PanelCentral.add(zonaFiguras, java.awt.BorderLayout.CENTER);
-
-        zonaEstadoFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        zonaEstadoFiguras.setPreferredSize(new java.awt.Dimension(100, 90));
-        PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.LINE_END);
 
         PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
 
@@ -428,7 +497,17 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton btnLinea;
     private javax.swing.JMenuItem btnRehacer1;
     private javax.swing.JButton btnTrazo;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -440,7 +519,6 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
     private javax.swing.JPanel zonaEstadoColor;
-    private javax.swing.JPanel zonaEstadoFiguras;
     private javax.swing.JPanel zonaFiguras;
     private javax.swing.JPanel zonaGrosor;
     private javax.swing.JPanel zonaHerramientas;
