@@ -44,8 +44,11 @@ public class PanelHerramientas extends JPanel {
 
     private static final int TAM_BOTON = 36;
 
-    public final JToggleButton btnLapiz = new JToggleButton(new IconoLapiz());
-    public final JToggleButton btnBorrador = new JToggleButton(new IconoBorrador());
+//    public final JToggleButton btnLapiz = new JToggleButton(new IconoLapiz());
+//    public final JToggleButton btnBorrador = new JToggleButton(new IconoBorrador());
+    public final JToggleButton btnLapiz = new JToggleButton();
+    public final JToggleButton btnBorrador = new JToggleButton();
+
     public final JButton btnGuardar = new JButton(new IconoGuardar());
     public final JButton btnLimpiar = new JButton(new IconoLimpiar());
     public final JButton btnDeshacer = new JButton(new IconoDeshacer(false));
@@ -80,8 +83,7 @@ public class PanelHerramientas extends JPanel {
         }
 
         JPanel filaIconos = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
-        filaIconos.add(btnLapiz);
-        filaIconos.add(btnBorrador);
+
         filaIconos.add(btnLimpiar);
         JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
         separador.setPreferredSize(new Dimension(6, 28));
@@ -165,6 +167,21 @@ public class PanelHerramientas extends JPanel {
         borrador.setGrosor(sliderGrosor.getValue());
         sliderGrosor.addChangeListener(e
                 -> borrador.setGrosor(sliderGrosor.getValue()));
+
+    }
+    // Activa la función del lápiz
+
+    public void activarLapiz() {
+        if (!btnLapiz.isSelected()) {
+            btnLapiz.doClick();
+        }
+    }
+
+// Activa la función del borrador
+    public void activarBorrador() {
+        if (!btnBorrador.isSelected()) {
+            btnBorrador.doClick();
+        }
     }
 
     private static void configurar(javax.swing.AbstractButton b, String tooltip) {
@@ -194,7 +211,7 @@ public class PanelHerramientas extends JPanel {
                 // TODO Equipo 1/4: mostrar img en el lienzo (falta un método en PanelDeDibujo)
             }
         });
-        
+
         // Guardar
         JMenuItem itemGuardar = new JMenuItem("Guardar...");
         itemGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));

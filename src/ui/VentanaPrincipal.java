@@ -46,10 +46,6 @@ public class VentanaPrincipal extends JFrame {
 
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
 
-//    TODO clases por crear, por quien le corresponda:
-//    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
-//    private final PanelColores colores = new PanelColores(panelDeDibujo);
-//    private final BarraEstado estado = new BarraEstado();
     /**
      * Creates new form VentanaPrincipal
      */
@@ -66,9 +62,6 @@ public class VentanaPrincipal extends JFrame {
         zonaGrosor.setPreferredSize(new Dimension(110, 100));
         zonaGrosor.add(herramientas.getPanelGrosor(), BorderLayout.CENTER);
 
-        grupoHerramientas.add(herramientas.btnLapiz);
-        grupoHerramientas.add(herramientas.btnBorrador);
-        herramientas.btnLapiz.setSelected(true);
         herramientas.conectar(panelDeDibujo);
         panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
 
@@ -83,6 +76,9 @@ public class VentanaPrincipal extends JFrame {
 //        jPanel1.add(btnEstrella, posicionRelleno + 7);
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
+
+//        nuevoBtnLapiz.addActionListener(e -> herramientas.activarLapiz());
+//        nuevoBtnBorrador.addActionListener(e -> herramientas.activarBorrador());
 
         //btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
         //btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
@@ -303,7 +299,7 @@ public class VentanaPrincipal extends JFrame {
             panelDeDibujo.deshacer();// TODO add your handling code here:
     }//GEN-LAST:event_btnDeshacer1ActionPerformed
     }
-    
+
     private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
         if (panelDeDibujo != null) {
             panelDeDibujo.deshacer();// TODO add your handling code here:
