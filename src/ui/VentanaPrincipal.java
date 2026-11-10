@@ -5,6 +5,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import herramientaborrador.Borrador;
 import archivos.ServicioNuevoDocumento;
 
 import javax.swing.*;
@@ -15,9 +16,8 @@ import javax.swing.*;
  * @author josearielpereyra
  */
 public class VentanaPrincipal extends JFrame {
-    private static final java.util.logging.Logger logger
-            = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
-
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
     private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
@@ -63,6 +63,24 @@ public class VentanaPrincipal extends JFrame {
         }
         chkRelleno.setFocusPainted(false);
         btnLimpiar.setFocusPainted(false);
+      
+        //Agrupacion de botones
+        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
+        grupoHerramientas.add(btnTrazo);
+        grupoHerramientas.add(btnLinea);
+        grupoHerramientas.add(btnRectangulo);
+        
+        //Borrador
+        javax.swing.JToggleButton btnBorrador = new javax.swing.JToggleButton("Borrador");
+        btnBorrador.setFocusPainted(false);
+        jPanel1.add(btnBorrador);
+        grupoHerramientas.add(btnBorrador);
+
+        Borrador borrador = new Borrador(panelDeDibujo);
+        borrador.vincularBoton(btnBorrador);
+        borrador.vincularLimpiar(btnLimpiar);
+
+        // Trazo seleccionado por defecto al abrir
         btnTrazo.setSelected(true);
 
         btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
@@ -83,6 +101,8 @@ public class VentanaPrincipal extends JFrame {
         btnLimpiar.setSelected(false);
         });
 
+        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
+        
         setSize(1000, 500);
         setLocationRelativeTo(null);
     }
