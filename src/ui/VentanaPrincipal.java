@@ -72,6 +72,14 @@ public class VentanaPrincipal extends JFrame {
         Borrador borrador = new Borrador(panelDeDibujo);
         borrador.vincularBoton(btnBorrador);
         borrador.vincularLimpiar(btnLimpiar);
+        
+        // Opacidad
+        javax.swing.JLabel lblOpacidad = new javax.swing.JLabel("Opacidad:");
+        javax.swing.JSlider sliderOpacidad = new javax.swing.JSlider(0, 100, 100);
+        sliderOpacidad.setToolTipText("Opacidad de las figuras: 0-100 %");
+        sliderOpacidad.addChangeListener(e -> panelDeDibujo.setOpacidad(sliderOpacidad.getValue()));
+        jPanel1.add(lblOpacidad);
+        jPanel1.add(sliderOpacidad);
 
         // Trazo seleccionado por defecto al abrir
         btnTrazo.setSelected(true);
@@ -95,6 +103,11 @@ public class VentanaPrincipal extends JFrame {
         });
 
         btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
+        
+        sliderGrosor.addChangeListener(e -> {
+            int grosorSeleccionado = sliderGrosor.getValue();
+            panelDeDibujo.setGrosorActual(grosorSeleccionado);
+        });
         
         setSize(1000, 500);
         setLocationRelativeTo(null);
@@ -133,6 +146,8 @@ public class VentanaPrincipal extends JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jPanel2 = new javax.swing.JPanel();
+        sliderGrosor = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin Nombre - Paint");
@@ -176,6 +191,23 @@ public class VentanaPrincipal extends JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        sliderGrosor.setMaximum(50);
+        sliderGrosor.setMinimum(1);
+        sliderGrosor.setOrientation(javax.swing.JSlider.VERTICAL);
+        sliderGrosor.setToolTipText("");
+        sliderGrosor.setValue(3);
+        sliderGrosor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sliderGrosorMouseClicked(evt);
+            }
+        });
+        jPanel2.add(sliderGrosor, java.awt.BorderLayout.LINE_START);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setText("Salir");
@@ -211,6 +243,34 @@ public class VentanaPrincipal extends JFrame {
     private void btnTrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTrazoActionPerformed
+
+    private void btnDeshacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeshacer1ActionPerformed
+    }
+    
+    private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnDeshacer2ActionPerformed
+
+    private void btnRehacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer1ActionPerformed
+
+    private void btnRehacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer2ActionPerformed
+
+    private void sliderGrosorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderGrosorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sliderGrosorMouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -267,5 +327,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSlider sliderGrosor;
     // End of variables declaration//GEN-END:variables
 }
