@@ -9,6 +9,7 @@ package figuras;
 
 // Importación de las clases necesarias.
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -22,7 +23,17 @@ public class Trazo extends Figura {
 
     // Lista que almacena todos los puntos que forman el trazo.
     ArrayList<Point> puntos = new ArrayList<>();
+    // private final ArrayList<Point> puntos = new ArrayList<>();
+    
+    public Trazo() {
+        super();
+    }
 
+    public Trazo(Point puntoInicial) {
+        super(puntoInicial, false);
+        puntos.add(new Point(puntoInicial));
+    }
+    
     /**
      * Método dibujar.
      * Se encarga de unir los puntos almacenados mediante líneas
@@ -30,6 +41,7 @@ public class Trazo extends Figura {
      *
      * @param g Objeto Graphics utilizado para dibujar.
      */
+    /*
     @Override
     public void dibujar(Graphics g) {
 
@@ -39,23 +51,9 @@ public class Trazo extends Figura {
             // Une el punto anterior con el punto actual
             // creando una línea entre ambos.
             new Linea(puntos.get(i - 1), puntos.get(i)).dibujar(g);
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.util.ArrayList;
-
-public class Trazo extends Figura {
-    private final ArrayList<Point> puntos = new ArrayList<>();
-
-    public Trazo() {
-        super();
+        }
     }
-
-    public Trazo(Point puntoInicial) {
-        super(puntoInicial, false);
-        puntos.add(new Point(puntoInicial));
-    }
-
+    */
     @Override
     public void dibujar(Graphics g) {
         Graphics2D copia = prepararGraficos(g);
@@ -68,8 +66,8 @@ public class Trazo extends Figura {
         } finally {
             copia.dispose();
         }
-    }
-
+    }    
+    
     /**
      * Método actualizar.
      * Agrega un nuevo punto a la lista cada vez que se actualiza
@@ -77,13 +75,17 @@ public class Trazo extends Figura {
      *
      * @param puntoActual Punto que se va a agregar al trazo.
      */
+    /*
     @Override
     public void actualizar(Point puntoActual) {
-
+        
         // Guarda el nuevo punto en la lista.
         puntos.add(puntoActual);
     }
-}
+    */
+    
+    @Override
+    public void actualizar(Point puntoActual) {
         super.actualizar(puntoActual);
         if (puntos.isEmpty()) {
             puntoInicial = new Point(puntoActual);

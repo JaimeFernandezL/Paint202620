@@ -52,9 +52,8 @@ public class VentanaPrincipal extends JFrame {
         jPanel1.add(btnEstrella, posicionRelleno + 7);
         jPanel1.add(btnTriangulo, posicionRelleno + 8);
         jPanel1.add(btnParalelogramo, posicionRelleno + 9);
-
         
-
+        //Agrupacion de botones
         ButtonGroup grupoHerramientas = new ButtonGroup();
         JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella, btnTriangulo, btnParalelogramo};
         for (JToggleButton boton : botones) {
@@ -63,12 +62,6 @@ public class VentanaPrincipal extends JFrame {
         }
         chkRelleno.setFocusPainted(false);
         btnLimpiar.setFocusPainted(false);
-      
-        //Agrupacion de botones
-        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
-        grupoHerramientas.add(btnTrazo);
-        grupoHerramientas.add(btnLinea);
-        grupoHerramientas.add(btnRectangulo);
         
         //Borrador
         javax.swing.JToggleButton btnBorrador = new javax.swing.JToggleButton("Borrador");

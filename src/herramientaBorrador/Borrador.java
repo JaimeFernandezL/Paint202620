@@ -251,18 +251,17 @@ public class Borrador {
             g2.setColor(Color.BLACK);
             g2.drawRect(posicion.x, posicion.y, 10, 10);
             
-//            Codigo para icono de borrador
-//            int r = grosor / 2;
-//            int x = posicion.x + r;
-//            int y = posicion.y - r - 14;
-//            g2.setColor(new Color(240, 140, 150));
-//            g2.fillRect(x, y, 20, 12);
-//            g2.setColor(new Color(90, 130, 200));
-//            g2.fillRect(x, y, 7, 12);
-//            g2.setColor(Color.DARK_GRAY);
-//            g2.drawRect(x, y, 20, 12);
-
-
+            // Codigo para icono de borrador
+            // int r = grosor / 2;
+            // int x = posicion.x + r;
+            // int y = posicion.y - r - 14;
+            // g2.setColor(new Color(240, 140, 150));
+            // g2.fillRect(x, y, 20, 12);
+            // g2.setColor(new Color(90, 130, 200));
+            // g2.fillRect(x, y, 7, 12);
+            // g2.setColor(Color.DARK_GRAY);
+            // g2.drawRect(x, y, 20, 12);
+            
             g2.setColor(colorAntes);
             g2.setStroke(strokeAntes);
         }

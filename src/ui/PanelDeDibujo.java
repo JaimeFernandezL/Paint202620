@@ -42,9 +42,7 @@ public class PanelDeDibujo extends JPanel {
      * Enumeración que define los tipos de figuras disponibles para dibujar.
      */
     public enum TipoFigura {
-        LINEA,
-        TRAZO,
-        RECTANGULO
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO,PARALELOGRAMO
     }
 
     // Lista dinámica que almacena todas las figuras dibujadas en el lienzo
@@ -52,20 +50,13 @@ public class PanelDeDibujo extends JPanel {
     
     // Referencia a la figura que se está creando o arrastrando actualmente
     private Figura figuraActual;
-
-    // Estado actual de la herramienta seleccionada (por defecto: TRAZO libre)
-public class PanelDeDibujo extends JPanel {
-    public enum TipoFigura {
-        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO,PARALELOGRAMO
-    }
-
-    private final ArrayList<Figura> figuras = new ArrayList<>();
-    private Figura figuraActual;
-    private TipoFigura tipoActual = TipoFigura.TRAZO;
     
     // Bandera para determinar si la figura geométrica tendrá relleno
     private boolean rellenarFigura = false;
 
+    // Estado actual de la herramienta seleccionada (por defecto: TRAZO libre)
+    private TipoFigura tipoActual = TipoFigura.TRAZO;
+    
     /**
      * Constructor del PanelDeDibujo.
      * Configura el fondo del lienzo y registra los oyentes de eventos del ratón.
@@ -84,23 +75,15 @@ public class PanelDeDibujo extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 
-                // Según el tipo de figura seleccionado, instanciamos el objeto correspondiente
-            @Override
-            public void mousePressed(MouseEvent e) {
                 if (!SwingUtilities.isLeftMouseButton(e)) {
                     return;
                 }
+                // Según el tipo de figura seleccionado, instanciamos el objeto correspondiente
                 switch (tipoActual) {
-                    
                     case LINEA:
-                        
-                        // Instancia una nueva Línea iniciando en el punto del clic
                         figuraActual = new Linea(e.getPoint());
                         break;
-                    
                     case RECTANGULO:
-                        
-                        // Instancia un nuevo Rectángulo iniciando en el punto del clic y su opción de relleno
                         figuraActual = new Rectangulo(e.getPoint(), rellenarFigura);
                         break;
                     case OVALO:
@@ -124,23 +107,19 @@ public class PanelDeDibujo extends JPanel {
                     case TRIANGULO:
                         figuraActual = new Triangulo(e.getPoint(), rellenarFigura);
                          break;                           
-                     case PARALELOGRAMO:
+                    case PARALELOGRAMO:
                          figuraActual = new Paralelogramo(e.getPoint(), rellenarFigura);
-      
-                          break; 
-
-                     case TRAZO:
-                    default:
-                        figuraActual = new Trazo(e.getPoint());
-                        break;
+                         break;
                     case HEXAGONO:
                         figuraActual = new Hexagono(e.getPoint(), rellenarFigura);
                         break;
                     case ESTRELLA:
                          figuraActual = new Estrella(e.getPoint(), rellenarFigura);
                          break;
-                        
-                        
+                    case TRAZO:
+                    default:
+                        figuraActual = new Trazo(e.getPoint());
+                        break;                        
                 }
                 
                 // Agregamos la nueva figura a la lista dinámica del lienzo
@@ -158,21 +137,12 @@ public class PanelDeDibujo extends JPanel {
                 
                 // Si existe una figura en creación, actualizamos sus coordenadas con la posición actual del ratón
                 if (figuraActual != null) {
-                    
                     figuraActual.actualizar(e.getPoint());
                     // Solicitamos el redibujado inmediato para mostrar la figura en tiempo real
                     repaint();
                 }
             }
-        };
-
-        // Registramos el manejador para los eventos del ratón (clics)
-                if (figuraActual != null) {
-                    figuraActual.actualizar(e.getPoint());
-                    repaint();
-                }
-            }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e) && figuraActual != null) {
@@ -184,7 +154,6 @@ public class PanelDeDibujo extends JPanel {
         };
 
         addMouseListener(manejador);
-        
         // Registramos el manejador para los movimientos del ratón con arrastre
         addMouseMotionListener(manejador);
     }
