@@ -63,7 +63,7 @@ public class VentanaPrincipal extends JFrame {
 
         zonaHerramientas.add(herramientas, BorderLayout.CENTER);
         zonaGrosor.setLayout(new BorderLayout());          // slider de grosor a un lado del lienzo
-        zonaGrosor.setPreferredSize(new Dimension(56, 100));
+        zonaGrosor.setPreferredSize(new Dimension(110, 100));
         zonaGrosor.add(herramientas.getPanelGrosor(), BorderLayout.CENTER);
 
         grupoHerramientas.add(herramientas.btnLapiz);
@@ -298,6 +298,34 @@ public class VentanaPrincipal extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTrazoActionPerformed
 
+    private void btnDeshacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeshacer1ActionPerformed
+    }
+    
+    private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnDeshacer2ActionPerformed
+
+    private void btnRehacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer1ActionPerformed
+
+    private void btnRehacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer2ActionPerformed
+
+    private void sliderGrosorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderGrosorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sliderGrosorMouseClicked
+
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         servicioNuevoDocumento.nuevoDocumento();
@@ -351,11 +379,4 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel zonaHerramientas;
     // End of variables declaration//GEN-END:variables
 
-    private void btnRehacer1ActionPerformed(ActionEvent e) {
-        panelDeDibujo.rehacer();
-    }
-
-    private void btnDeshacer1ActionPerformed(ActionEvent e) {
-        panelDeDibujo.deshacer();
-    }
 }

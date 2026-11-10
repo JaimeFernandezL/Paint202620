@@ -31,6 +31,8 @@ import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import java.awt.GridLayout;
+import herramientaborrador.Borrador;
 
 /**
  * Grupo "Herramientas" al estilo del Paint de Windows: iconos arriba y la
@@ -55,6 +57,10 @@ public class PanelHerramientas extends JPanel {
     public final JSlider sliderGrosor = new JSlider(JSlider.VERTICAL, 1, 50, 3);
     public final JLabel lblGrosor = new JLabel("3", SwingConstants.CENTER);
     private final JPanel panelGrosor = new JPanel(new BorderLayout(0, 4));
+
+    public final JSlider sliderOpacidad = new JSlider(JSlider.VERTICAL, 1, 100, 100);
+    public final JLabel lblOpacidad = new JLabel("100%", SwingConstants.CENTER);
+    private Borrador borrador;
 
     public PanelHerramientas() {
         setLayout(new BorderLayout(0, 2));
@@ -99,14 +105,24 @@ public class PanelHerramientas extends JPanel {
 
     private void armarPanelGrosor() {
         sliderGrosor.setToolTipText("Grosor del trazo");
+        sliderOpacidad.setToolTipText("Opacidad");
+        panelGrosor.setLayout(new GridLayout(1, 2, 4, 0));
         panelGrosor.setBorder(BorderFactory.createEmptyBorder(6, 4, 6, 4));
-        panelGrosor.add(new JLabel("Grosor", SwingConstants.CENTER), BorderLayout.NORTH);
-        panelGrosor.add(sliderGrosor, BorderLayout.CENTER);
-        panelGrosor.add(lblGrosor, BorderLayout.SOUTH);
+        panelGrosor.add(columnaSlider("Grosor", sliderGrosor, lblGrosor));
+        panelGrosor.add(columnaSlider("Opac.", sliderOpacidad, lblOpacidad));
 
-        // Solo actualiza el número que se ve junto al slider.
         sliderGrosor.addChangeListener(e
                 -> lblGrosor.setText(String.valueOf(sliderGrosor.getValue())));
+        sliderOpacidad.addChangeListener(e
+                -> lblOpacidad.setText(sliderOpacidad.getValue() + "%"));
+    }
+
+    private static JPanel columnaSlider(String titulo, JSlider slider, JLabel valor) {
+        JPanel p = new JPanel(new BorderLayout(0, 4));
+        p.add(new JLabel(titulo, SwingConstants.CENTER), BorderLayout.NORTH);
+        p.add(slider, BorderLayout.CENTER);
+        p.add(valor, BorderLayout.SOUTH);
+        return p;
     }
 
     /**
@@ -136,10 +152,19 @@ public class PanelHerramientas extends JPanel {
             lblGrosor.setText(String.valueOf(grosor));
         });
         lienzo.setGrosorActual(sliderGrosor.getValue());
-        
-        // TODO Equipo 1: el borrador aún no existe en PanelDeDibujo.
-        btnBorrador.setEnabled(false);
-        btnBorrador.setToolTipText("Borrador (pendiente del Equipo 1)");
+
+        // Opacidad (0-100 %)
+        sliderOpacidad.addChangeListener(e
+                -> lienzo.setOpacidad(sliderOpacidad.getValue()));
+        lienzo.setOpacidad(sliderOpacidad.getValue());
+
+// Borrador
+        borrador = new Borrador(lienzo);
+        borrador.vincularBoton(btnBorrador);      // se activa al seleccionar el botón
+        borrador.vincularLimpiar(btnLimpiar);     // Limpiar también borra sus marcas
+        borrador.setGrosor(sliderGrosor.getValue());
+        sliderGrosor.addChangeListener(e
+                -> borrador.setGrosor(sliderGrosor.getValue()));
     }
 
     private static void configurar(javax.swing.AbstractButton b, String tooltip) {
@@ -169,9 +194,7 @@ public class PanelHerramientas extends JPanel {
                 // TODO Equipo 1/4: mostrar img en el lienzo (falta un método en PanelDeDibujo)
             }
         });
-        itemAbrir.setEnabled(false);   // quitar esta línea cuando exista el método de arriba
-        itemAbrir.setToolTipText("Pendiente: el lienzo aún no puede mostrar imágenes");
-
+        
         // Guardar
         JMenuItem itemGuardar = new JMenuItem("Guardar...");
         itemGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
