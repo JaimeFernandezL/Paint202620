@@ -10,6 +10,9 @@ import figuras.Trazo;
 import figuras.Rectangulo;
 
 // Importaciones para manejo de gráficos, colores y renderizado en Swing
+import figuras.Triangulo;
+import figuras.Paralelogramo;
+import figuras.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 
 // Importación del componente base JPanel de Swing
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * Clase PanelDeDibujo que extiende de JPanel.
@@ -50,6 +54,13 @@ public class PanelDeDibujo extends JPanel {
     private Figura figuraActual;
 
     // Estado actual de la herramienta seleccionada (por defecto: TRAZO libre)
+public class PanelDeDibujo extends JPanel {
+    public enum TipoFigura {
+        LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO,PARALELOGRAMO
+    }
+
+    private final ArrayList<Figura> figuras = new ArrayList<>();
+    private Figura figuraActual;
     private TipoFigura tipoActual = TipoFigura.TRAZO;
     
     // Bandera para determinar si la figura geométrica tendrá relleno
@@ -74,6 +85,11 @@ public class PanelDeDibujo extends JPanel {
             public void mousePressed(MouseEvent e) {
                 
                 // Según el tipo de figura seleccionado, instanciamos el objeto correspondiente
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (!SwingUtilities.isLeftMouseButton(e)) {
+                    return;
+                }
                 switch (tipoActual) {
                     
                     case LINEA:
@@ -87,14 +103,44 @@ public class PanelDeDibujo extends JPanel {
                         // Instancia un nuevo Rectángulo iniciando en el punto del clic y su opción de relleno
                         figuraActual = new Rectangulo(e.getPoint(), rellenarFigura);
                         break;
-                    
-                    case TRAZO:
-                    
-                    default:
-                        
-                        // Instancia un nuevo Trazo libre
-                        figuraActual = new Trazo();
+                    case OVALO:
+                        figuraActual = new Ovalo(e.getPoint(), rellenarFigura);
                         break;
+                    case CIRCULO:
+                        figuraActual = new Circulo(e.getPoint(), rellenarFigura);
+                        break;
+                    case ROMBO:
+                        figuraActual = new Rombo(e.getPoint(), rellenarFigura);
+                        break;
+                    case PENTAGONO:
+                        figuraActual = new Pentagono(e.getPoint(), rellenarFigura);
+                        break;
+                    case CORAZON:
+                        figuraActual = new Corazon(e.getPoint(), rellenarFigura);
+                        break;
+                    case FLECHA:
+                        figuraActual = new Flecha(e.getPoint(), rellenarFigura);
+                         break; 
+                    case TRIANGULO:
+                        figuraActual = new Triangulo(e.getPoint(), rellenarFigura);
+                         break;                           
+                     case PARALELOGRAMO:
+                         figuraActual = new Paralelogramo(e.getPoint(), rellenarFigura);
+      
+                          break; 
+
+                     case TRAZO:
+                    default:
+                        figuraActual = new Trazo(e.getPoint());
+                        break;
+                    case HEXAGONO:
+                        figuraActual = new Hexagono(e.getPoint(), rellenarFigura);
+                        break;
+                    case ESTRELLA:
+                         figuraActual = new Estrella(e.getPoint(), rellenarFigura);
+                         break;
+                        
+                        
                 }
                 
                 // Agregamos la nueva figura a la lista dinámica del lienzo
@@ -121,6 +167,22 @@ public class PanelDeDibujo extends JPanel {
         };
 
         // Registramos el manejador para los eventos del ratón (clics)
+                if (figuraActual != null) {
+                    figuraActual.actualizar(e.getPoint());
+                    repaint();
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e) && figuraActual != null) {
+                    figuraActual.actualizar(e.getPoint());
+                    figuraActual = null;
+                    repaint();
+                }
+            }
+        };
+
         addMouseListener(manejador);
         
         // Registramos el manejador para los movimientos del ratón con arrastre
@@ -156,7 +218,7 @@ public class PanelDeDibujo extends JPanel {
      * @param tipo TipoFigura seleccionado.
      */
     public void setTipoActual(TipoFigura tipo) {
-        this.tipoActual = tipo;
+        tipoActual = java.util.Objects.requireNonNull(tipo);
     }
 
     /**
@@ -165,7 +227,7 @@ public class PanelDeDibujo extends JPanel {
      * @param rellenar boolean true para rellenar, false para solo borde.
      */
     public void setRellenarFigura(boolean rellenar) {
-        this.rellenarFigura = rellenar;
+        rellenarFigura = rellenar;
     }
 
     /**
@@ -193,3 +255,5 @@ public class PanelDeDibujo extends JPanel {
         limpiarLienzo();
     }
 }
+
+
