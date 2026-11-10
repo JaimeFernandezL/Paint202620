@@ -105,6 +105,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         zonaHerramientas = new javax.swing.JPanel();
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         zonaEstadoFiguras = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
@@ -138,6 +139,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
         zonaFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/linea-diagonal_1.png"))); // NOI18N
+        zonaFiguras.add(jButton1);
+
         PanelCentral.add(zonaFiguras, java.awt.BorderLayout.CENTER);
 
         zonaEstadoFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -223,6 +228,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
