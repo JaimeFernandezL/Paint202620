@@ -103,9 +103,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         PanelCinta = new javax.swing.JPanel();
         zonaHerramientas = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         zonaEstadoFiguras = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
@@ -132,7 +136,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         zonaHerramientas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
-        zonaHerramientas.setLayout(new java.awt.BorderLayout());
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lapiz.png"))); // NOI18N
+        jButton2.setToolTipText("");
+
+        jButton3.setText("Borra");
+        jButton3.setToolTipText("");
+
+        javax.swing.GroupLayout zonaHerramientasLayout = new javax.swing.GroupLayout(zonaHerramientas);
+        zonaHerramientas.setLayout(zonaHerramientasLayout);
+        zonaHerramientasLayout.setHorizontalGroup(
+            zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaHerramientasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(142, Short.MAX_VALUE))
+        );
+        zonaHerramientasLayout.setVerticalGroup(
+            zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaHerramientasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
+
         PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
 
         PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -140,8 +171,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         zonaFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/linea-diagonal_1.png"))); // NOI18N
-        zonaFiguras.add(jButton1);
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/linea-diagonal_1.png"))); // NOI18N
+        jButton4.setToolTipText("");
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/acento-circunflejo.png"))); // NOI18N
+        jButton5.setToolTipText("");
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rectangulo.png"))); // NOI18N
+        jButton6.setToolTipText("");
+
+        javax.swing.GroupLayout zonaFigurasLayout = new javax.swing.GroupLayout(zonaFiguras);
+        zonaFiguras.setLayout(zonaFigurasLayout);
+        zonaFigurasLayout.setHorizontalGroup(
+            zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaFigurasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+        zonaFigurasLayout.setVerticalGroup(
+            zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaFigurasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton6)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
 
         PanelCentral.add(zonaFiguras, java.awt.BorderLayout.CENTER);
 
@@ -228,7 +289,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
