@@ -66,7 +66,8 @@ public class Trazo extends Figura {
                 //Point actual = puntos.get(i);
                 //copia.drawLine(anterior.x, anterior.y, actual.x, actual.y);
                 Linea linea = new Linea(puntos.get(i - 1), puntos.get(i));
-                linea.setGrosor(this.grosor); 
+                linea.setGrosor(this.grosor);
+                linea.setOpacidad(this.opacidad);
                 linea.dibujar(copia);
             }
         } finally {

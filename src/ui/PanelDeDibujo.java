@@ -123,9 +123,11 @@ public class PanelDeDibujo extends JPanel {
                          figuraActual = new Estrella(e.getPoint(), rellenarFigura);
                          break;
                     case TRAZO:
+                        figuraActual = new Trazo(e.getPoint());
+                        break;
                     default:
                         figuraActual = new Trazo(e.getPoint());
-                        break;                        
+                        break;
                 }
                 
                 figuraActual.setGrosor(grosorActual);
@@ -260,9 +262,6 @@ public class PanelDeDibujo extends JPanel {
     
     public void setOpacidad(int opacidad) {
         this.opacidadActual = opacidad / 100.0f;
-        if (this.figuraActual != null) {
-            this.figuraActual.setOpacidad(this.opacidadActual);
-        }
     }
 }
 
