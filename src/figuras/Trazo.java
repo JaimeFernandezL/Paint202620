@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.awt.BasicStroke;
 
 /**
  * Clase Trazo.
@@ -57,11 +58,16 @@ public class Trazo extends Figura {
     @Override
     public void dibujar(Graphics g) {
         Graphics2D copia = prepararGraficos(g);
+        copia.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        
         try {
             for (int i = 1; i < puntos.size(); i++) {
-                Point anterior = puntos.get(i - 1);
-                Point actual = puntos.get(i);
-                copia.drawLine(anterior.x, anterior.y, actual.x, actual.y);
+                //Point anterior = puntos.get(i - 1);
+                //Point actual = puntos.get(i);
+                //copia.drawLine(anterior.x, anterior.y, actual.x, actual.y);
+                Linea linea = new Linea(puntos.get(i - 1), puntos.get(i));
+                linea.setGrosor(this.grosor); 
+                linea.dibujar(copia);
             }
         } finally {
             copia.dispose();

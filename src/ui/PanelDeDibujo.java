@@ -57,6 +57,12 @@ public class PanelDeDibujo extends JPanel {
     // Estado actual de la herramienta seleccionada (por defecto: TRAZO libre)
     private TipoFigura tipoActual = TipoFigura.TRAZO;
     
+    ArrayList<Figura> figurasRehacer = new ArrayList<>();
+
+    private int grosorActual = 3;
+    
+    private float opacidadActual = 1.0f;
+    
     /**
      * Constructor del PanelDeDibujo.
      * Configura el fondo del lienzo y registra los oyentes de eventos del ratón.
@@ -121,6 +127,11 @@ public class PanelDeDibujo extends JPanel {
                         figuraActual = new Trazo(e.getPoint());
                         break;                        
                 }
+                
+                figuraActual.setGrosor(grosorActual);
+                figuraActual.setOpacidad(opacidadActual);
+                figuras.add(figuraActual);
+                figurasRehacer.clear();
                 
                 // Agregamos la nueva figura a la lista dinámica del lienzo
                 figuras.add(figuraActual);
@@ -209,6 +220,8 @@ public class PanelDeDibujo extends JPanel {
         // Vacía la lista dinámica que contiene todas las figuras y trazos dibujados
         this.figuras.clear();
         
+        this.figurasRehacer.clear();
+        
         // Reinicia la referencia de la figura actual para evitar incongruencias
         this.figuraActual = null;
         
@@ -222,6 +235,39 @@ public class PanelDeDibujo extends JPanel {
      */
     public void Limpiar() {
         limpiarLienzo();
+    }
+    
+    public void setGrosorActual(int grosor) {
+        this.grosorActual = grosor;
+    }
+    
+    public void deshacer() {
+        if (figuras != null && !figuras.isEmpty()) {
+            //figuras.remove(figuras.size()-1);
+            Figura ultimaFigura = figuras.remove(figuras.size() - 1);
+            figurasRehacer.add(ultimaFigura);
+            repaint();
+        }
+    }
+
+    public void rehacer() {
+        if (figurasRehacer != null && !figurasRehacer.isEmpty()) {
+            Figura figuraARestaurar = figurasRehacer.remove(figurasRehacer.size() - 1);
+            figuras.add(figuraARestaurar);
+            repaint();
+        }
+    }
+    
+    public void setOpacidad(int opacidad) {
+        this.opacidadActual = opacidad / 100.0f;
+        
+        if (this.figuraActual != null) {
+            System.out.println("\nNo es nula\n");
+            this.figuraActual.setOpacidad(this.opacidadActual);
+        }
+        else {
+            System.out.println("\nEs nula\n");
+        }
     }
 }
 
