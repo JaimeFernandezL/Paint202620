@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.BasicStroke;
 
 public abstract class FiguraRellenable extends Figura {
     protected FiguraRellenable(Point puntoInicial, boolean relleno) {
@@ -23,6 +24,7 @@ public abstract class FiguraRellenable extends Figura {
     @Override
     public final void dibujar(Graphics g) {
         Graphics2D copia = prepararGraficos(g);
+        copia.setStroke(new BasicStroke(grosor, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         try {
             Shape forma = crearForma();
             if (relleno) {

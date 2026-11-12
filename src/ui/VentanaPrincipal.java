@@ -3,21 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
+//hola
 
+import archivos.ServicioAbrirImagen;
+import archivos.ServicioGuardarImagen;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.awt.BorderLayout;
+import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
-//import javax.swing.JButton;
-//import javax.swing.ButtonGroup;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.ButtonGroup;
+import javax.swing.JToggleButton;
 
 /**
  *
  * @author josearielpereyra
  */
 public class VentanaPrincipal extends JFrame {
+
     private static final java.util.logging.Logger logger
             = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
+
   
-    private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    //private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
     private final JToggleButton btnRombo = new JToggleButton("Rombo");
@@ -26,10 +38,15 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnFlecha = new JToggleButton("Flecha");
     private final JToggleButton btnHexagono = new JToggleButton("Hexágono");
     private final JToggleButton btnEstrella = new JToggleButton("Estrella");
-    private final JToggleButton btnTriangulo = new JToggleButton("Triángulo");
-    private final JToggleButton btnParalelogramo = new JToggleButton("Paralelogramo");
+    //
+    private ContenedorLienzo contenedorLienzo;
+    //
 
+    private ServicioNuevoDocumento servicioNuevoDocumento;
+    private final ButtonGroup grupoHerramientas = new ButtonGroup();
+    private final PanelHerramientas herramientas = new PanelHerramientas();
 
+    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
         
 
     
@@ -38,7 +55,7 @@ public class VentanaPrincipal extends JFrame {
     
 
     // TODO clases por crear, por quien le corresponda:
-    private final ButtonGroup grupoHerramientas = new ButtonGroup();
+    //private final ButtonGroup grupoHerramientas = new ButtonGroup();
     
 //    private final PanelHerramientas herramientas = new PanelHerramientas();
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
@@ -49,12 +66,52 @@ public class VentanaPrincipal extends JFrame {
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal() {
+   public VentanaPrincipal() {
         initComponents();
-    PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
-    zonaFiguras.setLayout(new java.awt.BorderLayout());
-    zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
-        //Delimitar cada clase en su zona
+
+        jMenuBar1.add(herramientas.btnGuardar, 3);
+        jMenuBar1.add(herramientas.btnDeshacer, 4);
+        jMenuBar1.add(herramientas.btnRehacer, 5);
+        jMenuBar1.add(herramientas.btnLimpiar, 6);
+        
+        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
+        zonaGrosor.setLayout(new BorderLayout());          // slider de grosor a un lado del lienzo
+        zonaGrosor.setPreferredSize(new Dimension(110, 100));
+        zonaGrosor.add(herramientas.getPanelGrosor(), BorderLayout.CENTER);
+
+        herramientas.conectar(panelDeDibujo);
+        panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
+        
+        PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
+        zonaFiguras.setLayout(new java.awt.BorderLayout());
+        zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
+
+
+        //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
+//        jPanel1.add(btnOvalo, posicionRelleno);
+//        jPanel1.add(btnCirculo, posicionRelleno + 1);
+//        jPanel1.add(btnRombo, posicionRelleno + 2);
+//        jPanel1.add(btnPentagono, posicionRelleno + 3);
+//        jPanel1.add(btnCorazon, posicionRelleno + 4);
+//        jPanel1.add(btnFlecha, posicionRelleno + 5);
+//        jPanel1.add(btnHexagono, posicionRelleno + 6);
+//        jPanel1.add(btnEstrella, posicionRelleno + 7);
+        servicioNuevoDocumento
+                = new ServicioNuevoDocumento(panelDeDibujo);
+
+//        btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
+//        btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
+//        btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
+//        btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
+//        btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
+//        btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
+//        btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
+//        btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
+        //chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+        //btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
+        //btnLimpiar.setSelected(false);});
+        // Herramienta inicial
+        herramientas.btnLapiz.setSelected(true);    //Delimitar cada clase en su zona
 //        zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
 //        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
@@ -63,52 +120,63 @@ public class VentanaPrincipal extends JFrame {
 //        zonaEstado.add(estado, BorderLayout.CENTER);
 //        grupoHerramientas.add(herramientas.btnLapiz);
 //        grupoHerramientas.add(herramientas.btnBorrador);
+    
         setSize(1000, 700);
-        add(panelDeDibujo, BorderLayout.CENTER);
+        contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
+        ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
 
-        //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
-        //jPanel1.add(btnOvalo, posicionRelleno);
-        //jPanel1.add(btnCirculo, posicionRelleno + 1);
-        //jPanel1.add(btnRombo, posicionRelleno + 2);
-        //jPanel1.add(btnPentagono, posicionRelleno + 3);
-        //jPanel1.add(btnCorazon, posicionRelleno + 4);
-        //jPanel1.add(btnFlecha, posicionRelleno + 5);
-        //jPanel1.add(btnHexagono, posicionRelleno + 6);
-        //jPanel1.add(btnEstrella, posicionRelleno + 7);
-        //jPanel1.add(btnTriangulo, posicionRelleno + 8);
-        //jPanel1.add(btnParalelogramo, posicionRelleno + 9);
+        herramientas.instalarMenuArchivo(jMenu1, jMenuItem2, jMenuItem1,
+                panelDeDibujo, contenedorLienzo, this);
 
-        
+        panelDeDibujo.setBackground(java.awt.Color.WHITE);
 
-        //ButtonGroup grupoHerramientas = new ButtonGroup();
-        //JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella, btnTriangulo, btnParalelogramo};
-        //for (JToggleButton boton : botones) {
-          //  boton.setFocusPainted(false);
-            //grupoHerramientas.add(boton);
-        //}
-        //chkRelleno.setFocusPainted(false);
-        //btnLimpiar.setFocusPainted(false);
-        //btnTrazo.setSelected(true);
-
-        //btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-        //btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-        //btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-        //btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
-        //btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
-        //btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
-        //btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
-        //btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
-        //btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
-        //btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
-        //btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
-        //btnTriangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRIANGULO));
-        //btnParalelogramo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PARALELOGRAMO));
-        //chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-        //btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
-        //btnLimpiar.setSelected(false);
-        //});
-
-        setSize(1000, 500);
+//        btnTrazo.setFocusPainted(false);
+//        btnLinea.setFocusPainted(false);
+//        btnRectangulo.setFocusPainted(false);
+//        chkRelleno.setFocusPainted(false);
+//        btnLimpiar.setFocusPainted(false);
+//        //Agrupacion de botones
+//        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
+//        grupoHerramientas.add(btnTrazo);
+//        grupoHerramientas.add(btnLinea);
+//        grupoHerramientas.add(btnRectangulo);
+//
+//        // Trazo seleccionado por defecto al abrir
+//        btnTrazo.setSelected(true);
+//
+//        // lógica (Listeners)
+//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+//
+//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+//
+//        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
+//        JToolBar barra = new JToolBar();
+//        barra.setFloatable(false);
+//
+//        JButton btnTrazo = new JButton("Trazo Libre");
+//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+//
+//        JButton btnLinea = new JButton("Línea");
+//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+//
+//        JButton btnRectangulo = new JButton("Rectángulo");
+//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+//
+//        JCheckBox chkRelleno = new JCheckBox("Relleno");
+//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+//
+//        barra.add(btnTrazo);
+//        barra.add(btnLinea);
+//        barra.add(btnRectangulo);
+//        barra.addSeparator();
+//        barra.add(chkRelleno);
+        //add(barra, BorderLayout.NORTH);
+//        sliderGrosor.addChangeListener(e -> {
+//            int grosorSeleccionado = sliderGrosor.getValue();
+//            panelDeDibujo.setGrosorActual(grosorSeleccionado);
+//        });
         setLocationRelativeTo(null);
     }
 
@@ -130,10 +198,16 @@ public class VentanaPrincipal extends JFrame {
         zonaEstadoColor = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         ZonaLienzo = new javax.swing.JPanel();
+        zonaGrosor = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        btnDeshacer1 = new javax.swing.JMenuItem();
+        btnRehacer1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -184,7 +258,14 @@ public class VentanaPrincipal extends JFrame {
         PanelCinta.getAccessibleContext().setAccessibleDescription("");
 
         ZonaLienzo.setLayout(new java.awt.BorderLayout());
+        ZonaLienzo.add(zonaGrosor, java.awt.BorderLayout.LINE_START);
+
         getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
+
+        jLabel1.setText("jLabel2");
+        jPanel1.add(jLabel1);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jMenu1.setText("Archivo");
 
@@ -192,9 +273,26 @@ public class VentanaPrincipal extends JFrame {
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setText("Nuevo");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edición");
+
+        btnDeshacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnDeshacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/deshacer16x16.png"))); // NOI18N
+        btnDeshacer1.setText("Deshacer");
+        btnDeshacer1.addActionListener(this::btnDeshacer1ActionPerformed);
+        jMenu2.add(btnDeshacer1);
+
+        btnRehacer1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        btnRehacer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/rehacer16x16.png"))); // NOI18N
+        btnRehacer1.setText("Rehacer");
+        btnRehacer1.addActionListener(this::btnRehacer1ActionPerformed);
+        jMenu2.add(btnRehacer1);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Ayuda");
@@ -213,6 +311,43 @@ public class VentanaPrincipal extends JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnTrazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrazoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTrazoActionPerformed
+
+    private void btnDeshacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeshacer1ActionPerformed
+    }
+
+    private void btnDeshacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.deshacer();// TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnDeshacer2ActionPerformed
+
+    private void btnRehacer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer1ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer1ActionPerformed
+
+    private void btnRehacer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacer2ActionPerformed
+        if (panelDeDibujo != null) {
+            panelDeDibujo.rehacer();
+        }
+    }//GEN-LAST:event_btnRehacer2ActionPerformed
+
+    private void sliderGrosorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderGrosorMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sliderGrosorMouseClicked
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        servicioNuevoDocumento.nuevoDocumento();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,16 +378,23 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private javax.swing.JMenuItem btnDeshacer1;
+    private javax.swing.JMenuItem btnRehacer1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
     private javax.swing.JPanel zonaEstadoColor;
     private javax.swing.JPanel zonaEstadoFiguras;
     private javax.swing.JPanel zonaFiguras;
+    private javax.swing.JPanel zonaGrosor;
     private javax.swing.JPanel zonaHerramientas;
     // End of variables declaration//GEN-END:variables
+
 }
