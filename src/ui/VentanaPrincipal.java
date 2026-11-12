@@ -16,7 +16,7 @@ import javax.swing.*;
 public class VentanaPrincipal extends JFrame {
     private static final java.util.logging.Logger logger
             = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
-
+  
     private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
@@ -34,11 +34,11 @@ public class VentanaPrincipal extends JFrame {
 
     
 
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    //PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     
 
     // TODO clases por crear, por quien le corresponda:
-    //private final ButtonGroup grupoHerramientas = new ButtonGroup();
+    private final ButtonGroup grupoHerramientas = new ButtonGroup();
     
 //    private final PanelHerramientas herramientas = new PanelHerramientas();
 //    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
@@ -51,7 +51,9 @@ public class VentanaPrincipal extends JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
-
+    PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
+    zonaFiguras.setLayout(new java.awt.BorderLayout());
+    zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
         //Delimitar cada clase en su zona
 //        zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
 //        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
@@ -64,47 +66,47 @@ public class VentanaPrincipal extends JFrame {
         setSize(1000, 700);
         add(panelDeDibujo, BorderLayout.CENTER);
 
-        int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
-        jPanel1.add(btnOvalo, posicionRelleno);
-        jPanel1.add(btnCirculo, posicionRelleno + 1);
-        jPanel1.add(btnRombo, posicionRelleno + 2);
-        jPanel1.add(btnPentagono, posicionRelleno + 3);
-        jPanel1.add(btnCorazon, posicionRelleno + 4);
-        jPanel1.add(btnFlecha, posicionRelleno + 5);
-        jPanel1.add(btnHexagono, posicionRelleno + 6);
-        jPanel1.add(btnEstrella, posicionRelleno + 7);
-        jPanel1.add(btnTriangulo, posicionRelleno + 8);
-        jPanel1.add(btnParalelogramo, posicionRelleno + 9);
+        //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
+        //jPanel1.add(btnOvalo, posicionRelleno);
+        //jPanel1.add(btnCirculo, posicionRelleno + 1);
+        //jPanel1.add(btnRombo, posicionRelleno + 2);
+        //jPanel1.add(btnPentagono, posicionRelleno + 3);
+        //jPanel1.add(btnCorazon, posicionRelleno + 4);
+        //jPanel1.add(btnFlecha, posicionRelleno + 5);
+        //jPanel1.add(btnHexagono, posicionRelleno + 6);
+        //jPanel1.add(btnEstrella, posicionRelleno + 7);
+        //jPanel1.add(btnTriangulo, posicionRelleno + 8);
+        //jPanel1.add(btnParalelogramo, posicionRelleno + 9);
 
         
 
-        ButtonGroup grupoHerramientas = new ButtonGroup();
-        JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella, btnTriangulo, btnParalelogramo};
-        for (JToggleButton boton : botones) {
-            boton.setFocusPainted(false);
-            grupoHerramientas.add(boton);
-        }
-        chkRelleno.setFocusPainted(false);
-        btnLimpiar.setFocusPainted(false);
-        btnTrazo.setSelected(true);
+        //ButtonGroup grupoHerramientas = new ButtonGroup();
+        //JToggleButton[] botones = {btnTrazo, btnLinea, btnRectangulo, btnOvalo, btnCirculo, btnRombo, btnPentagono,btnCorazon,btnFlecha,  btnHexagono, btnEstrella, btnTriangulo, btnParalelogramo};
+        //for (JToggleButton boton : botones) {
+          //  boton.setFocusPainted(false);
+            //grupoHerramientas.add(boton);
+        //}
+        //chkRelleno.setFocusPainted(false);
+        //btnLimpiar.setFocusPainted(false);
+        //btnTrazo.setSelected(true);
 
-        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-        btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
-        btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
-        btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
-        btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
-        btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
-        btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
-        btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
-        btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
-        btnTriangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRIANGULO));
-        btnParalelogramo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PARALELOGRAMO));
-        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-        btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
-        btnLimpiar.setSelected(false);
-        });
+        //btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+        //btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
+        //btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
+        //btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
+        //btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
+        //btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
+        //btnPentagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PENTAGONO));
+        //btnCorazon.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CORAZON));
+        //btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
+        //btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
+        //btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
+        //btnTriangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRIANGULO));
+        //btnParalelogramo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.PARALELOGRAMO));
+        //chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
+        //btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
+        //btnLimpiar.setSelected(false);
+        //});
 
         setSize(1000, 500);
         setLocationRelativeTo(null);
