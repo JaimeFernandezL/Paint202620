@@ -5,6 +5,9 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JColorChooser;
+
 //import javax.swing.JButton;
 //import javax.swing.ButtonGroup;
 
@@ -17,6 +20,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
 
     PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    
+    private Color colorActual = Color.WHITE;
+    private Color colorAnterior = Color.WHITE;
+    
+    
+    private void cambiarColor(Color nuevoColor) {
+
+    colorAnterior = colorActual;
+    colorActual = nuevoColor;
+
+    panelColorAnterior.setBackground(colorAnterior);
+    panelColorActual.setBackground(colorActual);
+    //panelDeDibujo.setColorTrazo(colorActual);
+}
+    
     
 
     // TODO clases por crear, por quien le corresponda:
@@ -33,9 +51,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        
+        
+     
+        jButton8.setBackground(Color.WHITE);
+      
+        
+        // Botones de la paleta de colores
+        jButton1.addActionListener(e -> cambiarColor(jButton1.getBackground()));
+        jButton2.addActionListener(e -> cambiarColor(jButton2.getBackground()));
+        jButton3.addActionListener(e -> cambiarColor(jButton3.getBackground()));
+        jButton4.addActionListener(e -> cambiarColor(jButton4.getBackground()));
+        jButton5.addActionListener(e -> cambiarColor(jButton5.getBackground()));
+        jButton6.addActionListener(e -> cambiarColor(jButton6.getBackground()));
+        jButton7.addActionListener(e -> cambiarColor(jButton7.getBackground()));
+        jButton8.addActionListener(e -> cambiarColor(jButton8.getBackground()));
+        jButton9.addActionListener(e -> cambiarColor(jButton9.getBackground()));
+        jButton10.addActionListener(e -> cambiarColor(jButton10.getBackground()));
+        jButton11.addActionListener(e -> cambiarColor(jButton11.getBackground()));
+        jButton12.addActionListener(e -> cambiarColor(jButton12.getBackground()));
+        jButton13.addActionListener(e -> cambiarColor(jButton13.getBackground()));
+        jButton14.addActionListener(e -> cambiarColor(jButton14.getBackground()));
+        jButton15.addActionListener(e -> cambiarColor(jButton15.getBackground()));
+        jButton16.addActionListener(e -> cambiarColor(jButton16.getBackground()));
+        jButton17.addActionListener(e -> cambiarColor(jButton17.getBackground()));
+        jButton18.addActionListener(e -> cambiarColor(jButton18.getBackground()));
 
         //Delimitar cada clase en su zona
-//        zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
+//       zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
 //        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
 //        zonaOpciones.add(opciones, BorderLayout.CENTER);
@@ -108,7 +151,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         zonaEstadoFiguras = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
+        panelColorActual = new javax.swing.JPanel();
+        panelColorAnterior = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
+        panelBotones = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnElegirColor = new javax.swing.JButton();
         ZonaLienzo = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -148,14 +214,158 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelDerecho.setLayout(new java.awt.BorderLayout());
 
-        zonaEstadoColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaEstadoColor.setMinimumSize(new java.awt.Dimension(20, 22));
         zonaEstadoColor.setPreferredSize(new java.awt.Dimension(100, 90));
-        zonaEstadoColor.setLayout(new java.awt.BorderLayout());
+
+        panelColorActual.setBackground(new java.awt.Color(0, 0, 0));
+        panelColorActual.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        panelColorAnterior.setBackground(new java.awt.Color(255, 255, 255));
+        panelColorAnterior.setPreferredSize(new java.awt.Dimension(35, 35));
+
+        javax.swing.GroupLayout zonaEstadoColorLayout = new javax.swing.GroupLayout(zonaEstadoColor);
+        zonaEstadoColor.setLayout(zonaEstadoColorLayout);
+        zonaEstadoColorLayout.setHorizontalGroup(
+            zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaEstadoColorLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelColorActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelColorAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        zonaEstadoColorLayout.setVerticalGroup(
+            zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaEstadoColorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelColorActual, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelColorAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
         panelDerecho.add(zonaEstadoColor, java.awt.BorderLayout.LINE_START);
 
         zonaColores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaColores.setPreferredSize(new java.awt.Dimension(290, 100));
-        zonaColores.setLayout(new java.awt.BorderLayout());
+
+        panelBotones.setName("PanelBotones"); // NOI18N
+        panelBotones.setPreferredSize(new java.awt.Dimension(280, 63));
+        panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setToolTipText("Negro");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton1);
+
+        jButton11.setBackground(new java.awt.Color(102, 102, 102));
+        jButton11.setToolTipText("Gris");
+        jButton11.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton11);
+
+        jButton2.setBackground(new java.awt.Color(204, 0, 0));
+        jButton2.setToolTipText("Rojo");
+        jButton2.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton2);
+
+        jButton3.setBackground(new java.awt.Color(255, 153, 0));
+        jButton3.setToolTipText("Naranja");
+        jButton3.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton3);
+
+        jButton4.setBackground(new java.awt.Color(255, 255, 0));
+        jButton4.setToolTipText("Amarillo");
+        jButton4.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton4);
+
+        jButton5.setBackground(new java.awt.Color(0, 153, 0));
+        jButton5.setToolTipText("Verde");
+        jButton5.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton5);
+
+        jButton6.setBackground(new java.awt.Color(51, 51, 255));
+        jButton6.setToolTipText("Azul");
+        jButton6.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton6);
+
+        jButton7.setBackground(new java.awt.Color(204, 0, 204));
+        jButton7.setToolTipText("Púrpura");
+        jButton7.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton7);
+
+        jButton9.setBackground(new java.awt.Color(153, 102, 0));
+        jButton9.setToolTipText("Marrón");
+        jButton9.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton9);
+
+        jButton8.setToolTipText("Blanco");
+        jButton8.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton8);
+
+        jButton12.setBackground(new java.awt.Color(153, 153, 153));
+        jButton12.setToolTipText("Gris Claro");
+        jButton12.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton12);
+
+        jButton10.setBackground(new java.awt.Color(255, 204, 204));
+        jButton10.setToolTipText("Rosa");
+        jButton10.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton10);
+
+        jButton13.setBackground(new java.awt.Color(255, 222, 0));
+        jButton13.setToolTipText("Dorado");
+        jButton13.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton13);
+
+        jButton14.setBackground(new java.awt.Color(255, 255, 157));
+        jButton14.setToolTipText("Amarillo Claro");
+        jButton14.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton14);
+
+        jButton15.setBackground(new java.awt.Color(51, 255, 51));
+        jButton15.setToolTipText("Lima");
+        jButton15.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton15);
+
+        jButton16.setBackground(new java.awt.Color(115, 251, 253));
+        jButton16.setToolTipText("Azul Cielo");
+        jButton16.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton16);
+
+        jButton17.setBackground(new java.awt.Color(238, 138, 248));
+        jButton17.setToolTipText("Lavanda");
+        jButton17.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton17);
+
+        jButton18.setBackground(new java.awt.Color(196, 164, 132));
+        jButton18.setToolTipText("Marrón Claro");
+        jButton18.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(jButton18);
+
+        zonaColores.add(panelBotones);
+        panelBotones.getAccessibleContext().setAccessibleDescription("");
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Colores");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setMaximumSize(new java.awt.Dimension(50, 16));
+        jLabel1.setMinimumSize(new java.awt.Dimension(50, 16));
+        jLabel1.setPreferredSize(new java.awt.Dimension(50, 16));
+        zonaColores.add(jLabel1);
+
+        btnElegirColor.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        btnElegirColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/Imagenes/ruedadecolores.png"))); // NOI18N
+        btnElegirColor.setToolTipText("Editar Colores");
+        btnElegirColor.setFocusPainted(false);
+        btnElegirColor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnElegirColor.setIconTextGap(8);
+        btnElegirColor.setName(""); // NOI18N
+        btnElegirColor.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnElegirColor.addActionListener(this::btnElegirColorActionPerformed);
+        zonaColores.add(btnElegirColor);
+
         panelDerecho.add(zonaColores, java.awt.BorderLayout.LINE_END);
 
         PanelCinta.add(panelDerecho, java.awt.BorderLayout.EAST);
@@ -163,6 +373,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().add(PanelCinta, java.awt.BorderLayout.PAGE_START);
         PanelCinta.getAccessibleContext().setAccessibleDescription("");
 
+        ZonaLienzo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ZonaLienzo.setLayout(new java.awt.BorderLayout());
         getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
 
@@ -194,6 +405,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnElegirColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirColorActionPerformed
+         Color nuevoColor = JColorChooser.showDialog(
+        this,
+        "Selecciona un color",
+        colorActual
+    );
+
+    if (nuevoColor != null) {
+        cambiarColor(nuevoColor);
+  
+    }
+    }//GEN-LAST:event_btnElegirColorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,11 +447,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private javax.swing.JButton btnElegirColor;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel panelBotones;
+    private javax.swing.JPanel panelColorActual;
+    private javax.swing.JPanel panelColorAnterior;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
     private javax.swing.JPanel zonaEstadoColor;
