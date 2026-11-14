@@ -136,6 +136,11 @@ public class ContenedorLienzo extends JScrollPane {
         int w = Math.max(MINIMO, Math.min(MAXIMO, ancho));
         int h = Math.max(MINIMO, Math.min(MAXIMO, alto));
 
+        // Si el lienzo es una instancia de PanelDeDibujo, aplicamos el recorte destructivo
+        if (lienzo instanceof PanelDeDibujo panel) {
+            panel.recortarAlTamano(w, h);
+        }
+
         // Aplicamos las nuevas dimensiones preferidas al lienzo
         lienzo.setPreferredSize(new Dimension(w, h));
 
