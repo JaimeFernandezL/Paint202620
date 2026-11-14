@@ -19,6 +19,8 @@ public class VentanaPrincipal extends JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
     private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    // Contenedor con área gris, barras de desplazamiento y asas para redimensionar el lienzo
+    private final ContenedorLienzo contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
     private final JToggleButton btnRombo = new JToggleButton("Rombo");
@@ -37,7 +39,8 @@ public class VentanaPrincipal extends JFrame {
     public VentanaPrincipal() {
         initComponents();
 
-        add(panelDeDibujo, BorderLayout.CENTER);
+        // Agregamos el contenedor del lienzo al centro de la ventana principal en lugar del panel directo
+        add(contenedorLienzo, BorderLayout.CENTER); //add(panelDeDibujo, BorderLayout.CENTER);
         servicioNuevoDocumento =
         new ServicioNuevoDocumento(panelDeDibujo);
 
@@ -109,8 +112,12 @@ public class VentanaPrincipal extends JFrame {
             panelDeDibujo.setGrosorActual(grosorSeleccionado);
         });
         
-        setSize(1000, 500);
+        // Establecemos un tamaño base de respaldo en caso de que el usuario restaure la ventana
+        setSize(1000, 600);
+        // Centra la ventana principal en el medio de la pantalla del dispositivo cuando no está maximizada
         setLocationRelativeTo(null);
+        // Maximizamos la ventana al tamaño completo de la pantalla del dispositivo al iniciar
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
