@@ -12,6 +12,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 // Importaciones para la captura de eventos del ratón
 import java.awt.event.MouseAdapter;
@@ -61,6 +66,9 @@ public class PanelDeDibujo extends JPanel {
     
     // Nivel de opacidad actual (1.0f = 100% opaco)
     private float opacidadActual = 1.0f;
+    
+    // Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
+    private final Map<Figura, Area> recortesFiguras = new IdentityHashMap<>();
     
     /**
      * Constructor del PanelDeDibujo.
@@ -138,6 +146,10 @@ public class PanelDeDibujo extends JPanel {
 
                 // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
                 figuras.add(figuraActual);
+                // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
+                figuras.add(figuraActual);
+                // Asociamos a esta figura los límites actuales del lienzo
+                recortesFiguras.put(figuraActual, new Area(new Rectangle(0, 0, getWidth(), getHeight())));
                 figurasRehacer.clear();
                 
                 // Solicitamos a Swing que repinte el componente
@@ -219,9 +231,22 @@ public class PanelDeDibujo extends JPanel {
         // Activamos el suavizado de bordes (Antialiasing) para mejorar la calidad visual de los trazos
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Iteramos sobre la lista dinámica y dibujamos cada figura almacenada
+        // Iteramos sobre la lista dinámica y dibujamos cada figura aplicando su recorte destructivo
         for (Figura figura : figuras) {
+            // Guardamos el recorte gráfico global actual del lienzo
+            Shape clipAnterior = g2.getClip();
+
+            // Si la figura tiene un área de recorte registrada, intersectamos el clip con dicha área
+            Area areaPermitida = recortesFiguras.get(figura);
+            if (areaPermitida != null) {
+                g2.clip(areaPermitida);
+            }
+
+            // Dibujamos la figura (solo se pintará dentro de su área no recortada)
             figura.dibujar(g2);
+
+            // Restauramos el clip global del lienzo para la siguiente figura
+            g2.setClip(clipAnterior);
         }
     }
 
@@ -255,6 +280,9 @@ public class PanelDeDibujo extends JPanel {
         
         // Vacía también el historial de rehacer
         this.figurasRehacer.clear();
+        
+        // Vacía el Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
+        this.recortesFiguras.clear();
         
         // Reinicia la referencia de la figura actual para evitar incongruencias
         this.figuraActual = null;
@@ -309,5 +337,38 @@ public class PanelDeDibujo extends JPanel {
      */
     public void setOpacidad(int opacidad) {
         this.opacidadActual = opacidad / 100.0f;
+    }
+    
+    /**
+     * Aplica un recorte destructivo (estilo MS Paint clásico) sobre todas las figuras
+     * existentes cuando el lienzo cambia de tamaño. Todo lo que quede fuera de las
+     * nuevas dimensiones se elimina permanentemente y no reaparece al volver a expandir.
+     *
+     * @param nuevoAncho Nuevo ancho del lienzo en píxeles.
+     * @param nuevoAlto  Nuevo alto del lienzo en píxeles.
+     */
+    public void recortarAlTamano(int nuevoAncho, int nuevoAlto) {
+        // Creamos el rectángulo que representa los nuevos límites válidos del lienzo
+        Area nuevoLimite = new Area(new Rectangle(0, 0, Math.max(0, nuevoAncho), Math.max(0, nuevoAlto)));
+
+        // Intersectamos el área de cada figura existente con el nuevo límite del lienzo
+        for (Figura figura : figuras) {
+            Area areaFigura = recortesFiguras.get(figura);
+            if (areaFigura == null) {
+                areaFigura = new Area(nuevoLimite);
+                recortesFiguras.put(figura, areaFigura);
+            } else {
+                // La intersección recorta de forma permanente cualquier parte fuera del nuevo tamaño
+                areaFigura.intersect(nuevoLimite);
+            }
+        }
+
+        // Aplicamos también el recorte a las figuras en la pila de rehacer por coherencia
+        for (Figura figura : figurasRehacer) {
+            Area areaFigura = recortesFiguras.get(figura);
+            if (areaFigura != null) {
+                areaFigura.intersect(nuevoLimite);
+            }
+        }
     }
 }
