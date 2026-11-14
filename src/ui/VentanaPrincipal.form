@@ -189,6 +189,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Borrador"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorradorActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
@@ -272,6 +275,8 @@
                                           <Component id="jButton10" min="-2" pref="28" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jButton16" min="-2" pref="28" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jButton17" min="-2" pref="28" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -301,6 +306,7 @@
                               <Component id="jButton14" min="-2" pref="28" max="-2" attributes="0"/>
                               <Component id="jButton10" min="-2" pref="28" max="-2" attributes="0"/>
                               <Component id="jButton16" min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jButton17" min="-2" pref="28" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -417,6 +423,12 @@
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Formas"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton17">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="paralelogramo"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Flecha"/>
                   </Properties>
                 </Component>
               </SubComponents>

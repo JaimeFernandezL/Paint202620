@@ -261,45 +261,45 @@ public class PanelHerramientas extends JPanel {
         abstract void dibujar(Graphics2D g2, Color trazo);
     }
 
-    private static class IconoLapiz extends IconoBase {
+//    private static class IconoLapiz extends IconoBase {
+//
+//        @Override
+//        void dibujar(Graphics2D g2, Color trazo) {
+//            g2.translate(12, 12);
+//            g2.rotate(Math.toRadians(45));
+//            g2.setColor(new Color(0xF2B84B));             // cuerpo
+//            g2.fillRect(-3, -8, 6, 13);
+//            g2.setColor(new Color(0xE58A9B));             // goma
+//            g2.fillRect(-3, -11, 6, 3);
+//            Path2D punta = new Path2D.Double();
+//            punta.moveTo(-3, 5);
+//            punta.lineTo(3, 5);
+//            punta.lineTo(0, 10);
+//            punta.closePath();
+//            g2.setColor(new Color(0xE8CFA0));
+//            g2.fill(punta);
+//            g2.setColor(trazo);
+//            g2.drawRect(-3, -11, 6, 16);
+//            g2.draw(punta);
+//        }
+//    }
 
-        @Override
-        void dibujar(Graphics2D g2, Color trazo) {
-            g2.translate(12, 12);
-            g2.rotate(Math.toRadians(45));
-            g2.setColor(new Color(0xF2B84B));             // cuerpo
-            g2.fillRect(-3, -8, 6, 13);
-            g2.setColor(new Color(0xE58A9B));             // goma
-            g2.fillRect(-3, -11, 6, 3);
-            Path2D punta = new Path2D.Double();
-            punta.moveTo(-3, 5);
-            punta.lineTo(3, 5);
-            punta.lineTo(0, 10);
-            punta.closePath();
-            g2.setColor(new Color(0xE8CFA0));
-            g2.fill(punta);
-            g2.setColor(trazo);
-            g2.drawRect(-3, -11, 6, 16);
-            g2.draw(punta);
-        }
-    }
-
-    private static class IconoBorrador extends IconoBase {
-
-        @Override
-        void dibujar(Graphics2D g2, Color trazo) {
-            g2.translate(12, 12);
-            g2.rotate(Math.toRadians(-35));
-            RoundRectangle2D cuerpo = new RoundRectangle2D.Double(-9, -5, 18, 10, 4, 4);
-            g2.setColor(new Color(0xF08FA0));             // parte rosada
-            g2.fill(cuerpo);
-            g2.setColor(new Color(0x7FA6D9));             // franja azul
-            g2.fillRect(0, -5, 9, 10);
-            g2.setColor(trazo);
-            g2.draw(cuerpo);
-            g2.drawLine(0, -5, 0, 5);
-        }
-    }
+//    private static class IconoBorrador extends IconoBase {
+//
+//        @Override
+//        void dibujar(Graphics2D g2, Color trazo) {
+//            g2.translate(12, 12);
+//            g2.rotate(Math.toRadians(-35));
+//            RoundRectangle2D cuerpo = new RoundRectangle2D.Double(-9, -5, 18, 10, 4, 4);
+//            g2.setColor(new Color(0xF08FA0));             // parte rosada
+//            g2.fill(cuerpo);
+//            g2.setColor(new Color(0x7FA6D9));             // franja azul
+//            g2.fillRect(0, -5, 9, 10);
+//            g2.setColor(trazo);
+//            g2.draw(cuerpo);
+//            g2.drawLine(0, -5, 0, 5);
+//        }
+//    }
 
     private static class IconoLimpiar extends IconoBase {
 

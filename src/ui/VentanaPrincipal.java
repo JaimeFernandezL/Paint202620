@@ -188,6 +188,7 @@ public class VentanaPrincipal extends JFrame {
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton17 = new javax.swing.JButton();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
@@ -226,6 +227,7 @@ public class VentanaPrincipal extends JFrame {
 
         btnBorrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrador.png"))); // NOI18N
         btnBorrador.setToolTipText("Borrador");
+        btnBorrador.addActionListener(this::btnBorradorActionPerformed);
 
         jLabel3.setText("Herramientas");
 
@@ -307,6 +309,9 @@ public class VentanaPrincipal extends JFrame {
 
         jLabel2.setText("Formas");
 
+        jButton17.setText("paralelogramo");
+        jButton17.setToolTipText("Flecha");
+
         javax.swing.GroupLayout zonaFigurasLayout = new javax.swing.GroupLayout(zonaFiguras);
         zonaFiguras.setLayout(zonaFigurasLayout);
         zonaFigurasLayout.setHorizontalGroup(
@@ -342,7 +347,9 @@ public class VentanaPrincipal extends JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
         zonaFigurasLayout.setVerticalGroup(
@@ -364,7 +371,8 @@ public class VentanaPrincipal extends JFrame {
                     .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap())
@@ -482,6 +490,10 @@ public class VentanaPrincipal extends JFrame {
         servicioNuevoDocumento.nuevoDocumento();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void btnBorradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorradorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorradorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -524,6 +536,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
