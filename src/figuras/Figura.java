@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.Objects;
 import java.awt.AlphaComposite;
+import java.awt.Color;
 
 /**
  *
@@ -74,4 +75,8 @@ public abstract class Figura {
     //    graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacidad));
     //    return graphics2D;
     //}
+
+    public void setColor(Color colorActual) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
