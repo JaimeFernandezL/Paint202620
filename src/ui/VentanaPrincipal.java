@@ -16,7 +16,6 @@ import javax.swing.JColorChooser;
 
 //import javax.swing.JButton;
 //import javax.swing.ButtonGroup;
-
 import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,9 +30,10 @@ import javax.swing.JToggleButton;
  */
 public class VentanaPrincipal extends JFrame {
 
-    private static final java.util.logging.Logger logger
-            = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
-
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
+    private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    // Contenedor con área gris, barras de desplazamiento y asas para redimensionar el lienzo
+    private final ContenedorLienzo contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
     private final JToggleButton btnRombo = new JToggleButton("Rombo");
@@ -43,43 +43,51 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnHexagono = new JToggleButton("Hexágono");
     private final JToggleButton btnEstrella = new JToggleButton("Estrella");
     //
-    private ContenedorLienzo contenedorLienzo;
+//    private ContenedorLienzo contenedorLienzo;
     //
 
     private ServicioNuevoDocumento servicioNuevoDocumento;
     private final ButtonGroup grupoHerramientas = new ButtonGroup();
     private final PanelHerramientas herramientas = new PanelHerramientas();
 
-    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
-
-    
+//    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private Color colorActual = Color.WHITE;
     private Color colorAnterior = Color.WHITE;
-    
-    
+
     private void cambiarColor(Color nuevoColor) {
 
-    colorAnterior = colorActual;
-    colorActual = nuevoColor;
+        colorAnterior = colorActual;
+        colorActual = nuevoColor;
 
-    panelColorAnterior.setBackground(colorAnterior);
-    panelColorActual.setBackground(colorActual);
-    //para conectar la paleta de colores al lienzo, sustituir setColor por el método que se requiere
-    //panelDeDibujo.setColor(colorActual);
-}
-    
+        panelColorAnterior.setBackground(colorAnterior);
+        panelColorActual.setBackground(colorActual);
+        //para conectar la paleta de colores al lienzo, sustituir setColor por el método que se requiere
+        //panelDeDibujo.setColor(colorActual);
+    }
 
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
-        
-     
+
+        // Agregamos el contenedor del lienzo al centro de la ventana principal en lugar del panel directo
+        servicioNuevoDocumento
+                = new ServicioNuevoDocumento(panelDeDibujo);
+
+//        int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
+//        jPanel1.add(btnOvalo, posicionRelleno);
+//        jPanel1.add(btnCirculo, posicionRelleno + 1);
+//        jPanel1.add(btnRombo, posicionRelleno + 2);
+//        jPanel1.add(btnPentagono, posicionRelleno + 3);
+//        jPanel1.add(btnCorazon, posicionRelleno + 4);
+//        jPanel1.add(btnFlecha, posicionRelleno + 5);
+//        jPanel1.add(btnHexagono, posicionRelleno + 6);
+//        jPanel1.add(btnEstrella, posicionRelleno + 7);
+//        jPanel1.add(btnTriangulo, posicionRelleno + 8);
+//        jPanel1.add(btnParalelogramo, posicionRelleno + 9);
         jButton8.setBackground(Color.WHITE);
-      
-        
+
         // Botones de la paleta de colores
         jButton1.addActionListener(e -> cambiarColor(jButton1.getBackground()));
         jButton2.addActionListener(e -> cambiarColor(jButton2.getBackground()));
@@ -100,11 +108,9 @@ public class VentanaPrincipal extends JFrame {
         jButton17.addActionListener(e -> cambiarColor(jButton17.getBackground()));
         jButton18.addActionListener(e -> cambiarColor(jButton18.getBackground()));
 
-
         //Delimitar cada clase en su zona
 //       zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
 //        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
-
         grupoHerramientas.add(herramientas.btnLapiz);
         grupoHerramientas.add(herramientas.btnBorrador);
 
@@ -113,13 +119,14 @@ public class VentanaPrincipal extends JFrame {
         jMenuBar1.add(herramientas.btnRehacer, 5);
         jMenuBar1.add(herramientas.btnLimpiar, 6);
 
-        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
-        zonaGrosor.setLayout(new BorderLayout());          // slider de grosor a un lado del lienzo
-        zonaGrosor.setPreferredSize(new Dimension(110, 100));
+        ZonaLienzo.setLayout(new BorderLayout());
+
+        zonaGrosor.setPreferredSize(new Dimension(75, 100));
         zonaGrosor.add(herramientas.getPanelGrosor(), BorderLayout.CENTER);
 
+        ZonaLienzo.add(zonaGrosor, BorderLayout.WEST);
+        ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
         herramientas.conectar(panelDeDibujo);
-        panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
 
         //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
 //        jPanel1.add(btnOvalo, posicionRelleno);
@@ -150,14 +157,18 @@ public class VentanaPrincipal extends JFrame {
         // Herramienta inicial
         herramientas.btnLapiz.setSelected(true);
 
+//        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
+        // Establecemos un tamaño base de respaldo en caso de que el usuario restaure la ventana
+        setSize(1000, 600);
+        // Centra la ventana principal en el medio de la pantalla del dispositivo cuando no está maximizada
 
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
 //        zonaOpciones.add(opciones, BorderLayout.CENTER);
 //        zonaColores.add(colores, BorderLayout.CENTER);
 //        zonaEstado.add(estado, BorderLayout.CENTER);
         setSize(1000, 700);
-        contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
-        ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
+//        contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
+//        ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
 
         herramientas.instalarMenuArchivo(jMenu1, jMenuItem2, jMenuItem1,
                 panelDeDibujo, contenedorLienzo, this);
@@ -212,6 +223,8 @@ public class VentanaPrincipal extends JFrame {
 //            panelDeDibujo.setGrosorActual(grosorSeleccionado);
 //        });
         setLocationRelativeTo(null);
+        // Maximizamos la ventana al tamaño completo de la pantalla del dispositivo al iniciar
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**

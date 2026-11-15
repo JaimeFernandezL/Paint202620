@@ -107,6 +107,8 @@ public class PanelHerramientas extends JPanel {
     private void armarPanelGrosor() {
         sliderGrosor.setToolTipText("Grosor del trazo");
         sliderOpacidad.setToolTipText("Opacidad");
+        sliderGrosor.setPreferredSize(new Dimension(20, 400));
+        sliderOpacidad.setPreferredSize(new Dimension(20, 400));
         panelGrosor.setLayout(new GridLayout(1, 2, 4, 0));
         panelGrosor.setBorder(BorderFactory.createEmptyBorder(6, 4, 6, 4));
         panelGrosor.add(columnaSlider("Grosor", sliderGrosor, lblGrosor));
