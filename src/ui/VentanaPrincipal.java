@@ -52,6 +52,9 @@ public class VentanaPrincipal extends JFrame {
     public VentanaPrincipal() {
         initComponents();
 
+        grupoHerramientas.add(herramientas.btnLapiz);
+        grupoHerramientas.add(herramientas.btnBorrador);
+
         jMenuBar1.add(herramientas.btnGuardar, 3);
         jMenuBar1.add(herramientas.btnDeshacer, 4);
         jMenuBar1.add(herramientas.btnRehacer, 5);
@@ -77,12 +80,9 @@ public class VentanaPrincipal extends JFrame {
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
 
-//        nuevoBtnLapiz.addActionListener(e -> herramientas.activarLapiz());
-//        nuevoBtnBorrador.addActionListener(e -> herramientas.activarBorrador());
+        btnLapiz.addActionListener(e -> herramientas.activarLapiz());
+        btnBorra.addActionListener(e -> herramientas.activarBorrador());
 
-        //btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-        //btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-        //btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
         btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
         btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
         btnRombo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ROMBO));
@@ -94,7 +94,8 @@ public class VentanaPrincipal extends JFrame {
         //chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
         //btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
         //btnLimpiar.setSelected(false);});
-
+        // Herramienta inicial
+        herramientas.btnLapiz.setSelected(true);
 //        zonaFiguras.add(figuras, BorderLayout.CENTER);
 //        zonaOpciones.add(opciones, BorderLayout.CENTER);
 //        zonaColores.add(colores, BorderLayout.CENTER);
@@ -169,6 +170,8 @@ public class VentanaPrincipal extends JFrame {
 
         PanelCinta = new javax.swing.JPanel();
         zonaHerramientas = new javax.swing.JPanel();
+        btnBorra = new javax.swing.JButton();
+        btnLapiz = new javax.swing.JButton();
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
         zonaEstadoFiguras = new javax.swing.JPanel();
@@ -203,7 +206,35 @@ public class VentanaPrincipal extends JFrame {
 
         zonaHerramientas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
-        zonaHerramientas.setLayout(new java.awt.BorderLayout());
+
+        btnBorra.setText("jButton2");
+
+        btnLapiz.setText("jButton1");
+        btnLapiz.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLapiz.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnLapiz.addActionListener(this::btnLapizActionPerformed);
+
+        javax.swing.GroupLayout zonaHerramientasLayout = new javax.swing.GroupLayout(zonaHerramientas);
+        zonaHerramientas.setLayout(zonaHerramientasLayout);
+        zonaHerramientasLayout.setHorizontalGroup(
+            zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaHerramientasLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(btnLapiz, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBorra, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
+        );
+        zonaHerramientasLayout.setVerticalGroup(
+            zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaHerramientasLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBorra)
+                    .addComponent(btnLapiz))
+                .addGap(48, 48, 48))
+        );
+
         PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
 
         PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -327,6 +358,10 @@ public class VentanaPrincipal extends JFrame {
         servicioNuevoDocumento.nuevoDocumento();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void btnLapizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLapizActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLapizActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -356,7 +391,9 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private javax.swing.JButton btnBorra;
     private javax.swing.JMenuItem btnDeshacer1;
+    private javax.swing.JButton btnLapiz;
     private javax.swing.JMenuItem btnRehacer1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;

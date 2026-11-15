@@ -91,9 +91,8 @@ public class PanelHerramientas extends JPanel {
         filaIconos.add(btnDeshacer);   // deshacer / rehacer: mismos métodos que el menú Edición
         filaIconos.add(btnRehacer);
 
-        add(filaIconos, BorderLayout.CENTER);
-        add(new JLabel("Herramientas", SwingConstants.CENTER), BorderLayout.SOUTH);
-
+//        add(filaIconos, BorderLayout.CENTER);
+//        add(new JLabel("Herramientas", SwingConstants.CENTER), BorderLayout.SOUTH);
         armarPanelGrosor();
     }
 
@@ -172,16 +171,13 @@ public class PanelHerramientas extends JPanel {
     // Activa la función del lápiz
 
     public void activarLapiz() {
-        if (!btnLapiz.isSelected()) {
-            btnLapiz.doClick();
-        }
+        btnLapiz.setSelected(true);
+        btnLapiz.doClick();
     }
 
-// Activa la función del borrador
     public void activarBorrador() {
-        if (!btnBorrador.isSelected()) {
-            btnBorrador.doClick();
-        }
+        btnBorrador.setSelected(true);
+        btnBorrador.doClick();
     }
 
     private static void configurar(javax.swing.AbstractButton b, String tooltip) {
