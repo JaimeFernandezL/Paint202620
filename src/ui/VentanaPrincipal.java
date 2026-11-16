@@ -439,7 +439,6 @@ public class VentanaPrincipal extends JFrame {
         zonaColores.add(jLabel1);
 
         btnElegirColor.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        btnElegirColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/Imagenes/ruedadecolores.png"))); // NOI18N
         btnElegirColor.setToolTipText("Editar Colores");
         btnElegirColor.setFocusPainted(false);
         btnElegirColor.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
