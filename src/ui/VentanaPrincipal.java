@@ -386,8 +386,8 @@ public class VentanaPrincipal extends JFrame {
 
         jLabel2.setText("Formas");
 
-        jButton17.setText("paralelogramo");
-        jButton17.setToolTipText("Flecha");
+        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/paralelogramo (1).png"))); // NOI18N
+        jButton17.setToolTipText("Paralelogramo");
 
         javax.swing.GroupLayout zonaFigurasLayout = new javax.swing.GroupLayout(zonaFiguras);
         zonaFiguras.setLayout(zonaFigurasLayout);

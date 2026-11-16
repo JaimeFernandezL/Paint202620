@@ -427,8 +427,10 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton17">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="paralelogramo"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Flecha"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/imagenes/paralelogramo (1).png"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Paralelogramo"/>
                   </Properties>
                 </Component>
               </SubComponents>
