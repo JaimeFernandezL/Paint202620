@@ -563,6 +563,11 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JButton" name="jButton19">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="jButton19"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

@@ -54,15 +54,12 @@ public class VentanaPrincipal extends JFrame {
     private Color colorActual = Color.WHITE;
     private Color colorAnterior = Color.WHITE;
 
+    private final GestorColor gestorColor = new GestorColor(panelDeDibujo);
+
     private void cambiarColor(Color nuevoColor) {
-
-        colorAnterior = colorActual;
-        colorActual = nuevoColor;
-
-        panelColorAnterior.setBackground(colorAnterior);
-        panelColorActual.setBackground(colorActual);
-        //para conectar la paleta de colores al lienzo, sustituir setColor por el método que se requiere
-        //panelDeDibujo.setColor(colorActual);
+        gestorColor.cambiarColor(nuevoColor);
+        panelColorAnterior.setBackground(gestorColor.getColorAnterior());
+        panelColorActual.setBackground(gestorColor.getColorActual());
     }
 
     /**
@@ -268,6 +265,7 @@ public class VentanaPrincipal extends JFrame {
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton19 = new javax.swing.JButton();
         ZonaLienzo = new javax.swing.JPanel();
         zonaGrosor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -482,6 +480,9 @@ public class VentanaPrincipal extends JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(50, 16));
         zonaColores.add(jLabel1);
 
+        jButton19.setText("jButton19");
+        zonaColores.add(jButton19);
+
         panelDerecho.add(zonaColores, java.awt.BorderLayout.LINE_END);
 
         PanelCinta.add(panelDerecho, java.awt.BorderLayout.EAST);
@@ -630,6 +631,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
