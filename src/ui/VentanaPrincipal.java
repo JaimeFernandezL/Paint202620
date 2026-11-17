@@ -353,7 +353,7 @@ public class VentanaPrincipal extends JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(50, 16));
         zonaColores.add(jLabel1);
 
-        jButton19.setText("jButton19");
+        jButton19.setText("Elegir Color");
         zonaColores.add(jButton19);
 
         panelDerecho.add(zonaColores, java.awt.BorderLayout.LINE_END);
