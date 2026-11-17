@@ -12,6 +12,16 @@ public class GestorColor {
     private Color colorAnterior = Color.BLACK;
     private PanelDeDibujo lienzo;
 
+    public boolean abrirSelector(java.awt.Component padre) {
+        java.awt.Color c = javax.swing.JColorChooser.showDialog(
+                padre, "Seleccionar color", colorActual);
+        if (c != null) {
+            cambiarColor(c);
+            return true;
+        }
+        return false;
+    }
+
     public GestorColor(PanelDeDibujo lienzo) {
         this.lienzo = lienzo;
         aplicar();

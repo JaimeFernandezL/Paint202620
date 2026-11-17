@@ -45,8 +45,6 @@ public class VentanaPrincipal extends JFrame {
 
     private void cambiarColor(Color nuevoColor) {
         gestorColor.cambiarColor(nuevoColor);
-        panelColorAnterior.setBackground(gestorColor.getColorAnterior());
-        panelColorActual.setBackground(gestorColor.getColorActual());
     }
 
     /**
@@ -80,6 +78,12 @@ public class VentanaPrincipal extends JFrame {
         jButton16.addActionListener(e -> cambiarColor(jButton16.getBackground()));
         jButton17.addActionListener(e -> cambiarColor(jButton17.getBackground()));
         jButton18.addActionListener(e -> cambiarColor(jButton18.getBackground()));
+        jButton19.addActionListener(e -> {
+            if (gestorColor.abrirSelector(this)) {
+                // Si eligen un color nuevo, el botón 18 (el que marcaste) se pinta de ese color
+                jButton18.setBackground(gestorColor.getColorActual());
+            }
+        });
 
         grupoHerramientas.add(herramientas.btnLapiz);
         grupoHerramientas.add(herramientas.btnBorrador);
@@ -97,7 +101,7 @@ public class VentanaPrincipal extends JFrame {
         ZonaLienzo.add(zonaGrosor, BorderLayout.WEST);
         ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
         herramientas.conectar(panelDeDibujo);
-        
+
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
 
@@ -116,14 +120,13 @@ public class VentanaPrincipal extends JFrame {
         herramientas.btnLapiz.setSelected(true);
 
         // Establecemos un tamaño base de respaldo en caso de que el usuario restaure la ventana
-       
         setSize(1000, 700);
-        
+
         herramientas.instalarMenuArchivo(jMenu1, jMenuItem2, jMenuItem1,
                 panelDeDibujo, contenedorLienzo, this);
 
         panelDeDibujo.setBackground(java.awt.Color.WHITE);
-        
+
         setLocationRelativeTo(null);
         // Maximizamos la ventana al tamaño completo de la pantalla del dispositivo al iniciar
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -146,9 +149,6 @@ public class VentanaPrincipal extends JFrame {
         zonaFiguras = new javax.swing.JPanel();
         zonaEstadoFiguras = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
-        zonaEstadoColor = new javax.swing.JPanel();
-        panelColorActual = new javax.swing.JPanel();
-        panelColorAnterior = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -243,38 +243,6 @@ public class VentanaPrincipal extends JFrame {
         PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
 
         panelDerecho.setLayout(new java.awt.BorderLayout());
-
-        zonaEstadoColor.setMinimumSize(new java.awt.Dimension(20, 22));
-        zonaEstadoColor.setPreferredSize(new java.awt.Dimension(100, 90));
-
-        panelColorActual.setBackground(new java.awt.Color(0, 0, 0));
-        panelColorActual.setPreferredSize(new java.awt.Dimension(35, 35));
-
-        panelColorAnterior.setBackground(new java.awt.Color(255, 255, 255));
-        panelColorAnterior.setPreferredSize(new java.awt.Dimension(35, 35));
-
-        javax.swing.GroupLayout zonaEstadoColorLayout = new javax.swing.GroupLayout(zonaEstadoColor);
-        zonaEstadoColor.setLayout(zonaEstadoColorLayout);
-        zonaEstadoColorLayout.setHorizontalGroup(
-            zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(zonaEstadoColorLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelColorActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelColorAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        zonaEstadoColorLayout.setVerticalGroup(
-            zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(zonaEstadoColorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelColorActual, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelColorAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        panelDerecho.add(zonaEstadoColor, java.awt.BorderLayout.LINE_START);
 
         zonaColores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaColores.setPreferredSize(new java.awt.Dimension(290, 100));
@@ -555,11 +523,8 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelBotones;
-    private javax.swing.JPanel panelColorActual;
-    private javax.swing.JPanel panelColorAnterior;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
-    private javax.swing.JPanel zonaEstadoColor;
     private javax.swing.JPanel zonaEstadoFiguras;
     private javax.swing.JPanel zonaFiguras;
     private javax.swing.JPanel zonaGrosor;
