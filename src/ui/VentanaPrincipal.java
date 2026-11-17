@@ -5,20 +5,11 @@
 package ui;
 //hola
 
-import archivos.ServicioAbrirImagen;
-import archivos.ServicioGuardarImagen;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import javax.swing.JColorChooser;
-
 //import javax.swing.JButton;
 //import javax.swing.ButtonGroup;
 import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ButtonGroup;
@@ -42,15 +33,11 @@ public class VentanaPrincipal extends JFrame {
     private final JToggleButton btnFlecha = new JToggleButton("Flecha");
     private final JToggleButton btnHexagono = new JToggleButton("Hexágono");
     private final JToggleButton btnEstrella = new JToggleButton("Estrella");
-    //
-//    private ContenedorLienzo contenedorLienzo;
-    //
 
     private ServicioNuevoDocumento servicioNuevoDocumento;
     private final ButtonGroup grupoHerramientas = new ButtonGroup();
     private final PanelHerramientas herramientas = new PanelHerramientas();
 
-//    PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
     private Color colorActual = Color.WHITE;
     private Color colorAnterior = Color.WHITE;
 
@@ -72,17 +59,6 @@ public class VentanaPrincipal extends JFrame {
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
 
-//        int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
-//        jPanel1.add(btnOvalo, posicionRelleno);
-//        jPanel1.add(btnCirculo, posicionRelleno + 1);
-//        jPanel1.add(btnRombo, posicionRelleno + 2);
-//        jPanel1.add(btnPentagono, posicionRelleno + 3);
-//        jPanel1.add(btnCorazon, posicionRelleno + 4);
-//        jPanel1.add(btnFlecha, posicionRelleno + 5);
-//        jPanel1.add(btnHexagono, posicionRelleno + 6);
-//        jPanel1.add(btnEstrella, posicionRelleno + 7);
-//        jPanel1.add(btnTriangulo, posicionRelleno + 8);
-//        jPanel1.add(btnParalelogramo, posicionRelleno + 9);
         jButton8.setBackground(Color.WHITE);
 
         // Botones de la paleta de colores
@@ -105,9 +81,6 @@ public class VentanaPrincipal extends JFrame {
         jButton17.addActionListener(e -> cambiarColor(jButton17.getBackground()));
         jButton18.addActionListener(e -> cambiarColor(jButton18.getBackground()));
 
-        //Delimitar cada clase en su zona
-//       zonaLienzo.add(new ContenedorLienzo(panelDeDibujo), BorderLayout.CENTER);
-//        zonaHerramientas.add(herramientas, BorderLayout.CENTER);
         grupoHerramientas.add(herramientas.btnLapiz);
         grupoHerramientas.add(herramientas.btnBorrador);
 
@@ -124,16 +97,7 @@ public class VentanaPrincipal extends JFrame {
         ZonaLienzo.add(zonaGrosor, BorderLayout.WEST);
         ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
         herramientas.conectar(panelDeDibujo);
-
-        //int posicionRelleno = jPanel1.getComponentZOrder(chkRelleno);
-//        jPanel1.add(btnOvalo, posicionRelleno);
-//        jPanel1.add(btnCirculo, posicionRelleno + 1);
-//        jPanel1.add(btnRombo, posicionRelleno + 2);
-//        jPanel1.add(btnPentagono, posicionRelleno + 3);
-//        jPanel1.add(btnCorazon, posicionRelleno + 4);
-//        jPanel1.add(btnFlecha, posicionRelleno + 5);
-//        jPanel1.add(btnHexagono, posicionRelleno + 6);
-//        jPanel1.add(btnEstrella, posicionRelleno + 7);
+        
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
 
@@ -148,77 +112,18 @@ public class VentanaPrincipal extends JFrame {
         btnFlecha.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.FLECHA));
         btnHexagono.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.HEXAGONO));
         btnEstrella.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.ESTRELLA));
-        //chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-        //btnLimpiar.addActionListener(e -> { panelDeDibujo.Limpiar(); 
-        //btnLimpiar.setSelected(false);});
-        // Herramienta inicial
+
         herramientas.btnLapiz.setSelected(true);
 
-//        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
         // Establecemos un tamaño base de respaldo en caso de que el usuario restaure la ventana
-        setSize(1000, 600);
-        // Centra la ventana principal en el medio de la pantalla del dispositivo cuando no está maximizada
-
-//        zonaFiguras.add(figuras, BorderLayout.CENTER);
-//        zonaOpciones.add(opciones, BorderLayout.CENTER);
-//        zonaColores.add(colores, BorderLayout.CENTER);
-//        zonaEstado.add(estado, BorderLayout.CENTER);
+       
         setSize(1000, 700);
-//        contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
-//        ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
-
+        
         herramientas.instalarMenuArchivo(jMenu1, jMenuItem2, jMenuItem1,
                 panelDeDibujo, contenedorLienzo, this);
 
         panelDeDibujo.setBackground(java.awt.Color.WHITE);
-
-//        btnTrazo.setFocusPainted(false);
-//        btnLinea.setFocusPainted(false);
-//        btnRectangulo.setFocusPainted(false);
-//        chkRelleno.setFocusPainted(false);
-//        btnLimpiar.setFocusPainted(false);
-//        //Agrupacion de botones
-//        javax.swing.ButtonGroup grupoHerramientas = new javax.swing.ButtonGroup();
-//        grupoHerramientas.add(btnTrazo);
-//        grupoHerramientas.add(btnLinea);
-//        grupoHerramientas.add(btnRectangulo);
-//
-//        // Trazo seleccionado por defecto al abrir
-//        btnTrazo.setSelected(true);
-//
-//        // lógica (Listeners)
-//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-//
-//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-//
-//        btnLimpiar.addActionListener(e -> panelDeDibujo.Limpiar());
-//        JToolBar barra = new JToolBar();
-//        barra.setFloatable(false);
-//
-//        JButton btnTrazo = new JButton("Trazo Libre");
-//        btnTrazo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
-//
-//        JButton btnLinea = new JButton("Línea");
-//        btnLinea.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.LINEA));
-//
-//        JButton btnRectangulo = new JButton("Rectángulo");
-//        btnRectangulo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.RECTANGULO));
-//
-//        JCheckBox chkRelleno = new JCheckBox("Relleno");
-//        chkRelleno.addActionListener(e -> panelDeDibujo.setRellenarFigura(chkRelleno.isSelected()));
-//
-//        barra.add(btnTrazo);
-//        barra.add(btnLinea);
-//        barra.add(btnRectangulo);
-//        barra.addSeparator();
-//        barra.add(chkRelleno);
-        //add(barra, BorderLayout.NORTH);
-//        sliderGrosor.addChangeListener(e -> {
-//            int grosorSeleccionado = sliderGrosor.getValue();
-//            panelDeDibujo.setGrosorActual(grosorSeleccionado);
-//        });
+        
         setLocationRelativeTo(null);
         // Maximizamos la ventana al tamaño completo de la pantalla del dispositivo al iniciar
         setExtendedState(JFrame.MAXIMIZED_BOTH);
