@@ -91,9 +91,13 @@ public class PanelHerramientas extends JPanel {
         filaIconos.add(btnDeshacer);   // deshacer / rehacer: mismos métodos que el menú Edición
         filaIconos.add(btnRehacer);
 
-        add(filaIconos, BorderLayout.CENTER);
-        add(new JLabel("Herramientas", SwingConstants.CENTER), BorderLayout.SOUTH);
+        for (javax.swing.AbstractButton b : new javax.swing.AbstractButton[]{
+            btnGuardar, btnDeshacer, btnRehacer, btnLimpiar, btnLapiz, btnBorrador}) {
+            resaltar(b);
+        }
 
+//        add(filaIconos, BorderLayout.CENTER);
+//        add(new JLabel("Herramientas", SwingConstants.CENTER), BorderLayout.SOUTH);
         armarPanelGrosor();
     }
 
@@ -108,6 +112,8 @@ public class PanelHerramientas extends JPanel {
     private void armarPanelGrosor() {
         sliderGrosor.setToolTipText("Grosor del trazo");
         sliderOpacidad.setToolTipText("Opacidad");
+        sliderGrosor.setPreferredSize(new Dimension(20, 400));
+        sliderOpacidad.setPreferredSize(new Dimension(20, 400));
         panelGrosor.setLayout(new GridLayout(1, 2, 4, 0));
         panelGrosor.setBorder(BorderFactory.createEmptyBorder(6, 4, 6, 4));
         panelGrosor.add(columnaSlider("Grosor", sliderGrosor, lblGrosor));
@@ -172,16 +178,13 @@ public class PanelHerramientas extends JPanel {
     // Activa la función del lápiz
 
     public void activarLapiz() {
-        if (!btnLapiz.isSelected()) {
-            btnLapiz.doClick();
-        }
+        btnLapiz.setSelected(true);
+        btnLapiz.doClick();
     }
 
-// Activa la función del borrador
     public void activarBorrador() {
-        if (!btnBorrador.isSelected()) {
-            btnBorrador.doClick();
-        }
+        btnBorrador.setSelected(true);
+        btnBorrador.doClick();
     }
 
     private static void configurar(javax.swing.AbstractButton b, String tooltip) {
@@ -189,6 +192,46 @@ public class PanelHerramientas extends JPanel {
         b.setFocusPainted(false);
         b.setMargin(new java.awt.Insets(0, 0, 0, 0));
         b.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
+        b.setBorder(BorderFactory.createEmptyBorder());      // sin borde visible
+        b.setBorderPainted(false);                           // no pintar borde
+        b.setContentAreaFilled(false);                       // sin fondo tipo botón
+        b.setOpaque(false);                                  // fondo transparente
+        b.setRolloverEnabled(true);
+    }
+
+    private static void resaltar(javax.swing.AbstractButton b) {
+        Color hover = new Color(0xE5F0FB);
+        Color press = new Color(0xC7E0F5);
+        b.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                pintar(b, hover);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                if (!b.isSelected()) {
+                    pintar(b, null);
+                }
+            }
+
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                pintar(b, press);
+            }
+
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                if (!b.isSelected()) {
+                    pintar(b, null);
+                }
+            }
+        });
+        b.addItemListener(e -> pintar(b, b.isSelected() ? hover : null));
+    }
+
+    private static void pintar(javax.swing.AbstractButton b, Color c) {
+        b.setContentAreaFilled(c != null);
+        b.setOpaque(c != null);
+        if (c != null) {
+            b.setBackground(c);
+        }
     }
 
     /**
