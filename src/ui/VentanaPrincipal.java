@@ -60,28 +60,28 @@ public class VentanaPrincipal extends JFrame {
         jButton8.setBackground(Color.WHITE);
 
         // Botones de la paleta de colores
-        btnNegro.addActionListener(e -> cambiarColor(btnNegro.getBackground()));
+        btnNegro.addActionListener(e -> cambiarColor(btnNegro.getBackground()));        
+        btnGris.addActionListener(e -> cambiarColor(btnGris.getBackground()));
         btnRojo.addActionListener(e -> cambiarColor(btnRojo.getBackground()));
         btnNaranja.addActionListener(e -> cambiarColor(btnNaranja.getBackground()));
         btnAmarillo.addActionListener(e -> cambiarColor(btnAmarillo.getBackground()));
         btnVerde.addActionListener(e -> cambiarColor(btnVerde.getBackground()));
-        jButton6.addActionListener(e -> cambiarColor(jButton6.getBackground()));
-        jButton7.addActionListener(e -> cambiarColor(jButton7.getBackground()));
-        jButton8.addActionListener(e -> cambiarColor(jButton8.getBackground()));
-        jButton9.addActionListener(e -> cambiarColor(jButton9.getBackground()));
-        jButton10.addActionListener(e -> cambiarColor(jButton10.getBackground()));
-        jButton11.addActionListener(e -> cambiarColor(jButton11.getBackground()));
-        jButton12.addActionListener(e -> cambiarColor(jButton12.getBackground()));
-        jButton13.addActionListener(e -> cambiarColor(jButton13.getBackground()));
-        jButton14.addActionListener(e -> cambiarColor(jButton14.getBackground()));
-        jButton15.addActionListener(e -> cambiarColor(jButton15.getBackground()));
-        jButton16.addActionListener(e -> cambiarColor(jButton16.getBackground()));
-        jButton17.addActionListener(e -> cambiarColor(jButton17.getBackground()));
-        jButton18.addActionListener(e -> cambiarColor(jButton18.getBackground()));
+        btnAzul.addActionListener(e -> cambiarColor(btnAzul.getBackground()));
+        btnPurpura.addActionListener(e -> cambiarColor(btnPurpura.getBackground()));        
+        btnMarron.addActionListener(e -> cambiarColor(btnMarron.getBackground()));
+        btnBlanco.addActionListener(e -> cambiarColor(btnBlanco.getBackground()));
+        btnGrisClaro.addActionListener(e -> cambiarColor(btnGrisClaro.getBackground()));
+        btnRosa.addActionListener(e -> cambiarColor(btnRosa.getBackground()));
+        btnDorado.addActionListener(e -> cambiarColor(btnDorado.getBackground()));
+        btnAmarilloClaro.addActionListener(e -> cambiarColor(btnAmarilloClaro.getBackground()));
+        btnLima.addActionListener(e -> cambiarColor(btnLima.getBackground()));
+        btnCeleste.addActionListener(e -> cambiarColor(btnCeleste.getBackground()));
+        btnLavanda.addActionListener(e -> cambiarColor(btnLavanda.getBackground()));
+        btnMarronClaro.addActionListener(e -> cambiarColor(btnMarronClaro.getBackground()));
         btnSelectorColores.addActionListener(e -> {
             if (gestorColor.abrirSelector(this)) {
                 // Si eligen un color nuevo, el botón 18 (el que marcaste) se pinta de ese color
-                jButton18.setBackground(gestorColor.getColorActual());
+                btnSelectorColores.setBackground(gestorColor.getColorActual());
             }
         });
 
@@ -145,6 +145,7 @@ public class VentanaPrincipal extends JFrame {
         zonaHerramientas = new javax.swing.JPanel();
         btnBorrador = new javax.swing.JButton();
         btnLapiz = new javax.swing.JButton();
+        jSeparador1 = new javax.swing.JSeparator();
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
         btnLinea = new javax.swing.JButton();
@@ -161,6 +162,7 @@ public class VentanaPrincipal extends JFrame {
         jButton16 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton17 = new javax.swing.JButton();
+        jSeparador2 = new javax.swing.JSeparator();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
         panelColorActual = new javax.swing.JPanel();
@@ -184,7 +186,7 @@ public class VentanaPrincipal extends JFrame {
         btnLima = new javax.swing.JButton();
         btnCeleste = new javax.swing.JButton();
         btnLavanda = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
+        btnMarronClaro = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnSelectorColores = new javax.swing.JButton();
         ZonaLienzo = new javax.swing.JPanel();
@@ -214,7 +216,6 @@ public class VentanaPrincipal extends JFrame {
 
         PanelCinta.setLayout(new java.awt.BorderLayout());
 
-        zonaHerramientas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
 
         btnBorrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrador.png"))); // NOI18N
@@ -226,33 +227,36 @@ public class VentanaPrincipal extends JFrame {
         btnLapiz.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnLapiz.addActionListener(this::btnLapizActionPerformed);
 
+        jSeparador1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout zonaHerramientasLayout = new javax.swing.GroupLayout(zonaHerramientas);
         zonaHerramientas.setLayout(zonaHerramientasLayout);
         zonaHerramientasLayout.setHorizontalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaHerramientasLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addComponent(btnLapiz)
-                .addGap(37, 37, 37)
-                .addComponent(btnBorrador)
-                .addGap(131, 131, 131))
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addComponent(btnLapiz, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(btnBorrador, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
+                .addComponent(jSeparador1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         zonaHerramientasLayout.setVerticalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparador1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(zonaHerramientasLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBorrador)
-                    .addComponent(btnLapiz))
-                .addGap(48, 48, 48))
+                .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnLapiz, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(btnBorrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
 
-        PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
-        zonaFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaFiguras.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         zonaFiguras.setMaximumSize(new java.awt.Dimension(257, 256));
         zonaFiguras.setMinimumSize(new java.awt.Dimension(2, 2));
@@ -366,6 +370,9 @@ public class VentanaPrincipal extends JFrame {
 
         PanelCentral.add(zonaFiguras, java.awt.BorderLayout.LINE_START);
 
+        jSeparador2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        PanelCentral.add(jSeparador2, java.awt.BorderLayout.LINE_END);
+
         PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
 
         panelDerecho.setLayout(new java.awt.BorderLayout());
@@ -402,7 +409,6 @@ public class VentanaPrincipal extends JFrame {
 
         panelDerecho.add(zonaEstadoColor, java.awt.BorderLayout.CENTER);
 
-        zonaColores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaColores.setPreferredSize(new java.awt.Dimension(290, 100));
 
         panelBotones.setName("PanelBotones"); // NOI18N
@@ -417,7 +423,7 @@ public class VentanaPrincipal extends JFrame {
 
         btnGris.setBackground(new java.awt.Color(102, 102, 102));
         btnGris.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        btnGris.setToolTipText("Editar Colores");
+        btnGris.setToolTipText("Gris");
         btnGris.setFocusPainted(false);
         btnGris.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnGris.setIconTextGap(8);
@@ -499,10 +505,10 @@ public class VentanaPrincipal extends JFrame {
         btnLavanda.setPreferredSize(new java.awt.Dimension(25, 25));
         panelBotones.add(btnLavanda);
 
-        jButton18.setBackground(new java.awt.Color(196, 164, 132));
-        jButton18.setToolTipText("Marrón Claro");
-        jButton18.setPreferredSize(new java.awt.Dimension(25, 25));
-        panelBotones.add(jButton18);
+        btnMarronClaro.setBackground(new java.awt.Color(196, 164, 132));
+        btnMarronClaro.setToolTipText("Marrón Claro");
+        btnMarronClaro.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(btnMarronClaro);
 
         zonaColores.add(panelBotones);
         panelBotones.getAccessibleContext().setAccessibleDescription("");
@@ -524,7 +530,6 @@ public class VentanaPrincipal extends JFrame {
         btnSelectorColores.setMaximumSize(new java.awt.Dimension(25, 25));
         btnSelectorColores.setMinimumSize(new java.awt.Dimension(25, 25));
         btnSelectorColores.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnSelectorColores.setSelected(true);
         zonaColores.add(btnSelectorColores);
 
         panelDerecho.add(zonaColores, java.awt.BorderLayout.CENTER);
@@ -676,6 +681,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton btnLima;
     private javax.swing.JButton btnLinea;
     private javax.swing.JButton btnMarron;
+    private javax.swing.JButton btnMarronClaro;
     private javax.swing.JButton btnNaranja;
     private javax.swing.JButton btnNegro;
     private javax.swing.JButton btnPurpura;
@@ -692,7 +698,6 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -707,6 +712,8 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparador1;
+    private javax.swing.JSeparator jSeparador2;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelColorActual;
     private javax.swing.JPanel panelColorAnterior;
