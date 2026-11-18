@@ -1,11 +1,11 @@
 package ui;
 
-
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.BevelBorder;
 
 public class BarraEstado extends JPanel {
+
     private JLabel lblHerramienta;
     private JPanel pnlColorActivo;
     private JLabel lblMensajeArchivo;
@@ -20,12 +20,12 @@ public class BarraEstado extends JPanel {
         // Seccion izquierda: Herramienta y Color actual
         JPanel panelIzquierdo = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 2));
         lblHerramienta = new JLabel("Herramienta: Ninguna");
-        
+
         pnlColorActivo = new JPanel();
         pnlColorActivo.setPreferredSize(new Dimension(15, 15));
         pnlColorActivo.setBackground(Color.BLACK); // Color inicial
         pnlColorActivo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        
+
         panelIzquierdo.add(lblHerramienta);
         panelIzquierdo.add(new JLabel("Color:"));
         panelIzquierdo.add(pnlColorActivo);
@@ -47,7 +47,6 @@ public class BarraEstado extends JPanel {
     }
 
     //Metodos publicos para actualizar la informacion
-
     public void setHerramientaActiva(String herramienta) {
         lblHerramienta.setText("Herramienta: " + herramienta);
     }
