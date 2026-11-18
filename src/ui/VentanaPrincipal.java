@@ -2,6 +2,7 @@
 package ui;
 //hola
 
+
 import java.awt.BorderLayout;
 import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
