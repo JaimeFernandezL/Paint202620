@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package ui;
 //hola
 
+
 import java.awt.BorderLayout;
-//import javax.swing.JButton;
-//import javax.swing.ButtonGroup;
 import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
 import java.awt.Color;
@@ -15,15 +11,12 @@ import java.awt.Dimension;
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 
-/**
- *
- * @author josearielpereyra
- */
+
 public class VentanaPrincipal extends JFrame {
 
+    //Atributos y metodos para conectar toda la interfaz con BarraEstado
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
     private final PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
-    // Contenedor con área gris, barras de desplazamiento y asas para redimensionar el lienzo
     private final ContenedorLienzo contenedorLienzo = new ContenedorLienzo(panelDeDibujo);
     private final JToggleButton btnOvalo = new JToggleButton("Óvalo");
     private final JToggleButton btnCirculo = new JToggleButton("Círculo");
@@ -37,19 +30,23 @@ public class VentanaPrincipal extends JFrame {
     private ServicioNuevoDocumento servicioNuevoDocumento;
     private final ButtonGroup grupoHerramientas = new ButtonGroup();
     private final PanelHerramientas herramientas = new PanelHerramientas();
+    private final BarraEstado estado = new BarraEstado();
 
     private Color colorActual = Color.WHITE;
     private Color colorAnterior = Color.WHITE;
 
     private final GestorColor gestorColor = new GestorColor(panelDeDibujo);
+    private JButton jButton1;
+    private JButton jButton2;
+    private JButton jButton3;
+    private JButton jButton4;
+    private JButton jButton5;
 
     private void cambiarColor(Color nuevoColor) {
         gestorColor.cambiarColor(nuevoColor);
+        estado.setColorActivo(nuevoColor);
     }
-
-    /**
-     * Creates new form VentanaPrincipal
-     */
+    
     public VentanaPrincipal() {
         initComponents();
 
@@ -82,9 +79,16 @@ public class VentanaPrincipal extends JFrame {
             if (gestorColor.abrirSelector(this)) {
                 // Si eligen un color nuevo, el botón 18 (el que marcaste) se pinta de ese color
                 btnSelectorColores.setBackground(gestorColor.getColorActual());
+                //Actualiza el color elegido en BarraEstado
+                estado.setColorActivo(gestorColor.getColorActual());
             }
         });
 
+        // Relleno: las figuras NUEVAS se dibujan con o sin relleno
+        jCheckBox1.setFocusPainted(false);
+        jCheckBox1.addActionListener(e -> panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected()));
+        panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected());   // que empiece igual que el checkbox (sin marcar)
+        
         grupoHerramientas.add(herramientas.btnLapiz);
         grupoHerramientas.add(herramientas.btnBorrador);
 
@@ -101,6 +105,11 @@ public class VentanaPrincipal extends JFrame {
         ZonaLienzo.add(zonaGrosor, BorderLayout.WEST);
         ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
         herramientas.conectar(panelDeDibujo);
+        panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
+
+        PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
+        zonaFiguras.setLayout(new java.awt.BorderLayout());
+        zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
 
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
@@ -126,7 +135,30 @@ public class VentanaPrincipal extends JFrame {
                 panelDeDibujo, contenedorLienzo, this);
 
         panelDeDibujo.setBackground(java.awt.Color.WHITE);
+        
+        getContentPane().remove(jPanel1);
+        getContentPane().add(estado, BorderLayout.PAGE_END);
+        
+        
+        
 
+       // Sincronizar herramienta activa con BarraEstado (Lápiz, Borrador y Figuras)
+        estado.setHerramientaActiva("Lápiz");
+        btnLapiz.addActionListener(e -> estado.setHerramientaActiva("Lápiz"));
+        btnBorra.addActionListener(e -> estado.setHerramientaActiva("Borrador"));
+        estado.setHerramientaActiva("Lápiz");
+        btnLapiz.addActionListener(e -> estado.setHerramientaActiva("Lápiz"));
+        btnBorra.addActionListener(e -> estado.setHerramientaActiva("Borrador"));
+        herramientas.btnLapiz.addActionListener(e -> estado.setHerramientaActiva("Lápiz"));
+        herramientas.btnBorrador.addActionListener(e -> estado.setHerramientaActiva("Borrador"));
+
+        for (java.awt.Component comp : figuras.getComponents()) {
+            if (comp instanceof JToggleButton) {
+                JToggleButton btn = (JToggleButton) comp;
+                btn.addActionListener(e -> estado.setHerramientaActiva(btn.getText()));
+            }
+        }
+        
         setLocationRelativeTo(null);
         // Maximizamos la ventana al tamaño completo de la pantalla del dispositivo al iniciar
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -164,6 +196,7 @@ public class VentanaPrincipal extends JFrame {
         jButton17 = new javax.swing.JButton();
         jSeparador2 = new javax.swing.JSeparator();
         zonaEstadoFiguras = new javax.swing.JPanel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
         panelColorActual = new javax.swing.JPanel();
@@ -374,16 +407,8 @@ public class VentanaPrincipal extends JFrame {
         jSeparador2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         PanelCentral.add(jSeparador2, java.awt.BorderLayout.LINE_END);
 
-        javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
-        zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
-        zonaEstadoFigurasLayout.setHorizontalGroup(
-            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 103, Short.MAX_VALUE)
-        );
-        zonaEstadoFigurasLayout.setVerticalGroup(
-            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jCheckBox1.setText("Relleno");
+        zonaEstadoFiguras.add(jCheckBox1);
 
         PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.CENTER);
 
@@ -716,6 +741,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
