@@ -574,6 +574,8 @@
             <Property name="text" type="java.lang.String" value="jLabel2"/>
           </Properties>
         </Component>
+        <Component class="ui.BarraEstado" name="barraEstado1">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

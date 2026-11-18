@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package ui;
 //hola
 
@@ -139,18 +136,22 @@ public class VentanaPrincipal extends JFrame {
         
         
 
-        // Sincronizar herramienta activa con BarraEstado
+       // Sincronizar herramienta activa con BarraEstado (Lápiz, Borrador y Figuras)
         estado.setHerramientaActiva("Lápiz");
         btnLapiz.addActionListener(e -> estado.setHerramientaActiva("Lápiz"));
         btnBorra.addActionListener(e -> estado.setHerramientaActiva("Borrador"));
-        btnOvalo.addActionListener(e -> estado.setHerramientaActiva("Óvalo"));
-        btnCirculo.addActionListener(e -> estado.setHerramientaActiva("Círculo"));
-        btnRombo.addActionListener(e -> estado.setHerramientaActiva("Rombo"));
-        btnPentagono.addActionListener(e -> estado.setHerramientaActiva("Pentágono"));
-        btnCorazon.addActionListener(e -> estado.setHerramientaActiva("Corazón"));
-        btnFlecha.addActionListener(e -> estado.setHerramientaActiva("Flecha"));
-        btnHexagono.addActionListener(e -> estado.setHerramientaActiva("Hexágono"));
-        btnEstrella.addActionListener(e -> estado.setHerramientaActiva("Estrella"));
+        estado.setHerramientaActiva("Lápiz");
+        btnLapiz.addActionListener(e -> estado.setHerramientaActiva("Lápiz"));
+        btnBorra.addActionListener(e -> estado.setHerramientaActiva("Borrador"));
+        herramientas.btnLapiz.addActionListener(e -> estado.setHerramientaActiva("Lápiz"));
+        herramientas.btnBorrador.addActionListener(e -> estado.setHerramientaActiva("Borrador"));
+
+        for (java.awt.Component comp : figuras.getComponents()) {
+            if (comp instanceof JToggleButton) {
+                JToggleButton btn = (JToggleButton) comp;
+                btn.addActionListener(e -> estado.setHerramientaActiva(btn.getText()));
+            }
+        }
         
         setLocationRelativeTo(null);
         // Maximizamos la ventana al tamaño completo de la pantalla del dispositivo al iniciar
@@ -201,6 +202,7 @@ public class VentanaPrincipal extends JFrame {
         zonaGrosor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        barraEstado1 = new ui.BarraEstado();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -417,6 +419,7 @@ public class VentanaPrincipal extends JFrame {
 
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2);
+        jPanel1.add(barraEstado1);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -536,6 +539,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelCinta;
     private javax.swing.JPanel ZonaLienzo;
+    private ui.BarraEstado barraEstado1;
     private javax.swing.JButton btnBorra;
     private javax.swing.JMenuItem btnDeshacer1;
     private javax.swing.JButton btnLapiz;
