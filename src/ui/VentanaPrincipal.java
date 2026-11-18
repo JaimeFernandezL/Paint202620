@@ -249,9 +249,9 @@ public class VentanaPrincipal extends JFrame {
         zonaEstadoFigurasLayout.setHorizontalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(jCheckBox1)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         zonaEstadoFigurasLayout.setVerticalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
