@@ -106,7 +106,7 @@ public class VentanaPrincipal extends JFrame {
                 = new ServicioNuevoDocumento(panelDeDibujo);
 
         btnLapiz.addActionListener(e -> herramientas.activarLapiz());
-        btnBorrador.addActionListener(e -> herramientas.activarBorrador());
+        btnBorra.addActionListener(e -> herramientas.activarBorrador());
 
         btnOvalo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.OVALO));
         btnCirculo.addActionListener(e -> panelDeDibujo.setTipoActual(PanelDeDibujo.TipoFigura.CIRCULO));
@@ -143,7 +143,7 @@ public class VentanaPrincipal extends JFrame {
 
         PanelCinta = new javax.swing.JPanel();
         zonaHerramientas = new javax.swing.JPanel();
-        btnBorrador = new javax.swing.JButton();
+        btnBorra = new javax.swing.JButton();
         btnLapiz = new javax.swing.JButton();
         jSeparador1 = new javax.swing.JSeparator();
         PanelCentral = new javax.swing.JPanel();
@@ -163,6 +163,7 @@ public class VentanaPrincipal extends JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton17 = new javax.swing.JButton();
         jSeparador2 = new javax.swing.JSeparator();
+        zonaEstadoFiguras = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
         panelColorActual = new javax.swing.JPanel();
@@ -218,8 +219,8 @@ public class VentanaPrincipal extends JFrame {
 
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
 
-        btnBorrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrador.png"))); // NOI18N
-        btnBorrador.setToolTipText("Borrador");
+        btnBorra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrador.png"))); // NOI18N
+        btnBorra.setToolTipText("Borrador");
 
         btnLapiz.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lapiz.png"))); // NOI18N
         btnLapiz.setToolTipText("Lapiz");
@@ -237,7 +238,7 @@ public class VentanaPrincipal extends JFrame {
                 .addContainerGap(52, Short.MAX_VALUE)
                 .addComponent(btnLapiz, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addGap(27, 27, 27)
-                .addComponent(btnBorrador, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBorra, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90)
                 .addComponent(jSeparador1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -249,7 +250,7 @@ public class VentanaPrincipal extends JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLapiz, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(btnBorrador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBorra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -372,6 +373,19 @@ public class VentanaPrincipal extends JFrame {
 
         jSeparador2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         PanelCentral.add(jSeparador2, java.awt.BorderLayout.LINE_END);
+
+        javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
+        zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
+        zonaEstadoFigurasLayout.setHorizontalGroup(
+            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 103, Short.MAX_VALUE)
+        );
+        zonaEstadoFigurasLayout.setVerticalGroup(
+            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.CENTER);
 
         PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
 
@@ -670,7 +684,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton btnAmarilloClaro;
     private javax.swing.JButton btnAzul;
     private javax.swing.JButton btnBlanco;
-    private javax.swing.JButton btnBorrador;
+    private javax.swing.JButton btnBorra;
     private javax.swing.JButton btnCeleste;
     private javax.swing.JMenuItem btnDeshacer1;
     private javax.swing.JButton btnDorado;
@@ -720,6 +734,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
     private javax.swing.JPanel zonaEstadoColor;
+    private javax.swing.JPanel zonaEstadoFiguras;
     private javax.swing.JPanel zonaFiguras;
     private javax.swing.JPanel zonaGrosor;
     private javax.swing.JPanel zonaHerramientas;

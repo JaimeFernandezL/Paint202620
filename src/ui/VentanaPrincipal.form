@@ -143,7 +143,7 @@
                       <EmptySpace pref="52" max="32767" attributes="0"/>
                       <Component id="btnLapiz" pref="32" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="btnBorrador" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnBorra" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="jSeparador1" min="-2" pref="11" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -157,7 +157,7 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnLapiz" pref="32" max="32767" attributes="0"/>
-                          <Component id="btnBorrador" max="32767" attributes="0"/>
+                          <Component id="btnBorra" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -165,7 +165,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btnBorrador">
+            <Component class="javax.swing.JButton" name="btnBorra">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagenes/borrador.png"/>
@@ -421,6 +421,26 @@
                 </Constraint>
               </Constraints>
             </Component>
+            <Container class="javax.swing.JPanel" name="zonaEstadoFiguras">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                  <BorderConstraints direction="Center"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="103" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelDerecho">
