@@ -46,11 +46,27 @@ public class VentanaPrincipal extends JFrame {
     private void cambiarColor(Color nuevoColor) {
         gestorColor.cambiarColor(nuevoColor);
     }
+    //PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+        
 
+    
+
+    //PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
+    
+
+    // TODO clases por crear, por quien le corresponda:
+    //private final ButtonGroup grupoHerramientas = new ButtonGroup();
+    
+//    private final PanelHerramientas herramientas = new PanelHerramientas();
+//    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
+//    private final PanelOpciones opciones = new PanelOpciones(panelDeDibujo);
+//    private final PanelColores colores = new PanelColores(panelDeDibujo);
+//    private final BarraEstado estado = new BarraEstado();
+    
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal() {
+   public VentanaPrincipal() {
         initComponents();
 
         // Agregamos el contenedor del lienzo al centro de la ventana principal en lugar del panel directo
@@ -101,6 +117,12 @@ public class VentanaPrincipal extends JFrame {
         ZonaLienzo.add(zonaGrosor, BorderLayout.WEST);
         ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
         herramientas.conectar(panelDeDibujo);
+        panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
+        
+        PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
+        zonaFiguras.setLayout(new java.awt.BorderLayout());
+        zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
+
 
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
