@@ -6,8 +6,6 @@ package ui;
 //hola
 
 import java.awt.BorderLayout;
-//import javax.swing.JButton;
-//import javax.swing.ButtonGroup;
 import archivos.ServicioNuevoDocumento;
 import javax.swing.*;
 import java.awt.Color;
@@ -15,10 +13,7 @@ import java.awt.Dimension;
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 
-/**
- *
- * @author josearielpereyra
- */
+
 public class VentanaPrincipal extends JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName());
@@ -46,27 +41,8 @@ public class VentanaPrincipal extends JFrame {
     private void cambiarColor(Color nuevoColor) {
         gestorColor.cambiarColor(nuevoColor);
     }
-    //PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
-        
-
     
-
-    //PanelDeDibujo panelDeDibujo = new PanelDeDibujo();
-    
-
-    // TODO clases por crear, por quien le corresponda:
-    //private final ButtonGroup grupoHerramientas = new ButtonGroup();
-    
-//    private final PanelHerramientas herramientas = new PanelHerramientas();
-//    private final PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
-//    private final PanelOpciones opciones = new PanelOpciones(panelDeDibujo);
-//    private final PanelColores colores = new PanelColores(panelDeDibujo);
-//    private final BarraEstado estado = new BarraEstado();
-    
-    /**
-     * Creates new form VentanaPrincipal
-     */
-   public VentanaPrincipal() {
+    public VentanaPrincipal() {
         initComponents();
 
         // Agregamos el contenedor del lienzo al centro de la ventana principal en lugar del panel directo
@@ -101,6 +77,11 @@ public class VentanaPrincipal extends JFrame {
             }
         });
 
+        // Relleno: las figuras NUEVAS se dibujan con o sin relleno
+        jCheckBox1.setFocusPainted(false);
+        jCheckBox1.addActionListener(e -> panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected()));
+        panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected());   // que empiece igual que el checkbox (sin marcar)
+        
         grupoHerramientas.add(herramientas.btnLapiz);
         grupoHerramientas.add(herramientas.btnBorrador);
 
@@ -118,11 +99,10 @@ public class VentanaPrincipal extends JFrame {
         ZonaLienzo.add(contenedorLienzo, BorderLayout.CENTER);
         herramientas.conectar(panelDeDibujo);
         panelDeDibujo.setGrosorActual(herramientas.sliderGrosor.getValue());
-        
+
         PanelFiguras figuras = new PanelFiguras(panelDeDibujo, grupoHerramientas);
         zonaFiguras.setLayout(new java.awt.BorderLayout());
         zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
-
 
         servicioNuevoDocumento
                 = new ServicioNuevoDocumento(panelDeDibujo);
@@ -170,6 +150,7 @@ public class VentanaPrincipal extends JFrame {
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
         zonaEstadoFiguras = new javax.swing.JPanel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         panelDerecho = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
@@ -260,6 +241,26 @@ public class VentanaPrincipal extends JFrame {
 
         zonaEstadoFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         zonaEstadoFiguras.setPreferredSize(new java.awt.Dimension(100, 90));
+
+        jCheckBox1.setText("Relleno");
+
+        javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
+        zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
+        zonaEstadoFigurasLayout.setHorizontalGroup(
+            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox1)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        zonaEstadoFigurasLayout.setVerticalGroup(
+            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zonaEstadoFigurasLayout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
         PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.LINE_END);
 
         PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
@@ -535,6 +536,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
