@@ -70,15 +70,16 @@ public class VentanaPrincipal extends JFrame {
         jButton16.addActionListener(e -> cambiarColor(jButton16.getBackground()));
         jButton17.addActionListener(e -> cambiarColor(jButton17.getBackground()));
         jButton18.addActionListener(e -> cambiarColor(jButton18.getBackground()));
+        jButton21.addActionListener(e -> cambiarColor(jButton21.getBackground()));
         jButton19.addActionListener(e -> {
             if (gestorColor.abrirSelector(this)) {
                 // Si eligen un color nuevo, el botón 18 (el que marcaste) se pinta de ese color
-                jButton18.setBackground(gestorColor.getColorActual());
+                jButton21.setBackground(gestorColor.getColorActual());
                 //Actualiza el color elegido en BarraEstado
                 estado.setColorActivo(gestorColor.getColorActual());
             }
         });
-
+        
         // Relleno: las figuras NUEVAS se dibujan con o sin relleno
         jCheckBox1.setFocusPainted(false);
         jCheckBox1.addActionListener(e -> panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected()));
@@ -168,6 +169,9 @@ public class VentanaPrincipal extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
         PanelCinta = new javax.swing.JPanel();
         zonaHerramientas = new javax.swing.JPanel();
         btnBorra = new javax.swing.JButton();
@@ -197,8 +201,8 @@ public class VentanaPrincipal extends JFrame {
         jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
         ZonaLienzo = new javax.swing.JPanel();
         zonaGrosor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -212,6 +216,12 @@ public class VentanaPrincipal extends JFrame {
         btnDeshacer1 = new javax.swing.JMenuItem();
         btnRehacer1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+
+        jMenu4.setText("File");
+        jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("Edit");
+        jMenuBar2.add(jMenu5);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sin Nombre - Paint");
@@ -390,20 +400,39 @@ public class VentanaPrincipal extends JFrame {
         jButton18.setPreferredSize(new java.awt.Dimension(25, 25));
         panelBotones.add(jButton18);
 
-        zonaColores.add(panelBotones);
-        panelBotones.getAccessibleContext().setAccessibleDescription("");
-
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Colores");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setMaximumSize(new java.awt.Dimension(50, 16));
-        jLabel1.setMinimumSize(new java.awt.Dimension(50, 16));
-        jLabel1.setPreferredSize(new java.awt.Dimension(50, 16));
-        zonaColores.add(jLabel1);
-
         jButton19.setText("Elegir Color");
-        zonaColores.add(jButton19);
+
+        jButton21.setToolTipText("Marrón Claro");
+        jButton21.setPreferredSize(new java.awt.Dimension(20, 24));
+
+        javax.swing.GroupLayout zonaColoresLayout = new javax.swing.GroupLayout(zonaColores);
+        zonaColores.setLayout(zonaColoresLayout);
+        zonaColoresLayout.setHorizontalGroup(
+            zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaColoresLayout.createSequentialGroup()
+                .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(zonaColoresLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jButton19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(zonaColoresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        zonaColoresLayout.setVerticalGroup(
+            zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaColoresLayout.createSequentialGroup()
+                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        panelBotones.getAccessibleContext().setAccessibleDescription("");
 
         panelDerecho.add(zonaColores, java.awt.BorderLayout.LINE_END);
 
@@ -457,7 +486,7 @@ public class VentanaPrincipal extends JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 879, 428);
+        setBounds(0, 0, 892, 428);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -557,6 +586,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -565,12 +595,14 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;

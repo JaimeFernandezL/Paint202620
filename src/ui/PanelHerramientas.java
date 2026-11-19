@@ -33,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import java.awt.GridLayout;
 import herramientaborrador.Borrador;
+import java.util.ArrayList;
 
 /**
  * Grupo "Herramientas" al estilo del Paint de Windows: iconos arriba y la
@@ -53,6 +54,11 @@ public class PanelHerramientas extends JPanel {
     public final JButton btnLimpiar = new JButton(new IconoLimpiar());
     public final JButton btnDeshacer = new JButton(new IconoDeshacer(false));
     public final JButton btnRehacer = new JButton(new IconoDeshacer(true));
+
+    private ArrayList<figuras.Figura> figurasAntesDeBorrar = null;
+    private boolean hayUnLimpiadoParaRehacer = false;
+    private java.awt.image.BufferedImage imagenAntesDeBorrar = null;
+    private java.awt.image.BufferedImage imagenParaRehacer = null;
 
     // Grosor: slider VERTICAL, como en el Paint. Rango 1-50 (el mismo del Equipo 5).
     // NO va dentro de este panel: VentanaPrincipal lo pone en zonaGrosor
@@ -147,11 +153,49 @@ public class PanelHerramientas extends JPanel {
                 .guardarImagen(lienzo, SwingUtilities.getWindowAncestor(btnGuardar)));
 
         // Limpiar
-        btnLimpiar.addActionListener(e -> lienzo.Limpiar());
+        btnLimpiar.addActionListener(e -> {
+            // 1. Guardamos cómo estaba antes de limpiar
+            figurasAntesDeBorrar = lienzo.obtenerCopiaFiguras();
+            imagenAntesDeBorrar = lienzo.getImagenFondo(); // <--- Guardamos la imagen
+            // Al limpiar, la imagen desaparece. Guardamos "null" para saber que el estado final es vacío.
+            imagenParaRehacer = null;
+            // 2. Activamos la bandera para saber que hay un limpiado pendiente
+            hayUnLimpiadoParaRehacer = true;
+            // 3. Limpiamos el lienzo
+            lienzo.Limpiar();
+        });
 
         // Deshacer / Rehacer (los mismos que usa el menú Edición)
-        btnDeshacer.addActionListener(e -> lienzo.deshacer());
-        btnRehacer.addActionListener(e -> lienzo.rehacer());
+        btnDeshacer.addActionListener(e -> {
+            if (figurasAntesDeBorrar != null) {
+                lienzo.restaurarFiguras(figurasAntesDeBorrar);
+                lienzo.setImagenFondoDirecto(imagenAntesDeBorrar); // Restaura la imagen
+
+                figurasAntesDeBorrar = null;
+                imagenAntesDeBorrar = null;
+                hayUnLimpiadoParaRehacer = false;
+            } else {
+                lienzo.deshacer();
+            }
+        });
+
+        //Boton rehacer
+        btnRehacer.addActionListener(e -> {
+            if (hayUnLimpiadoParaRehacer || imagenParaRehacer != null) {
+                // Si estamos rehaciendo un limpiado o una imagen, limpiamos el lienzo
+                lienzo.Limpiar();
+
+                // Si había una imagen para rehacer, la volvemos a poner
+                if (imagenParaRehacer != null) {
+                    lienzo.setImagenFondoDirecto(imagenParaRehacer);
+                    imagenParaRehacer = null; // La consumimos
+                }
+
+                hayUnLimpiadoParaRehacer = false;
+            } else {
+                lienzo.rehacer();
+            }
+        });
 
         // Grosor: cada cambio del slider llega al lienzo
         sliderGrosor.addChangeListener(e -> {
@@ -175,20 +219,20 @@ public class PanelHerramientas extends JPanel {
                 -> borrador.setGrosor(sliderGrosor.getValue()));
 
         //Otro metodo para el borrador
-    //// Borrador (Ahora es un trazo blanco para que se pueda Deshacer/Rehacer)
-    //btnBorrador.addActionListener(e -> {
-    //    if (btnBorrador.isSelected()) {
-    //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
-    //        lienzo.setColor(java.awt.Color.WHITE); // Pinta blanco
-    //    }
-    //});
-    //
-    //btnLapiz.addActionListener(e -> {
-    //    if (btnLapiz.isSelected()) {
-    //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
-    //        lienzo.setColor(java.awt.Color.BLACK); // Vuelve al negro
-    //    }
-    //});
+        //// Borrador (Ahora es un trazo blanco para que se pueda Deshacer/Rehacer)
+        //btnBorrador.addActionListener(e -> {
+        //    if (btnBorrador.isSelected()) {
+        //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
+        //        lienzo.setColor(java.awt.Color.WHITE); // Pinta blanco
+        //    }
+        //});
+        //
+        //btnLapiz.addActionListener(e -> {
+        //    if (btnLapiz.isSelected()) {
+        //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
+        //        lienzo.setColor(java.awt.Color.BLACK); // Vuelve al negro
+        //    }
+        //});
     }
     // Activa la función del lápiz
 
@@ -265,10 +309,17 @@ public class PanelHerramientas extends JPanel {
         itemAbrir.addActionListener(e -> {
             BufferedImage img = servicioAbrir.abrir(ventana);
             if (img != null) {
+                figurasAntesDeBorrar = lienzo.obtenerCopiaFiguras();
+                imagenAntesDeBorrar = lienzo.getImagenFondo();
+
+                imagenParaRehacer = img; // <--- Guardamos la nueva imagen aquí
+
+                hayUnLimpiadoParaRehacer = true;
+
                 contenedor.setTamanoLienzo(img.getWidth(), img.getHeight());
                 lienzo.cargarImagen(img);
                 if (borrador != null) {
-                    borrador.limpiar(); // Limpia las marcas blancas de la goma
+                    borrador.limpiar();
                 }
             }
         });

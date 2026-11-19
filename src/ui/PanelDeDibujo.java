@@ -146,8 +146,7 @@ public class PanelDeDibujo extends JPanel {
                 figuraActual.setGrosor(grosorActual);
                 figuraActual.setOpacidad(opacidadActual);
                 figuraActual.setColor(colorActual);   // ← aplica el color elegido
-                // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
-                figuras.add(figuraActual);
+
                 // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
                 figuras.add(figuraActual);
                 // Asociamos a esta figura los límites actuales del lienzo
@@ -234,7 +233,7 @@ public class PanelDeDibujo extends JPanel {
         if (imagenFondo != null) {
             g2.drawImage(imagenFondo, 0, 0, null);
         }
-        
+
         // Definimos el área de recorte (clip) exactamente al tamaño actual del lienzo
         // Esto garantiza que ningún trazo o figura se pinte fuera de los bordes visibles
         g2.clipRect(0, 0, getWidth(), getHeight());
@@ -297,6 +296,9 @@ public class PanelDeDibujo extends JPanel {
 
         // Reinicia la referencia de la figura actual para evitar incongruencias
         this.figuraActual = null;
+
+        //BORRAR LA IMAGEN DE FONDO ⬇️
+        this.imagenFondo = null;
 
         // Invalida la vista actual y solicita a Swing la ejecución de paintComponent
         this.repaint();
@@ -405,5 +407,27 @@ public class PanelDeDibujo extends JPanel {
             this.imagenFondo = imagen;
             this.repaint(); // Refresca el lienzo para que se vea la imagen
         }
+    }
+
+    // Devuelve una copia de la lista de figuras actuales
+    public ArrayList<Figura> obtenerCopiaFiguras() {
+        return new ArrayList<>(this.figuras);
+    }
+
+    // Restaura una lista de figuras guardada
+    public void restaurarFiguras(ArrayList<Figura> figurasGuardadas) {
+        this.figuras.clear();
+        this.figuras.addAll(figurasGuardadas);
+        this.figurasRehacer.clear();
+        this.repaint();
+    }
+
+    public java.awt.image.BufferedImage getImagenFondo() {
+        return this.imagenFondo;
+    }
+
+    public void setImagenFondoDirecto(java.awt.image.BufferedImage img) {
+        this.imagenFondo = img;
+        this.repaint();
     }
 }
