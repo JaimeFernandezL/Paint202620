@@ -69,6 +69,9 @@ public class PanelDeDibujo extends JPanel {
     // Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
     private final Map<Figura, Area> recortesFiguras = new IdentityHashMap<>();
 
+    // Variable para guardar la imagen de fondo
+    private java.awt.image.BufferedImage imagenFondo = null;
+
     /**
      * Constructor del PanelDeDibujo. Configura el fondo del lienzo y registra
      * los oyentes de eventos del ratón.
@@ -228,6 +231,10 @@ public class PanelDeDibujo extends JPanel {
         // Convertimos Graphics a Graphics2D para habilitar opciones avanzadas de renderizado
         Graphics2D g2 = (Graphics2D) g;
 
+        if (imagenFondo != null) {
+            g2.drawImage(imagenFondo, 0, 0, null);
+        }
+        
         // Definimos el área de recorte (clip) exactamente al tamaño actual del lienzo
         // Esto garantiza que ningún trazo o figura se pinte fuera de los bordes visibles
         g2.clipRect(0, 0, getWidth(), getHeight());
@@ -388,5 +395,15 @@ public class PanelDeDibujo extends JPanel {
 
     public Color getColor() {
         return colorActual;
+    }
+
+    /**
+     * Carga una imagen en el fondo del lienzo.
+     */
+    public void cargarImagen(java.awt.image.BufferedImage imagen) {
+        if (imagen != null) {
+            this.imagenFondo = imagen;
+            this.repaint(); // Refresca el lienzo para que se vea la imagen
+        }
     }
 }

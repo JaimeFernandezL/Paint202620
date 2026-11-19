@@ -166,7 +166,7 @@ public class PanelHerramientas extends JPanel {
                 -> lienzo.setOpacidad(sliderOpacidad.getValue()));
         lienzo.setOpacidad(sliderOpacidad.getValue());
 
-// Borrador
+        // Borrador
         borrador = new Borrador(lienzo);
         borrador.vincularBoton(btnBorrador);      // se activa al seleccionar el botón
         borrador.vincularLimpiar(btnLimpiar);     // Limpiar también borra sus marcas
@@ -174,6 +174,21 @@ public class PanelHerramientas extends JPanel {
         sliderGrosor.addChangeListener(e
                 -> borrador.setGrosor(sliderGrosor.getValue()));
 
+        //Otro metodo para el borrador
+    //// Borrador (Ahora es un trazo blanco para que se pueda Deshacer/Rehacer)
+    //btnBorrador.addActionListener(e -> {
+    //    if (btnBorrador.isSelected()) {
+    //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
+    //        lienzo.setColor(java.awt.Color.WHITE); // Pinta blanco
+    //    }
+    //});
+    //
+    //btnLapiz.addActionListener(e -> {
+    //    if (btnLapiz.isSelected()) {
+    //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
+    //        lienzo.setColor(java.awt.Color.BLACK); // Vuelve al negro
+    //    }
+    //});
     }
     // Activa la función del lápiz
 
@@ -251,7 +266,10 @@ public class PanelHerramientas extends JPanel {
             BufferedImage img = servicioAbrir.abrir(ventana);
             if (img != null) {
                 contenedor.setTamanoLienzo(img.getWidth(), img.getHeight());
-                // TODO Equipo 1/4: mostrar img en el lienzo (falta un método en PanelDeDibujo)
+                lienzo.cargarImagen(img);
+                if (borrador != null) {
+                    borrador.limpiar(); // Limpia las marcas blancas de la goma
+                }
             }
         });
 
