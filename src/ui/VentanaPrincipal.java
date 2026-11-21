@@ -177,13 +177,10 @@ public class VentanaPrincipal extends JFrame {
         zonaHerramientas = new javax.swing.JPanel();
         btnBorra = new javax.swing.JButton();
         btnLapiz = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
         zonaEstadoFiguras = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
@@ -251,19 +248,6 @@ public class VentanaPrincipal extends JFrame {
         btnLapiz.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnLapiz.addActionListener(this::btnLapizActionPerformed);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout zonaHerramientasLayout = new javax.swing.GroupLayout(zonaHerramientas);
         zonaHerramientas.setLayout(zonaHerramientasLayout);
         zonaHerramientasLayout.setHorizontalGroup(
@@ -273,9 +257,7 @@ public class VentanaPrincipal extends JFrame {
                 .addComponent(btnLapiz, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBorra, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(33, 33, 33))
         );
         zonaHerramientasLayout.setVerticalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,9 +267,6 @@ public class VentanaPrincipal extends JFrame {
                     .addComponent(btnBorra)
                     .addComponent(btnLapiz))
                 .addContainerGap(52, Short.MAX_VALUE))
-            .addGroup(zonaHerramientasLayout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
 
         PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
@@ -302,44 +281,14 @@ public class VentanaPrincipal extends JFrame {
 
         jCheckBox1.setText("Relleno");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
         zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
         zonaEstadoFigurasLayout.setHorizontalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(17, 17, 17)
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         zonaEstadoFigurasLayout.setVerticalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,11 +296,6 @@ public class VentanaPrincipal extends JFrame {
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zonaEstadoFigurasLayout.createSequentialGroup()
-                .addGroup(zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
         );
 
         PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.LINE_END);
@@ -663,9 +607,6 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
