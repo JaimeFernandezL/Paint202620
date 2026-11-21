@@ -21,7 +21,7 @@ public class PanelFiguras extends JPanel {
         // Cuadricula compacta: 2 filas, las columnas se ajustan solas
         setLayout(new GridLayout(2, 0, 2, 2));
 
-        agregarBoton("/imagenes/linea-diagonal_1.png", PanelDeDibujo.TipoFigura.LINEA);
+        agregarBoton("Linea", PanelDeDibujo.TipoFigura.LINEA);
         agregarBoton("Rectángulo", PanelDeDibujo.TipoFigura.RECTANGULO);
         agregarBoton("Óvalo", PanelDeDibujo.TipoFigura.OVALO);
         agregarBoton("Círculo", PanelDeDibujo.TipoFigura.CIRCULO);
