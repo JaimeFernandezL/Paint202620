@@ -125,6 +125,7 @@ public class VentanaPrincipal extends JFrame {
         herramientas.btnLapiz.setSelected(true);
 
         // Establecemos un tamaño base de respaldo en caso de que el usuario restaure la ventana
+        setMinimumSize(new Dimension(900, 600));
         setSize(1000, 700);
 
         herramientas.instalarMenuArchivo(jMenu1, jMenuItem2, jMenuItem1,
@@ -176,10 +177,13 @@ public class VentanaPrincipal extends JFrame {
         zonaHerramientas = new javax.swing.JPanel();
         btnBorra = new javax.swing.JButton();
         btnLapiz = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
         PanelCentral = new javax.swing.JPanel();
         zonaFiguras = new javax.swing.JPanel();
         zonaEstadoFiguras = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         panelDerecho = new javax.swing.JPanel();
         zonaColores = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
@@ -206,7 +210,6 @@ public class VentanaPrincipal extends JFrame {
         ZonaLienzo = new javax.swing.JPanel();
         zonaGrosor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         barraEstado1 = new ui.BarraEstado();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -234,9 +237,11 @@ public class VentanaPrincipal extends JFrame {
             }
         });
 
+        PanelCinta.setBackground(new java.awt.Color(255, 255, 255));
+        PanelCinta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         PanelCinta.setLayout(new java.awt.BorderLayout());
 
-        zonaHerramientas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaHerramientas.setBackground(new java.awt.Color(255, 255, 255));
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
 
         btnBorra.setText("jButton2");
@@ -246,16 +251,31 @@ public class VentanaPrincipal extends JFrame {
         btnLapiz.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnLapiz.addActionListener(this::btnLapizActionPerformed);
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout zonaHerramientasLayout = new javax.swing.GroupLayout(zonaHerramientas);
         zonaHerramientas.setLayout(zonaHerramientasLayout);
         zonaHerramientasLayout.setHorizontalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaHerramientasLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addComponent(btnLapiz, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBorra, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(23, 23, 23)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         zonaHerramientasLayout.setVerticalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,37 +284,74 @@ public class VentanaPrincipal extends JFrame {
                 .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorra)
                     .addComponent(btnLapiz))
-                .addGap(48, 48, 48))
+                .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(zonaHerramientasLayout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
 
-        PanelCentral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
-        zonaFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaFiguras.setBackground(new java.awt.Color(255, 255, 255));
         PanelCentral.add(zonaFiguras, java.awt.BorderLayout.CENTER);
 
-        zonaEstadoFiguras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaEstadoFiguras.setBackground(new java.awt.Color(255, 255, 255));
         zonaEstadoFiguras.setPreferredSize(new java.awt.Dimension(100, 90));
 
         jCheckBox1.setText("Relleno");
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
         zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
         zonaEstadoFigurasLayout.setHorizontalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(7, 7, 7)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         zonaEstadoFigurasLayout.setVerticalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zonaEstadoFigurasLayout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+            .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zonaEstadoFigurasLayout.createSequentialGroup()
+                .addGroup(zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.LINE_END);
@@ -303,9 +360,10 @@ public class VentanaPrincipal extends JFrame {
 
         panelDerecho.setLayout(new java.awt.BorderLayout());
 
-        zonaColores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        zonaColores.setBackground(new java.awt.Color(255, 255, 255));
         zonaColores.setPreferredSize(new java.awt.Dimension(290, 100));
 
+        panelBotones.setBackground(new java.awt.Color(255, 255, 255));
         panelBotones.setName("PanelBotones"); // NOI18N
         panelBotones.setPreferredSize(new java.awt.Dimension(280, 63));
         panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -441,17 +499,17 @@ public class VentanaPrincipal extends JFrame {
         getContentPane().add(PanelCinta, java.awt.BorderLayout.PAGE_START);
         PanelCinta.getAccessibleContext().setAccessibleDescription("");
 
-        ZonaLienzo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ZonaLienzo.setLayout(new java.awt.BorderLayout());
         ZonaLienzo.add(zonaGrosor, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(ZonaLienzo, java.awt.BorderLayout.CENTER);
 
-        jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2);
+        barraEstado1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(barraEstado1);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jMenu1.setText("Archivo");
 
@@ -595,7 +653,6 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -606,6 +663,9 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelDerecho;
     private javax.swing.JPanel zonaColores;
