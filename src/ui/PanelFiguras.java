@@ -34,7 +34,7 @@ public class PanelFiguras extends JPanel {
 
         setLayout(new GridLayout(2, 0, 5, 5));
         setBackground(Color.WHITE);
-setOpaque(true);
+        setOpaque(true);
 
         agregarBoton("Línea", PanelDeDibujo.TipoFigura.LINEA);
         agregarBoton("Rectángulo", PanelDeDibujo.TipoFigura.RECTANGULO);
@@ -90,12 +90,12 @@ setOpaque(true);
         };
 
         boton.setBackground(Color.WHITE);
-boton.setOpaque(true);
-boton.setContentAreaFilled(true);
+        boton.setOpaque(true);
+        boton.setContentAreaFilled(true);
 
-boton.setBorderPainted(false);
-boton.setBorder(BorderFactory.createEmptyBorder());
-boton.setFocusPainted(false);
+        boton.setBorderPainted(false);
+        boton.setBorder(BorderFactory.createEmptyBorder());
+        boton.setFocusPainted(false);
 
         boton.setToolTipText(texto);
         boton.setIcon(new IconoForma(forma(normalizar(texto))));
