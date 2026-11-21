@@ -69,7 +69,7 @@ public class VentanaPrincipal extends JFrame {
         btnBlanco.addActionListener(e -> cambiarColor(btnBlanco.getBackground()));
         btnGrisClaro.addActionListener(e -> cambiarColor(btnGrisClaro.getBackground()));
         btnRosa.addActionListener(e -> cambiarColor(btnRosa.getBackground()));
-        btnDorado.addActionListener(e -> cambiarColor(btnDorado.getBackground()));
+        btnSelectorColor.addActionListener(e -> cambiarColor(btnSelectorColor.getBackground()));
         btnAmarilloClaro.addActionListener(e -> cambiarColor(btnAmarilloClaro.getBackground()));
         btnLima.addActionListener(e -> cambiarColor(btnLima.getBackground()));
         btnCeleste.addActionListener(e -> cambiarColor(btnCeleste.getBackground()));
@@ -215,13 +215,13 @@ public class VentanaPrincipal extends JFrame {
         btnBlanco = new javax.swing.JButton();
         btnGrisClaro = new javax.swing.JButton();
         btnRosa = new javax.swing.JButton();
-        btnDorado = new javax.swing.JButton();
+        btnDorado1 = new javax.swing.JButton();
         btnAmarilloClaro = new javax.swing.JButton();
         btnLima = new javax.swing.JButton();
         btnCeleste = new javax.swing.JButton();
         btnLavanda = new javax.swing.JButton();
         btnMarronClaro = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        btnSelectorColor = new javax.swing.JButton();
         btnSelectorColores = new javax.swing.JButton();
         ZonaLienzo = new javax.swing.JPanel();
         zonaGrosor = new javax.swing.JPanel();
@@ -250,6 +250,7 @@ public class VentanaPrincipal extends JFrame {
 
         PanelCinta.setLayout(new java.awt.BorderLayout());
 
+        zonaHerramientas.setBackground(new java.awt.Color(255, 255, 255));
         zonaHerramientas.setPreferredSize(new java.awt.Dimension(250, 100));
 
         btnBorra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrador.png"))); // NOI18N
@@ -291,126 +292,94 @@ public class VentanaPrincipal extends JFrame {
 
         PanelCentral.setLayout(new java.awt.BorderLayout());
 
+        zonaFiguras.setBackground(new java.awt.Color(255, 255, 255));
         zonaFiguras.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         zonaFiguras.setMaximumSize(new java.awt.Dimension(257, 256));
         zonaFiguras.setMinimumSize(new java.awt.Dimension(2, 2));
+        zonaFiguras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnLinea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/linea-diagonal_1.png"))); // NOI18N
         btnLinea.setToolTipText("Linea");
+        zonaFiguras.add(btnLinea, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, -1, -1));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rectangulo.png"))); // NOI18N
         jButton6.setToolTipText("Rectangulo");
+        zonaFiguras.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 5, -1, -1));
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cuadrado.png"))); // NOI18N
         jButton7.setToolTipText("Cuadrado");
+        zonaFiguras.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 5, -1, -1));
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/circulo.png"))); // NOI18N
         jButton8.setToolTipText("Circulo");
+        zonaFiguras.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 5, -1, -1));
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ovalo.png"))); // NOI18N
         jButton9.setToolTipText("Ovalo");
+        zonaFiguras.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 5, -1, -1));
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/corazon.png"))); // NOI18N
         jButton10.setToolTipText("Corazon");
+        zonaFiguras.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 5, -1, -1));
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estrella-vacia.png"))); // NOI18N
         jButton11.setToolTipText("Estrella");
+        zonaFiguras.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(167, 5, -1, -1));
 
         jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hexagono.png"))); // NOI18N
         jButton12.setToolTipText("Hexagono");
+        zonaFiguras.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 5, -1, -1));
 
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pentagono.png"))); // NOI18N
         jButton13.setToolTipText("Pentagono");
+        zonaFiguras.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 5, -1, -1));
 
         jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/rombo.png"))); // NOI18N
         jButton14.setToolTipText("Rombo");
+        zonaFiguras.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(248, 5, -1, -1));
 
         jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/triangulo.png"))); // NOI18N
         jButton15.setToolTipText("Triangulo");
+        zonaFiguras.add(jButton15, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 5, -1, -1));
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flecha-correcta.png"))); // NOI18N
         jButton16.setToolTipText("Flecha");
+        zonaFiguras.add(jButton16, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 5, -1, -1));
 
         jLabel2.setText("Formas");
+        zonaFiguras.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 8, -1, -1));
 
         jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/paralelogramo (1).png"))); // NOI18N
         jButton17.setToolTipText("Paralelogramo");
+        zonaFiguras.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 5, -1, -1));
 
-        javax.swing.GroupLayout zonaFigurasLayout = new javax.swing.GroupLayout(zonaFiguras);
-        zonaFiguras.setLayout(zonaFigurasLayout);
-        zonaFigurasLayout.setHorizontalGroup(
-            zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(zonaFigurasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(zonaFigurasLayout.createSequentialGroup()
-                        .addComponent(btnLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(zonaFigurasLayout.createSequentialGroup()
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(zonaFigurasLayout.createSequentialGroup()
-                                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(zonaFigurasLayout.createSequentialGroup()
-                                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zonaFigurasLayout.createSequentialGroup()
-                                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(2, 2, 2)))
-                                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
-        zonaFigurasLayout.setVerticalGroup(
-            zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(zonaFigurasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(zonaFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
-        );
-
-        PanelCentral.add(zonaFiguras, java.awt.BorderLayout.LINE_START);
+        PanelCentral.add(zonaFiguras, java.awt.BorderLayout.CENTER);
 
         jSeparador2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         PanelCentral.add(jSeparador2, java.awt.BorderLayout.LINE_END);
 
-        jCheckBox1.setText("Relleno");
-        zonaEstadoFiguras.add(jCheckBox1);
+        zonaEstadoFiguras.setBackground(new java.awt.Color(255, 255, 255));
 
-        PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.CENTER);
+        jCheckBox1.setText("Relleno");
+
+        javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
+        zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
+        zonaEstadoFigurasLayout.setHorizontalGroup(
+            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jCheckBox1)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        zonaEstadoFigurasLayout.setVerticalGroup(
+            zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jCheckBox1)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+
+        PanelCentral.add(zonaEstadoFiguras, java.awt.BorderLayout.LINE_END);
 
         PanelCinta.add(PanelCentral, java.awt.BorderLayout.CENTER);
 
@@ -434,7 +403,7 @@ public class VentanaPrincipal extends JFrame {
                 .addGroup(zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelColorActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelColorAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         zonaEstadoColorLayout.setVerticalGroup(
             zonaEstadoColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,8 +417,10 @@ public class VentanaPrincipal extends JFrame {
 
         panelDerecho.add(zonaEstadoColor, java.awt.BorderLayout.CENTER);
 
+        zonaColores.setBackground(new java.awt.Color(255, 255, 255));
         zonaColores.setPreferredSize(new java.awt.Dimension(290, 100));
 
+        panelBotones.setBackground(new java.awt.Color(255, 255, 255));
         panelBotones.setName("PanelBotones"); // NOI18N
         panelBotones.setPreferredSize(new java.awt.Dimension(280, 63));
         panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -519,10 +490,10 @@ public class VentanaPrincipal extends JFrame {
         btnRosa.setPreferredSize(new java.awt.Dimension(25, 25));
         panelBotones.add(btnRosa);
 
-        btnDorado.setBackground(new java.awt.Color(255, 222, 0));
-        btnDorado.setToolTipText("Dorado");
-        btnDorado.setPreferredSize(new java.awt.Dimension(25, 25));
-        panelBotones.add(btnDorado);
+        btnDorado1.setBackground(new java.awt.Color(255, 222, 0));
+        btnDorado1.setToolTipText("Dorado");
+        btnDorado1.setPreferredSize(new java.awt.Dimension(25, 25));
+        panelBotones.add(btnDorado1);
 
         btnAmarilloClaro.setBackground(new java.awt.Color(255, 255, 157));
         btnAmarilloClaro.setToolTipText("Amarillo Claro");
@@ -549,27 +520,48 @@ public class VentanaPrincipal extends JFrame {
         btnMarronClaro.setPreferredSize(new java.awt.Dimension(25, 25));
         panelBotones.add(btnMarronClaro);
 
-        zonaColores.add(panelBotones);
-        panelBotones.getAccessibleContext().setAccessibleDescription("");
+        btnSelectorColor.setToolTipText("Dorado");
+        btnSelectorColor.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnSelectorColor.addActionListener(this::btnSelectorColorActionPerformed);
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Colores");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setMaximumSize(new java.awt.Dimension(50, 16));
-        jLabel1.setMinimumSize(new java.awt.Dimension(50, 16));
-        jLabel1.setPreferredSize(new java.awt.Dimension(50, 16));
-        zonaColores.add(jLabel1);
-
-        btnSelectorColores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/colores.png"))); // NOI18N
+        btnSelectorColores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/selector-de-color_1.png"))); // NOI18N
         btnSelectorColores.setToolTipText("Selector de colores");
         btnSelectorColores.setBorder(null);
+        btnSelectorColores.setBorderPainted(false);
         btnSelectorColores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnSelectorColores.setFocusTraversalPolicyProvider(true);
         btnSelectorColores.setMaximumSize(new java.awt.Dimension(25, 25));
         btnSelectorColores.setMinimumSize(new java.awt.Dimension(25, 25));
         btnSelectorColores.setPreferredSize(new java.awt.Dimension(25, 25));
-        zonaColores.add(btnSelectorColores);
+
+        javax.swing.GroupLayout zonaColoresLayout = new javax.swing.GroupLayout(zonaColores);
+        zonaColores.setLayout(zonaColoresLayout);
+        zonaColoresLayout.setHorizontalGroup(
+            zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaColoresLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(zonaColoresLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btnSelectorColores, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSelectorColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5))
+        );
+        zonaColoresLayout.setVerticalGroup(
+            zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(zonaColoresLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSelectorColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSelectorColores, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelBotones.getAccessibleContext().setAccessibleDescription("");
 
         panelDerecho.add(zonaColores, java.awt.BorderLayout.CENTER);
 
@@ -622,7 +614,7 @@ public class VentanaPrincipal extends JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 906, 425);
+        setBounds(0, 0, 1130, 690);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -676,6 +668,10 @@ public class VentanaPrincipal extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLapizActionPerformed
 
+    private void btnSelectorColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectorColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSelectorColorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -712,7 +708,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton btnBorra;
     private javax.swing.JButton btnCeleste;
     private javax.swing.JMenuItem btnDeshacer1;
-    private javax.swing.JButton btnDorado;
+    private javax.swing.JButton btnDorado1;
     private javax.swing.JButton btnGris;
     private javax.swing.JButton btnGrisClaro;
     private javax.swing.JButton btnLapiz;
@@ -727,6 +723,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JMenuItem btnRehacer1;
     private javax.swing.JButton btnRojo;
     private javax.swing.JButton btnRosa;
+    private javax.swing.JButton btnSelectorColor;
     private javax.swing.JButton btnSelectorColores;
     private javax.swing.JButton btnVerde;
     private javax.swing.JButton jButton10;
@@ -742,7 +739,6 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
