@@ -30,11 +30,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- * Clase PanelDeDibujo que extiende de JPanel.
- * Se encarga de actuar como lienzo de dibujo, capturar los eventos del ratón
- * restringidos a los límites del lienzo para crear figuras/trazos y repintar
- * de forma dinámica el contenido.
- * 
+ * Clase PanelDeDibujo que extiende de JPanel. Se encarga de actuar como lienzo
+ * de dibujo, capturar los eventos del ratón restringidos a los límites del
+ * lienzo para crear figuras/trazos y repintar de forma dinámica el contenido.
+ *
  * @author Miguel Castillo (Tarea 3.1.1 / Tarea 3.1.5)
  */
 public class PanelDeDibujo extends JPanel {
@@ -48,37 +47,40 @@ public class PanelDeDibujo extends JPanel {
 
     // Lista dinámica que almacena todas las figuras dibujadas en el lienzo
     private ArrayList<Figura> figuras = new ArrayList<>();
-    
+
     // Referencia a la figura que se está creando o arrastrando actualmente
     private Figura figuraActual;
-    
+
     // Bandera para determinar si la figura geométrica tendrá relleno
     private boolean rellenarFigura = false;
 
     // Estado actual de la herramienta seleccionada (por defecto: TRAZO libre)
     private TipoFigura tipoActual = TipoFigura.TRAZO;
-    
+
     // Lista dinámica para almacenar las figuras deshechas y permitir rehacerlas
     ArrayList<Figura> figurasRehacer = new ArrayList<>();
 
     // Grosor de línea actual del trazo o contorno
     private int grosorActual = 3;
-    
+
     // Nivel de opacidad actual (1.0f = 100% opaco)
     private float opacidadActual = 1.0f;
-    
+
     // Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
     private final Map<Figura, Area> recortesFiguras = new IdentityHashMap<>();
-    
+
+    // Variable para guardar la imagen de fondo
+    private java.awt.image.BufferedImage imagenFondo = null;
+
     /**
-     * Constructor del PanelDeDibujo.
-     * Configura el fondo del lienzo y registra los oyentes de eventos del ratón.
+     * Constructor del PanelDeDibujo. Configura el fondo del lienzo y registra
+     * los oyentes de eventos del ratón.
      */
     public PanelDeDibujo() {
-        
+
         // Establece el color de fondo inicial del lienzo
         setBackground(Color.WHITE);
-        
+
         // Creación del adaptador para escuchar eventos de clic y arrastre del ratón
         MouseAdapter manejador = new MouseAdapter() {
 
@@ -87,7 +89,7 @@ public class PanelDeDibujo extends JPanel {
              */
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
                 // Ignoramos cualquier clic que no sea el botón izquierdo del ratón
                 if (!SwingUtilities.isLeftMouseButton(e)) {
                     return;
@@ -121,10 +123,10 @@ public class PanelDeDibujo extends JPanel {
                         break;
                     case FLECHA:
                         figuraActual = new Flecha(puntoInicio, rellenarFigura);
-                        break; 
+                        break;
                     case TRIANGULO:
                         figuraActual = new Triangulo(puntoInicio, rellenarFigura);
-                        break;                           
+                        break;
                     case PARALELOGRAMO:
                         figuraActual = new Paralelogramo(puntoInicio, rellenarFigura);
                         break;
@@ -139,29 +141,29 @@ public class PanelDeDibujo extends JPanel {
                         figuraActual = new Trazo(puntoInicio);
                         break;
                 }
-                
+
                 // Aplicamos el grosor y la opacidad configurados actualmente
                 figuraActual.setGrosor(grosorActual);
                 figuraActual.setOpacidad(opacidadActual);
+                figuraActual.setColor(colorActual);   // ← aplica el color elegido
 
-                // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
-                figuras.add(figuraActual);
                 // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
                 figuras.add(figuraActual);
                 // Asociamos a esta figura los límites actuales del lienzo
                 recortesFiguras.put(figuraActual, new Area(new Rectangle(0, 0, getWidth(), getHeight())));
                 figurasRehacer.clear();
-                
+
                 // Solicitamos a Swing que repinte el componente
                 repaint();
             }
 
             /**
-             * Se ejecuta mientras el usuario arrastra el ratón con el botón presionado.
+             * Se ejecuta mientras el usuario arrastra el ratón con el botón
+             * presionado.
              */
             @Override
             public void mouseDragged(MouseEvent e) {
-                
+
                 // Si existe una figura en creación, actualizamos sus coordenadas dentro de los límites del lienzo
                 if (figuraActual != null) {
                     Point puntoActual = limitarPuntoAlLienzo(e.getPoint());
@@ -170,9 +172,10 @@ public class PanelDeDibujo extends JPanel {
                     repaint();
                 }
             }
-            
+
             /**
-             * Se ejecuta al soltar el botón del ratón para finalizar la figura actual.
+             * Se ejecuta al soltar el botón del ratón para finalizar la figura
+             * actual.
              */
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -191,12 +194,14 @@ public class PanelDeDibujo extends JPanel {
     }
 
     /**
-     * Restringe (hace clamping) las coordenadas de un punto para que nunca excedan
-     * los bordes actuales del lienzo [0 .. ancho-1] y [0 .. alto-1].
-     * Evita que al arrastrar el ratón fuera del área blanca se dibujen trazos o figuras fuera del lienzo.
+     * Restringe (hace clamping) las coordenadas de un punto para que nunca
+     * excedan los bordes actuales del lienzo [0 .. ancho-1] y [0 .. alto-1].
+     * Evita que al arrastrar el ratón fuera del área blanca se dibujen trazos o
+     * figuras fuera del lienzo.
      *
      * @param p Punto original reportado por el evento del ratón.
-     * @return Nuevo objeto Point con sus coordenadas X e Y ajustadas dentro del lienzo.
+     * @return Nuevo objeto Point con sus coordenadas X e Y ajustadas dentro del
+     * lienzo.
      */
     private Point limitarPuntoAlLienzo(Point p) {
         // Calculamos los límites máximos válidos según el tamaño actual del panel
@@ -211,18 +216,23 @@ public class PanelDeDibujo extends JPanel {
     }
 
     /**
-     * Método sobreescrito de JPanel encargado de renderizar el contenido del lienzo.
-     * 
+     * Método sobreescrito de JPanel encargado de renderizar el contenido del
+     * lienzo.
+     *
      * @param g Objeto Graphics proporcionado por el sistema para dibujar.
      */
     @Override
     protected void paintComponent(Graphics g) {
-        
+
         // Llama a la implementación base para limpiar el fondo del panel adecuadamente
         super.paintComponent(g);
 
         // Convertimos Graphics a Graphics2D para habilitar opciones avanzadas de renderizado
         Graphics2D g2 = (Graphics2D) g;
+
+        if (imagenFondo != null) {
+            g2.drawImage(imagenFondo, 0, 0, null);
+        }
 
         // Definimos el área de recorte (clip) exactamente al tamaño actual del lienzo
         // Esto garantiza que ningún trazo o figura se pinte fuera de los bordes visibles
@@ -252,7 +262,7 @@ public class PanelDeDibujo extends JPanel {
 
     /**
      * Establece el tipo de figura/herramienta que se creará con el ratón.
-     * 
+     *
      * @param tipo TipoFigura seleccionado.
      */
     public void setTipoActual(TipoFigura tipo) {
@@ -261,7 +271,7 @@ public class PanelDeDibujo extends JPanel {
 
     /**
      * Define si las figuras a dibujar tendrán relleno sólido.
-     * 
+     *
      * @param rellenar boolean true para rellenar, false para solo borde.
      */
     public void setRellenarFigura(boolean rellenar) {
@@ -269,36 +279,39 @@ public class PanelDeDibujo extends JPanel {
     }
 
     /**
-     * Limpia completamente el lienzo de dibujo.
-     * Vacía el historial de figuras almacenadas, reinicia la figura en progreso
-     * y solicita el repintado de la interfaz gráfica.
+     * Limpia completamente el lienzo de dibujo. Vacía el historial de figuras
+     * almacenadas, reinicia la figura en progreso y solicita el repintado de la
+     * interfaz gráfica.
      */
     public void limpiarLienzo() {
-        
+
         // Vacía la lista dinámica que contiene todas las figuras y trazos dibujados
         this.figuras.clear();
-        
+
         // Vacía también el historial de rehacer
         this.figurasRehacer.clear();
-        
+
         // Vacía el Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
         this.recortesFiguras.clear();
-        
+
         // Reinicia la referencia de la figura actual para evitar incongruencias
         this.figuraActual = null;
-        
+
+        //BORRAR LA IMAGEN DE FONDO ⬇️
+        this.imagenFondo = null;
+
         // Invalida la vista actual y solicita a Swing la ejecución de paintComponent
         this.repaint();
     }
 
     /**
-     * Método de compatibilidad para mantener soporte con las llamadas existentes.
-     * Redirige la ejecución hacia limpiarLienzo().
+     * Método de compatibilidad para mantener soporte con las llamadas
+     * existentes. Redirige la ejecución hacia limpiarLienzo().
      */
     public void Limpiar() {
         limpiarLienzo();
     }
-    
+
     /**
      * Establece el grosor del trazo o contorno de las próximas figuras.
      *
@@ -307,7 +320,7 @@ public class PanelDeDibujo extends JPanel {
     public void setGrosorActual(int grosor) {
         this.grosorActual = grosor;
     }
-    
+
     /**
      * Deshace la última figura dibujada en el lienzo.
      */
@@ -329,7 +342,7 @@ public class PanelDeDibujo extends JPanel {
             repaint();
         }
     }
-    
+
     /**
      * Establece la opacidad porcentual (0 a 100) para las nuevas figuras.
      *
@@ -338,14 +351,15 @@ public class PanelDeDibujo extends JPanel {
     public void setOpacidad(int opacidad) {
         this.opacidadActual = opacidad / 100.0f;
     }
-    
+
     /**
-     * Aplica un recorte destructivo (estilo MS Paint clásico) sobre todas las figuras
-     * existentes cuando el lienzo cambia de tamaño. Todo lo que quede fuera de las
-     * nuevas dimensiones se elimina permanentemente y no reaparece al volver a expandir.
+     * Aplica un recorte destructivo (estilo MS Paint clásico) sobre todas las
+     * figuras existentes cuando el lienzo cambia de tamaño. Todo lo que quede
+     * fuera de las nuevas dimensiones se elimina permanentemente y no reaparece
+     * al volver a expandir.
      *
      * @param nuevoAncho Nuevo ancho del lienzo en píxeles.
-     * @param nuevoAlto  Nuevo alto del lienzo en píxeles.
+     * @param nuevoAlto Nuevo alto del lienzo en píxeles.
      */
     public void recortarAlTamano(int nuevoAncho, int nuevoAlto) {
         // Creamos el rectángulo que representa los nuevos límites válidos del lienzo
@@ -370,5 +384,50 @@ public class PanelDeDibujo extends JPanel {
                 areaFigura.intersect(nuevoLimite);
             }
         }
+    }
+    // --- Nuevo campo ---
+    private Color colorActual = Color.BLACK;
+
+// --- Nuevo método público ---
+    public void setColor(Color color) {
+        if (color != null) {
+            this.colorActual = color;
+        }
+    }
+
+    public Color getColor() {
+        return colorActual;
+    }
+
+    /**
+     * Carga una imagen en el fondo del lienzo.
+     */
+    public void cargarImagen(java.awt.image.BufferedImage imagen) {
+        if (imagen != null) {
+            this.imagenFondo = imagen;
+            this.repaint(); // Refresca el lienzo para que se vea la imagen
+        }
+    }
+
+    // Devuelve una copia de la lista de figuras actuales
+    public ArrayList<Figura> obtenerCopiaFiguras() {
+        return new ArrayList<>(this.figuras);
+    }
+
+    // Restaura una lista de figuras guardada
+    public void restaurarFiguras(ArrayList<Figura> figurasGuardadas) {
+        this.figuras.clear();
+        this.figuras.addAll(figurasGuardadas);
+        this.figurasRehacer.clear();
+        this.repaint();
+    }
+
+    public java.awt.image.BufferedImage getImagenFondo() {
+        return this.imagenFondo;
+    }
+
+    public void setImagenFondoDirecto(java.awt.image.BufferedImage img) {
+        this.imagenFondo = img;
+        this.repaint();
     }
 }

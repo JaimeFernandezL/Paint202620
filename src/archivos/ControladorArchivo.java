@@ -49,7 +49,7 @@ public class ControladorArchivo {
         // Cuando esté creado, descomentar la siguiente línea.
         
         
-         //panel.cargarImagen(imagen);
+         panel.cargarImagen(imagen);
         }
     }
 
