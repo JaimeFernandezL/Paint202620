@@ -19,6 +19,10 @@ import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import ui.PanelDeDibujo;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.util.Map;
+
 
 /**
  * Clase Borrador.
@@ -47,18 +51,25 @@ public class Borrador {
     Point posicion;
     boolean activo = false;
     int grosor = 10;
+    Field campoRecortes;
    
 
     public Borrador(PanelDeDibujo panel) {
         this.panel = panel;
 
         // La lista "figuras" del panel no es publica, por eso se usa reflexion
-        try {
+        
+           try {
             campoFiguras = PanelDeDibujo.class.getDeclaredField("figuras");
             campoFiguras.setAccessible(true);
+
+            // Los recortes (al achicar el lienzo) tambien son privados
+            campoRecortes = PanelDeDibujo.class.getDeclaredField("recortesFiguras");
+            campoRecortes.setAccessible(true);
         } catch (Exception ex) {
             throw new RuntimeException("No se encontro la lista figuras en PanelDeDibujo");
         }
+        
 
         // Pongo la capa encima del panel, del mismo tamaño
         panel.setLayout(null);
@@ -116,6 +127,8 @@ public class Borrador {
         capa.addMouseMotionListener(raton);
     }
 
+    
+    
     // Devuelve la lista de figuras que tiene el panel
     List<Figura> obtenerFiguras() {
         try {
@@ -124,6 +137,16 @@ public class Borrador {
             return new ArrayList<>();
         }
     }
+    
+     @SuppressWarnings("unchecked")
+    Map<Figura, Area> obtenerRecortes() {
+        try {
+            return (Map<Figura, Area>) campoRecortes.get(panel);
+        } catch (Exception ex) {
+            return new java.util.HashMap<>();
+        }
+    }
+    
 
     // Activa el borrador cuando el boton esta seleccionado
     public void vincularBoton(AbstractButton boton) {
@@ -186,9 +209,12 @@ public class Borrador {
                 pintarIcono(g2);
             }
         }
-
-        void pintarTodo(Graphics2D g2) {
+        
+        
+        
+          void pintarTodo(Graphics2D g2) {
             List<Figura> figuras = obtenerFiguras();
+            Map<Figura, Area> recortes = obtenerRecortes();
             int total = figuras.size();
 
             // Fondo
@@ -213,7 +239,15 @@ public class Borrador {
                     }
                 }
                 if (i < total) {
-                    figuras.get(i).dibujar(g2);
+                    Figura f = figuras.get(i);
+                    // Respeta el recorte hecho al achicar el lienzo
+                    Shape clipAnterior = g2.getClip();
+                    Area permitida = recortes.get(f);
+                    if (permitida != null) {
+                        g2.clip(permitida);
+                    }
+                    f.dibujar(g2);
+                    g2.setClip(clipAnterior);
                 }
             }
         }
@@ -241,6 +275,7 @@ public class Borrador {
             g2.setColor(colorAntes);
             g2.setStroke(strokeAntes);
         }
+
 
        
         void pintarIcono(Graphics2D g2) {
