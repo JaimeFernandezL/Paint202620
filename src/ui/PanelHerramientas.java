@@ -34,6 +34,7 @@ import javax.swing.UIManager;
 import java.awt.GridLayout;
 import herramientaborrador.Borrador;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Grupo "Herramientas" al estilo del Paint de Windows: iconos arriba y la
@@ -45,8 +46,6 @@ public class PanelHerramientas extends JPanel {
 
     private static final int TAM_BOTON = 36;
 
-//    public final JToggleButton btnLapiz = new JToggleButton(new IconoLapiz());
-//    public final JToggleButton btnBorrador = new JToggleButton(new IconoBorrador());
     public final JToggleButton btnLapiz = new JToggleButton();
     public final JToggleButton btnBorrador = new JToggleButton();
 
@@ -57,12 +56,12 @@ public class PanelHerramientas extends JPanel {
 
     private ArrayList<figuras.Figura> figurasAntesDeBorrar = null;
     private boolean hayUnLimpiadoParaRehacer = false;
-    private java.awt.image.BufferedImage imagenAntesDeBorrar = null;
-    private java.awt.image.BufferedImage imagenParaRehacer = null;
+    private BufferedImage imagenAntesDeBorrar = null;
+    private BufferedImage imagenParaRehacer = null;
 
-    // Grosor: slider VERTICAL, como en el Paint. Rango 1-50 (el mismo del Equipo 5).
-    // NO va dentro de este panel: VentanaPrincipal lo pone en zonaGrosor
-    // con getPanelGrosor().
+    private final Stack<String> historialDeshacer = new Stack<>();
+    private final Stack<String> historialRehacer = new Stack<>();
+
     public final JSlider sliderGrosor = new JSlider(JSlider.VERTICAL, 1, 50, 3);
     public final JLabel lblGrosor = new JLabel("3", SwingConstants.CENTER);
     private final JPanel panelGrosor = new JPanel(new BorderLayout(0, 4));
@@ -89,12 +88,11 @@ public class PanelHerramientas extends JPanel {
         }
 
         JPanel filaIconos = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
-
         filaIconos.add(btnLimpiar);
         JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
         separador.setPreferredSize(new Dimension(6, 28));
         filaIconos.add(separador);
-        filaIconos.add(btnDeshacer);   // deshacer / rehacer: mismos métodos que el menú Edición
+        filaIconos.add(btnDeshacer);
         filaIconos.add(btnRehacer);
 
         for (javax.swing.AbstractButton b : new javax.swing.AbstractButton[]{
@@ -102,15 +100,9 @@ public class PanelHerramientas extends JPanel {
             resaltar(b);
         }
 
-//        add(filaIconos, BorderLayout.CENTER);
-//        add(new JLabel("Herramientas", SwingConstants.CENTER), BorderLayout.SOUTH);
         armarPanelGrosor();
     }
 
-    /**
-     * Panel del grosor (etiqueta, slider vertical y valor) para ponerlo en
-     * zonaGrosor.
-     */
     public JPanel getPanelGrosor() {
         return panelGrosor;
     }
@@ -139,102 +131,125 @@ public class PanelHerramientas extends JPanel {
         return p;
     }
 
-    /**
-     * Conecta mis controles con los métodos públicos de PanelDeDibujo. Si el
-     * Equipo 1 cambia un nombre, solo se ajusta AQUÍ.
-     */
     public void conectar(PanelDeDibujo lienzo) {
-        // Lápiz = trazo libre
         btnLapiz.addActionListener(e
                 -> lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
 
-        // Guardar (servicio del Equipo 4)
         btnGuardar.addActionListener(e -> new ServicioGuardarImagen()
                 .guardarImagen(lienzo, SwingUtilities.getWindowAncestor(btnGuardar)));
 
+        // Registrar cada figura/trazo nuevo en el historial unificado
+        lienzo.setAlCrearFigura(() -> {
+            historialDeshacer.push("FIGURA");
+            historialRehacer.clear();
+            figurasAntesDeBorrar = null;
+            imagenAntesDeBorrar = null;
+            hayUnLimpiadoParaRehacer = false;
+            if (borrador != null) {
+                borrador.repintar();
+            }
+        });
+
         // Limpiar
         btnLimpiar.addActionListener(e -> {
-            // 1. Guardamos cómo estaba antes de limpiar
             figurasAntesDeBorrar = lienzo.obtenerCopiaFiguras();
-            imagenAntesDeBorrar = lienzo.getImagenFondo(); // <--- Guardamos la imagen
-            // Al limpiar, la imagen desaparece. Guardamos "null" para saber que el estado final es vacío.
+            imagenAntesDeBorrar = lienzo.getImagenFondo();
             imagenParaRehacer = null;
-            // 2. Activamos la bandera para saber que hay un limpiado pendiente
             hayUnLimpiadoParaRehacer = true;
-            // 3. Limpiamos el lienzo
+            historialDeshacer.clear();
+            historialRehacer.clear();
             lienzo.Limpiar();
         });
 
-        // Deshacer / Rehacer (los mismos que usa el menú Edición)
+        // Deshacer unificado
         btnDeshacer.addActionListener(e -> {
             if (figurasAntesDeBorrar != null) {
                 lienzo.restaurarFiguras(figurasAntesDeBorrar);
-                lienzo.setImagenFondoDirecto(imagenAntesDeBorrar); // Restaura la imagen
-
+                lienzo.setImagenFondoDirecto(imagenAntesDeBorrar);
                 figurasAntesDeBorrar = null;
                 imagenAntesDeBorrar = null;
-                hayUnLimpiadoParaRehacer = false;
-            } else {
-                lienzo.deshacer();
+                hayUnLimpiadoParaRehacer = true;
+            } else if (!historialDeshacer.isEmpty()) {
+                String ultimaAccion = historialDeshacer.pop();
+                if ("BORRADOR".equals(ultimaAccion)) {
+                    borrador.deshacerMarca();
+                } else {
+                    lienzo.deshacer();
+                }
+                historialRehacer.push(ultimaAccion);
+            }
+            if (borrador != null) {
+                borrador.repintar();
             }
         });
 
-        //Boton rehacer
+        // Rehacer unificado
         btnRehacer.addActionListener(e -> {
             if (hayUnLimpiadoParaRehacer || imagenParaRehacer != null) {
-                // Si estamos rehaciendo un limpiado o una imagen, limpiamos el lienzo
+                figurasAntesDeBorrar = lienzo.obtenerCopiaFiguras();
+                imagenAntesDeBorrar = lienzo.getImagenFondo();
                 lienzo.Limpiar();
 
-                // Si había una imagen para rehacer, la volvemos a poner
                 if (imagenParaRehacer != null) {
                     lienzo.setImagenFondoDirecto(imagenParaRehacer);
-                    imagenParaRehacer = null; // La consumimos
+                    imagenParaRehacer = null;
                 }
-
                 hayUnLimpiadoParaRehacer = false;
-            } else {
-                lienzo.rehacer();
+            } else if (!historialRehacer.isEmpty()) {
+                String accionARehacer = historialRehacer.pop();
+                if ("BORRADOR".equals(accionARehacer)) {
+                    borrador.rehacerMarca();
+                } else {
+                    lienzo.rehacer();
+                }
+                historialDeshacer.push(accionARehacer);
+            }
+            if (borrador != null) {
+                borrador.repintar();
             }
         });
 
-        // Grosor: cada cambio del slider llega al lienzo
+        // Grosor
         sliderGrosor.addChangeListener(e -> {
             int grosor = sliderGrosor.getValue();
             lienzo.setGrosorActual(grosor);
             lblGrosor.setText(String.valueOf(grosor));
+            if (borrador != null) {
+                borrador.repintar();
+            }
         });
         lienzo.setGrosorActual(sliderGrosor.getValue());
 
-        // Opacidad (0-100 %)
-        sliderOpacidad.addChangeListener(e
-                -> lienzo.setOpacidad(sliderOpacidad.getValue()));
+        // Opacidad
+        sliderOpacidad.addChangeListener(e -> {
+            lienzo.setOpacidad(sliderOpacidad.getValue());
+            if (borrador != null) {
+                borrador.repintar();
+            }
+        });
         lienzo.setOpacidad(sliderOpacidad.getValue());
 
         // Borrador
         borrador = new Borrador(lienzo);
-        borrador.vincularBoton(btnBorrador);      // se activa al seleccionar el botón
-        borrador.vincularLimpiar(btnLimpiar);     // Limpiar también borra sus marcas
+        borrador.vincularBoton(btnBorrador);
+        borrador.vincularLimpiar(btnLimpiar);
         borrador.setGrosor(sliderGrosor.getValue());
+        borrador.setAlBorrar(() -> {
+            historialDeshacer.push("BORRADOR");
+            historialRehacer.clear();
+            figurasAntesDeBorrar = null;
+            imagenAntesDeBorrar = null;
+            hayUnLimpiadoParaRehacer = false;
+        });
         sliderGrosor.addChangeListener(e
                 -> borrador.setGrosor(sliderGrosor.getValue()));
-
-        //Otro metodo para el borrador
-        //// Borrador (Ahora es un trazo blanco para que se pueda Deshacer/Rehacer)
-        //btnBorrador.addActionListener(e -> {
-        //    if (btnBorrador.isSelected()) {
-        //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
-        //        lienzo.setColor(java.awt.Color.WHITE); // Pinta blanco
-        //    }
-        //});
-        //
-        //btnLapiz.addActionListener(e -> {
-        //    if (btnLapiz.isSelected()) {
-        //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
-        //        lienzo.setColor(java.awt.Color.BLACK); // Vuelve al negro
-        //    }
-        //});
     }
-    // Activa la función del lápiz
+
+    public void actualizarCapaBorrador() {
+        if (borrador != null) {
+            borrador.repintar();
+        }
+    }
 
     public void activarLapiz() {
         btnLapiz.setSelected(true);
@@ -251,10 +266,10 @@ public class PanelHerramientas extends JPanel {
         b.setFocusPainted(false);
         b.setMargin(new java.awt.Insets(0, 0, 0, 0));
         b.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
-        b.setBorder(BorderFactory.createEmptyBorder());      // sin borde visible
-        b.setBorderPainted(false);                           // no pintar borde
-        b.setContentAreaFilled(false);                       // sin fondo tipo botón
-        b.setOpaque(false);                                  // fondo transparente
+        b.setBorder(BorderFactory.createEmptyBorder());
+        b.setBorderPainted(false);
+        b.setContentAreaFilled(false);
+        b.setOpaque(false);
         b.setRolloverEnabled(true);
     }
 
@@ -262,20 +277,24 @@ public class PanelHerramientas extends JPanel {
         Color hover = new Color(0xE5F0FB);
         Color press = new Color(0xC7E0F5);
         b.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent e) {
                 pintar(b, hover);
             }
 
+            @Override
             public void mouseExited(java.awt.event.MouseEvent e) {
                 if (!b.isSelected()) {
                     pintar(b, null);
                 }
             }
 
+            @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
                 pintar(b, press);
             }
 
+            @Override
             public void mouseReleased(java.awt.event.MouseEvent e) {
                 if (!b.isSelected()) {
                     pintar(b, null);
@@ -293,17 +312,12 @@ public class PanelHerramientas extends JPanel {
         }
     }
 
-    /**
-     * Arma el menú Archivo: Nuevo, Abrir, Guardar, línea y Salir. La lógica la
-     * hacen los servicios del Equipo 4; aquí solo se presentan y se conectan.
-     */
     public void instalarMenuArchivo(JMenu menu, JMenuItem itemNuevo, JMenuItem itemSalir,
             PanelDeDibujo lienzo, ContenedorLienzo contenedor, Component ventana) {
 
         ServicioGuardarImagen servicioGuardar = new ServicioGuardarImagen();
         ServicioAbrirImagen servicioAbrir = new ServicioAbrirImagen();
 
-        // Abrir
         JMenuItem itemAbrir = new JMenuItem("Abrir...");
         itemAbrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
         itemAbrir.addActionListener(e -> {
@@ -311,10 +325,10 @@ public class PanelHerramientas extends JPanel {
             if (img != null) {
                 figurasAntesDeBorrar = lienzo.obtenerCopiaFiguras();
                 imagenAntesDeBorrar = lienzo.getImagenFondo();
-
-                imagenParaRehacer = img; // <--- Guardamos la nueva imagen aquí
-
+                imagenParaRehacer = img;
                 hayUnLimpiadoParaRehacer = true;
+                historialDeshacer.clear();
+                historialRehacer.clear();
 
                 contenedor.setTamanoLienzo(img.getWidth(), img.getHeight());
                 lienzo.cargarImagen(img);
@@ -324,15 +338,12 @@ public class PanelHerramientas extends JPanel {
             }
         });
 
-        // Guardar
         JMenuItem itemGuardar = new JMenuItem("Guardar...");
         itemGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
         itemGuardar.addActionListener(e -> servicioGuardar.guardarImagen(lienzo, ventana));
 
-        // Nuevo (lo conecta el Equipo 4; aquí solo le pongo el atajo)
         itemNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
 
-        // Orden final: Nuevo, Abrir, Guardar, línea, Salir
         menu.remove(itemSalir);
         menu.add(itemAbrir);
         menu.add(itemGuardar);
@@ -340,9 +351,6 @@ public class PanelHerramientas extends JPanel {
         menu.add(itemSalir);
     }
 
-    // ---------------------------------------------------------------
-    // Iconos dibujados con Java2D (24x24)
-    // ---------------------------------------------------------------
     private abstract static class IconoBase implements Icon {
 
         @Override
@@ -373,46 +381,6 @@ public class PanelHerramientas extends JPanel {
         abstract void dibujar(Graphics2D g2, Color trazo);
     }
 
-//    private static class IconoLapiz extends IconoBase {
-//
-//        @Override
-//        void dibujar(Graphics2D g2, Color trazo) {
-//            g2.translate(12, 12);
-//            g2.rotate(Math.toRadians(45));
-//            g2.setColor(new Color(0xF2B84B));             // cuerpo
-//            g2.fillRect(-3, -8, 6, 13);
-//            g2.setColor(new Color(0xE58A9B));             // goma
-//            g2.fillRect(-3, -11, 6, 3);
-//            Path2D punta = new Path2D.Double();
-//            punta.moveTo(-3, 5);
-//            punta.lineTo(3, 5);
-//            punta.lineTo(0, 10);
-//            punta.closePath();
-//            g2.setColor(new Color(0xE8CFA0));
-//            g2.fill(punta);
-//            g2.setColor(trazo);
-//            g2.drawRect(-3, -11, 6, 16);
-//            g2.draw(punta);
-//        }
-//    }
-
-//    private static class IconoBorrador extends IconoBase {
-//
-//        @Override
-//        void dibujar(Graphics2D g2, Color trazo) {
-//            g2.translate(12, 12);
-//            g2.rotate(Math.toRadians(-35));
-//            RoundRectangle2D cuerpo = new RoundRectangle2D.Double(-9, -5, 18, 10, 4, 4);
-//            g2.setColor(new Color(0xF08FA0));             // parte rosada
-//            g2.fill(cuerpo);
-//            g2.setColor(new Color(0x7FA6D9));             // franja azul
-//            g2.fillRect(0, -5, 9, 10);
-//            g2.setColor(trazo);
-//            g2.draw(cuerpo);
-//            g2.drawLine(0, -5, 0, 5);
-//        }
-//    }
-
     private static class IconoLimpiar extends IconoBase {
 
         @Override
@@ -427,17 +395,14 @@ public class PanelHerramientas extends JPanel {
             g2.fill(cubo);
             g2.setColor(trazo);
             g2.draw(cubo);
-            g2.drawLine(4, 7, 20, 7);                      // tapa
-            g2.drawPolyline(new int[]{9, 9, 15, 15}, new int[]{7, 4, 4, 7}, 4); // asa
+            g2.drawLine(4, 7, 20, 7);
+            g2.drawPolyline(new int[]{9, 9, 15, 15}, new int[]{7, 4, 4, 7}, 4);
             g2.drawLine(10, 11, 10, 18);
             g2.drawLine(12, 11, 12, 18);
             g2.drawLine(14, 11, 14, 18);
         }
     }
 
-    /**
-     * Flecha curva de deshacer; con invertido = true es la de rehacer (espejo).
-     */
     private static class IconoDeshacer extends IconoBase {
 
         private final boolean invertido;
@@ -455,8 +420,8 @@ public class PanelHerramientas extends JPanel {
             Color azul = new Color(0x3F7FC1);
             g2.setColor(azul);
             g2.setStroke(new BasicStroke(2.4f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2.draw(new Arc2D.Double(5, 6, 14, 14, 0, 180, Arc2D.OPEN));   // arco
-            Path2D punta = new Path2D.Double();                              // cabeza de la flecha
+            g2.draw(new Arc2D.Double(5, 6, 14, 14, 0, 180, Arc2D.OPEN));
+            Path2D punta = new Path2D.Double();
             punta.moveTo(1.5, 13);
             punta.lineTo(8.5, 13);
             punta.lineTo(5, 18);
@@ -465,9 +430,6 @@ public class PanelHerramientas extends JPanel {
         }
     }
 
-    /**
-     * Disquete de guardar.
-     */
     private static class IconoGuardar extends IconoBase {
 
         @Override
@@ -483,10 +445,10 @@ public class PanelHerramientas extends JPanel {
             g2.setColor(azul);
             g2.fill(cuerpo);
             g2.setColor(Color.WHITE);
-            g2.fillRect(6, 3, 10, 6);      // parte metálica de arriba
-            g2.fillRect(6, 13, 12, 8);     // etiqueta
+            g2.fillRect(6, 3, 10, 6);
+            g2.fillRect(6, 13, 12, 8);
             g2.setColor(azul);
-            g2.fillRect(12, 4, 2, 4);      // ranura
+            g2.fillRect(12, 4, 2, 4);
             g2.setColor(Color.GRAY);
             g2.drawLine(8, 16, 16, 16);
             g2.drawLine(8, 18, 16, 18);

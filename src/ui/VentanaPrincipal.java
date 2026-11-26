@@ -1,5 +1,4 @@
 package ui;
-//hola
 
 import java.awt.BorderLayout;
 import archivos.ServicioNuevoDocumento;
@@ -46,10 +45,24 @@ public class VentanaPrincipal extends JFrame {
 
     public VentanaPrincipal() {
         initComponents();
-
-        // Agregamos el contenedor del lienzo al centro de la ventana principal en lugar del panel directo
-        servicioNuevoDocumento
-                = new ServicioNuevoDocumento(panelDeDibujo);
+        btnEnviarAtras.setIcon(new IconoEnviarAtras());
+        btnEnviarAtras.setToolTipText("Enviar atrás");
+        btnEnviarAtras.setFocusPainted(false);
+        btnEnviarAtras.addActionListener(e -> {
+            if (panelDeDibujo != null) {
+                panelDeDibujo.enviarAtras();
+                herramientas.actualizarCapaBorrador();
+            }
+        });
+        btnTraerAdelante.setIcon(new IconoTraerAdelante());
+        btnTraerAdelante.setToolTipText("Traer adelante");
+        btnTraerAdelante.setFocusPainted(false);
+        btnTraerAdelante.addActionListener(e -> {
+            if (panelDeDibujo != null) {
+                panelDeDibujo.traerAdelante();
+                herramientas.actualizarCapaBorrador();
+            }
+        });
 
         // Botones de la paleta de colores
         btnNegro.addActionListener(e -> cambiarColor(btnNegro.getBackground()));
@@ -72,14 +85,20 @@ public class VentanaPrincipal extends JFrame {
         btnMarronClaro.addActionListener(e -> cambiarColor(btnMarronClaro.getBackground()));
         btnSelectorColores.addActionListener(e -> {
             if (gestorColor.abrirSelector(this)) {
-                // Si eligen un color nuevo, el botón 18 (el que marcaste) se pinta de ese color
+                // Si eligen un color nuevo, el botón se pinta de ese color
                 btnSelectorColor.setBackground(gestorColor.getColorActual());
                 //Actualiza el color elegido en BarraEstado
                 estado.setColorActivo(gestorColor.getColorActual());
             }
         });
-
-        // Relleno: las figuras NUEVAS se dibujan con o sin relleno
+        // Relleno: afecta a la figura seleccionada y a las nuevas
+        jCheckBox1.setFocusPainted(false);
+        jCheckBox1.addActionListener(e -> {
+            panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected());
+            herramientas.actualizarCapaBorrador();
+        });
+        panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected());
+        // Relleno las figuras NUEVAS se dibujan con o sin relleno
         jCheckBox1.setFocusPainted(false);
         jCheckBox1.addActionListener(e -> panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected()));
         panelDeDibujo.setRellenarFigura(jCheckBox1.isSelected());   // que empiece igual que el checkbox (sin marcar)
@@ -106,8 +125,7 @@ public class VentanaPrincipal extends JFrame {
         zonaFiguras.setLayout(new java.awt.BorderLayout());
         zonaFiguras.add(figuras, java.awt.BorderLayout.CENTER);
 
-        servicioNuevoDocumento
-                = new ServicioNuevoDocumento(panelDeDibujo);
+        servicioNuevoDocumento = new ServicioNuevoDocumento(panelDeDibujo);
 
         btnLapiz.addActionListener(e -> herramientas.activarLapiz());
         btnBorra.addActionListener(e -> herramientas.activarBorrador());
@@ -158,6 +176,92 @@ public class VentanaPrincipal extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    private static class IconoEnviarAtras implements javax.swing.Icon {
+
+        @Override
+        public int getIconWidth() {
+            return 20;
+        }
+
+        @Override
+        public int getIconHeight() {
+            return 20;
+        }
+
+        @Override
+        public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
+                    java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.translate(x, y);
+
+            // Cuadro de atrás (azul)
+            g2.setColor(new java.awt.Color(0x3F7FC1));
+            g2.fillRoundRect(7, 7, 10, 10, 3, 3);
+            g2.setColor(new java.awt.Color(0x285685));
+            g2.setStroke(new java.awt.BasicStroke(1.2f));
+            g2.drawRoundRect(7, 7, 10, 10, 3, 3);
+
+            // Cuadro de adelante (blanco)
+            g2.setColor(java.awt.Color.WHITE);
+            g2.fillRoundRect(2, 2, 10, 10, 3, 3);
+            g2.setColor(java.awt.Color.DARK_GRAY);
+            g2.drawRoundRect(2, 2, 10, 10, 3, 3);
+
+            // Flecha indicando enviar atrás
+            g2.setColor(new java.awt.Color(0xD9534F));
+            g2.setStroke(new java.awt.BasicStroke(1.5f, java.awt.BasicStroke.CAP_ROUND, java.awt.BasicStroke.JOIN_ROUND));
+            g2.drawLine(12, 12, 16, 16);
+            g2.drawLine(13, 16, 16, 16);
+            g2.drawLine(16, 13, 16, 16);
+
+            g2.dispose();
+        }
+    }
+
+    private static class IconoTraerAdelante implements javax.swing.Icon {
+
+        @Override
+        public int getIconWidth() {
+            return 20;
+        }
+
+        @Override
+        public int getIconHeight() {
+            return 20;
+        }
+
+        @Override
+        public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
+                    java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.translate(x, y);
+
+            // Cuadro de atrás (blanco/gris)
+            g2.setColor(java.awt.Color.WHITE);
+            g2.fillRoundRect(7, 7, 10, 10, 3, 3);
+            g2.setColor(java.awt.Color.DARK_GRAY);
+            g2.setStroke(new java.awt.BasicStroke(1.2f));
+            g2.drawRoundRect(7, 7, 10, 10, 3, 3);
+
+            // Cuadro de adelante (azul, el que sube al frente)
+            g2.setColor(new java.awt.Color(0x3F7FC1));
+            g2.fillRoundRect(2, 2, 10, 10, 3, 3);
+            g2.setColor(new java.awt.Color(0x285685));
+            g2.drawRoundRect(2, 2, 10, 10, 3, 3);
+
+            // Flecha verde indicando subir hacia adelante
+            g2.setColor(new java.awt.Color(0x28A745));
+            g2.setStroke(new java.awt.BasicStroke(1.5f, java.awt.BasicStroke.CAP_ROUND, java.awt.BasicStroke.JOIN_ROUND));
+            g2.drawLine(8, 8, 4, 4);
+            g2.drawLine(4, 4, 7, 4);
+            g2.drawLine(4, 4, 4, 7);
+
+            g2.dispose();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,6 +286,8 @@ public class VentanaPrincipal extends JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jSeparador3 = new javax.swing.JSeparator();
         jSeparador4 = new javax.swing.JSeparator();
+        btnEnviarAtras = new javax.swing.JButton();
+        btnTraerAdelante = new javax.swing.JButton();
         panelDerecho = new javax.swing.JPanel();
         zonaEstadoColor = new javax.swing.JPanel();
         panelColorActual = new javax.swing.JPanel();
@@ -265,11 +371,11 @@ public class VentanaPrincipal extends JFrame {
         zonaHerramientasLayout.setHorizontalGroup(
             zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaHerramientasLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(btnLapiz, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(btnBorra, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(43, 43, 43)
                 .addComponent(jSeparador1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47))
         );
@@ -281,7 +387,7 @@ public class VentanaPrincipal extends JFrame {
                 .addGroup(zonaHerramientasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLapiz, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(btnBorra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         PanelCinta.add(zonaHerramientas, java.awt.BorderLayout.WEST);
@@ -309,6 +415,11 @@ public class VentanaPrincipal extends JFrame {
         jSeparador4.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparador4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        btnEnviarAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-send-backward-48.png"))); // NOI18N
+        btnEnviarAtras.addActionListener(this::btnEnviarAtrasActionPerformed);
+
+        btnTraerAdelante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-bring-forward-48.png"))); // NOI18N
+
         javax.swing.GroupLayout zonaEstadoFigurasLayout = new javax.swing.GroupLayout(zonaEstadoFiguras);
         zonaEstadoFiguras.setLayout(zonaEstadoFigurasLayout);
         zonaEstadoFigurasLayout.setHorizontalGroup(
@@ -316,18 +427,29 @@ public class VentanaPrincipal extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, zonaEstadoFigurasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparador3, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
+                        .addGap(0, 15, Short.MAX_VALUE)
+                        .addComponent(jCheckBox1))
+                    .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
+                        .addComponent(btnEnviarAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTraerAdelante, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparador4, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         zonaEstadoFigurasLayout.setVerticalGroup(
             zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaEstadoFigurasLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(11, 11, 11)
                 .addComponent(jCheckBox1)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(zonaEstadoFigurasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEnviarAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTraerAdelante, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
             .addComponent(jSeparador4, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparador3)
         );
@@ -495,14 +617,16 @@ public class VentanaPrincipal extends JFrame {
         zonaColoresLayout.setHorizontalGroup(
             zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaColoresLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
                 .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(zonaColoresLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(btnSelectorColores, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSelectorColor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5))
+                        .addComponent(btnSelectorColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(zonaColoresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29))
         );
         zonaColoresLayout.setVerticalGroup(
             zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,7 +635,7 @@ public class VentanaPrincipal extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSelectorColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSelectorColores, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                    .addComponent(btnSelectorColores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -573,8 +697,17 @@ public class VentanaPrincipal extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        System.exit(0x0);
-        // TODO add your handling code here:
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que desea salir? Se perderán los cambios no guardados.",
+                "Confirmar salida",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -627,6 +760,10 @@ public class VentanaPrincipal extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLapizActionPerformed
 
+    private void btnEnviarAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarAtrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEnviarAtrasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -664,6 +801,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton btnCeleste;
     private javax.swing.JMenuItem btnDeshacer1;
     private javax.swing.JButton btnDorado1;
+    private javax.swing.JButton btnEnviarAtras;
     private javax.swing.JButton btnGris;
     private javax.swing.JButton btnGrisClaro;
     private javax.swing.JButton btnLapiz;
@@ -679,6 +817,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JButton btnRosa;
     private javax.swing.JButton btnSelectorColor;
     private javax.swing.JButton btnSelectorColores;
+    private javax.swing.JButton btnTraerAdelante;
     private javax.swing.JButton btnVerde;
     private javax.swing.JButton jButton21;
     private javax.swing.JCheckBox jCheckBox1;

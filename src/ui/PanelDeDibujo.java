@@ -5,9 +5,11 @@ package ui;
 
 // Importación de las clases de figuras geométricas del paquete figuras
 import figuras.*;
+import java.awt.BasicStroke;
 
 // Importaciones para manejo de gráficos, colores, puntos y renderizado en Swing
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -24,6 +26,7 @@ import java.awt.event.MouseEvent;
 
 // Importación de estructuras de datos para almacenar el historial de dibujos
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Importaciones de componentes base de Swing
 import javax.swing.JPanel;
@@ -38,346 +41,421 @@ import javax.swing.SwingUtilities;
  */
 public class PanelDeDibujo extends JPanel {
 
-    /**
-     * Enumeración que define los tipos de figuras disponibles para dibujar.
-     */
     public enum TipoFigura {
         LINEA, TRAZO, RECTANGULO, OVALO, CIRCULO, ROMBO, PENTAGONO, CORAZON, FLECHA, HEXAGONO, ESTRELLA, TRIANGULO, PARALELOGRAMO
     }
 
-    // Lista dinámica que almacena todas las figuras dibujadas en el lienzo
     private ArrayList<Figura> figuras = new ArrayList<>();
-
-    // Referencia a la figura que se está creando o arrastrando actualmente
     private Figura figuraActual;
+    private Figura figuraSeleccionada = null;
 
-    // Bandera para determinar si la figura geométrica tendrá relleno
+    // 0: Sup-Izq, 1: Sup-Der, 2: Inf-Der, 3: Inf-Izq, 4: Mover
+    private int nodoArrastrado = -1;
+    private Point puntoArrastreAnterior = null;
+
     private boolean rellenarFigura = false;
-
-    // Estado actual de la herramienta seleccionada (por defecto: TRAZO libre)
     private TipoFigura tipoActual = TipoFigura.TRAZO;
-
-    // Lista dinámica para almacenar las figuras deshechas y permitir rehacerlas
     ArrayList<Figura> figurasRehacer = new ArrayList<>();
-
-    // Grosor de línea actual del trazo o contorno
     private int grosorActual = 3;
-
-    // Nivel de opacidad actual (1.0f = 100% opaco)
     private float opacidadActual = 1.0f;
-
-    // Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
     private final Map<Figura, Area> recortesFiguras = new IdentityHashMap<>();
-
-    // Variable para guardar la imagen de fondo
     private java.awt.image.BufferedImage imagenFondo = null;
+    private Color colorActual = Color.BLACK;
+    private Runnable alCrearFigura;
 
-    /**
-     * Constructor del PanelDeDibujo. Configura el fondo del lienzo y registra
-     * los oyentes de eventos del ratón.
-     */
     public PanelDeDibujo() {
-
-        // Establece el color de fondo inicial del lienzo
         setBackground(Color.WHITE);
 
-        // Creación del adaptador para escuchar eventos de clic y arrastre del ratón
         MouseAdapter manejador = new MouseAdapter() {
 
-            /**
-             * Se ejecuta al presionar un botón del ratón sobre el panel.
-             */
             @Override
             public void mousePressed(MouseEvent e) {
-
-                // Ignoramos cualquier clic que no sea el botón izquierdo del ratón
                 if (!SwingUtilities.isLeftMouseButton(e)) {
                     return;
                 }
 
-                // Restringimos el punto inicial para asegurar que esté dentro de los límites del lienzo
-                Point puntoInicio = limitarPuntoAlLienzo(e.getPoint());
+                Point p = limitarPuntoAlLienzo(e.getPoint());
 
-                // Según el tipo de figura seleccionado, instanciamos el objeto correspondiente
+                // 1. Verificar si se hizo clic en algún nodo o dentro de la figura seleccionada
+                if (figuraSeleccionada != null) {
+                    nodoArrastrado = detectarNodo(p, figuraSeleccionada.getBounds());
+                    if (nodoArrastrado != -1) {
+                        puntoArrastreAnterior = p;
+                        return;
+                    }
+                }
+
+                // 2. Si hizo clic fuera, deseleccionamos la figura anterior y creamos una nueva
+                figuraSeleccionada = null;
+                nodoArrastrado = -1;
+
                 switch (tipoActual) {
                     case LINEA:
-                        figuraActual = new Linea(puntoInicio);
+                        figuraActual = new Linea(p);
                         break;
                     case RECTANGULO:
-                        figuraActual = new Rectangulo(puntoInicio, rellenarFigura);
+                        figuraActual = new Rectangulo(p, rellenarFigura);
                         break;
                     case OVALO:
-                        figuraActual = new Ovalo(puntoInicio, rellenarFigura);
+                        figuraActual = new Ovalo(p, rellenarFigura);
                         break;
                     case CIRCULO:
-                        figuraActual = new Circulo(puntoInicio, rellenarFigura);
+                        figuraActual = new Circulo(p, rellenarFigura);
                         break;
                     case ROMBO:
-                        figuraActual = new Rombo(puntoInicio, rellenarFigura);
+                        figuraActual = new Rombo(p, rellenarFigura);
                         break;
                     case PENTAGONO:
-                        figuraActual = new Pentagono(puntoInicio, rellenarFigura);
+                        figuraActual = new Pentagono(p, rellenarFigura);
                         break;
                     case CORAZON:
-                        figuraActual = new Corazon(puntoInicio, rellenarFigura);
+                        figuraActual = new Corazon(p, rellenarFigura);
                         break;
                     case FLECHA:
-                        figuraActual = new Flecha(puntoInicio, rellenarFigura);
+                        figuraActual = new Flecha(p, rellenarFigura);
                         break;
                     case TRIANGULO:
-                        figuraActual = new Triangulo(puntoInicio, rellenarFigura);
+                        figuraActual = new Triangulo(p, rellenarFigura);
                         break;
                     case PARALELOGRAMO:
-                        figuraActual = new Paralelogramo(puntoInicio, rellenarFigura);
+                        figuraActual = new Paralelogramo(p, rellenarFigura);
                         break;
                     case HEXAGONO:
-                        figuraActual = new Hexagono(puntoInicio, rellenarFigura);
+                        figuraActual = new Hexagono(p, rellenarFigura);
                         break;
                     case ESTRELLA:
-                        figuraActual = new Estrella(puntoInicio, rellenarFigura);
+                        figuraActual = new Estrella(p, rellenarFigura);
                         break;
                     case TRAZO:
                     default:
-                        figuraActual = new Trazo(puntoInicio);
+                        figuraActual = new Trazo(p);
                         break;
                 }
 
-                // Aplicamos el grosor y la opacidad configurados actualmente
                 figuraActual.setGrosor(grosorActual);
                 figuraActual.setOpacidad(opacidadActual);
-                figuraActual.setColor(colorActual);   // ← aplica el color elegido
+                figuraActual.setColor(colorActual);
 
-                // Agregamos la nueva figura al historial (una sola vez) y limpiamos la pila de rehacer
                 figuras.add(figuraActual);
-                // Asociamos a esta figura los límites actuales del lienzo
                 recortesFiguras.put(figuraActual, new Area(new Rectangle(0, 0, getWidth(), getHeight())));
                 figurasRehacer.clear();
 
-                // Solicitamos a Swing que repinte el componente
+                if (alCrearFigura != null) {
+                    alCrearFigura.run();
+                }
+
                 repaint();
             }
 
-            /**
-             * Se ejecuta mientras el usuario arrastra el ratón con el botón
-             * presionado.
-             */
             @Override
             public void mouseDragged(MouseEvent e) {
+                Point p = limitarPuntoAlLienzo(e.getPoint());
 
-                // Si existe una figura en creación, actualizamos sus coordenadas dentro de los límites del lienzo
+                if (figuraSeleccionada != null && nodoArrastrado != -1) {
+                    redimensionarOMover(p);
+                    repaint();
+                    return;
+                }
+
                 if (figuraActual != null) {
-                    Point puntoActual = limitarPuntoAlLienzo(e.getPoint());
-                    figuraActual.actualizar(puntoActual);
-                    // Solicitamos el redibujado inmediato para mostrar la figura en tiempo real
+                    figuraActual.actualizar(p);
                     repaint();
                 }
             }
 
-            /**
-             * Se ejecuta al soltar el botón del ratón para finalizar la figura
-             * actual.
-             */
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e) && figuraActual != null) {
-                    Point puntoFinal = limitarPuntoAlLienzo(e.getPoint());
-                    figuraActual.actualizar(puntoFinal);
+                if (!SwingUtilities.isLeftMouseButton(e)) {
+                    return;
+                }
+
+                if (nodoArrastrado != -1) {
+                    nodoArrastrado = -1;
+                    puntoArrastreAnterior = null;
+                    repaint();
+                    return;
+                }
+
+                if (figuraActual != null) {
+                    Point p = limitarPuntoAlLienzo(e.getPoint());
+                    figuraActual.actualizar(p);
+
+                    // Deja seleccionada solo la figura geométrica recién dibujada
+                    if (figuraActual instanceof FiguraRellenable) {
+                        figuraSeleccionada = figuraActual;
+                    }
                     figuraActual = null;
                     repaint();
                 }
             }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (figuraSeleccionada == null) {
+                    setCursor(Cursor.getDefaultCursor());
+                    return;
+                }
+                int nodo = detectarNodo(e.getPoint(), figuraSeleccionada.getBounds());
+                switch (nodo) {
+                    case 0:
+                    case 2:
+                        setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
+                        break;
+                    case 1:
+                    case 3:
+                        setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
+                        break;
+                    case 4:
+                        setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                        break;
+                    default:
+                        setCursor(Cursor.getDefaultCursor());
+                        break;
+                }
+            }
         };
 
-        // Registramos el manejador para los clics y el arrastre del ratón
         addMouseListener(manejador);
         addMouseMotionListener(manejador);
     }
 
-    /**
-     * Restringe (hace clamping) las coordenadas de un punto para que nunca
-     * excedan los bordes actuales del lienzo [0 .. ancho-1] y [0 .. alto-1].
-     * Evita que al arrastrar el ratón fuera del área blanca se dibujen trazos o
-     * figuras fuera del lienzo.
-     *
-     * @param p Punto original reportado por el evento del ratón.
-     * @return Nuevo objeto Point con sus coordenadas X e Y ajustadas dentro del
-     * lienzo.
-     */
-    private Point limitarPuntoAlLienzo(Point p) {
-        // Calculamos los límites máximos válidos según el tamaño actual del panel
-        int maxX = Math.max(0, getWidth() - 1);
-        int maxY = Math.max(0, getHeight() - 1);
-
-        // Restringimos X e Y entre 0 y el límite máximo
-        int xLimitada = Math.max(0, Math.min(p.x, maxX));
-        int yLimitada = Math.max(0, Math.min(p.y, maxY));
-
-        return new Point(xLimitada, yLimitada);
+    public void enviarAtras() {
+        if (figuraSeleccionada == null) {
+            return;
+        }
+        int indice = figuras.indexOf(figuraSeleccionada);
+        // Si es mayor a 0, tiene al menos una figura detrás con la cual intercambiar lugar
+        if (indice > 0) {
+            java.util.Collections.swap(figuras, indice, indice - 1);
+            repaint();
+        }
     }
 
     /**
-     * Método sobreescrito de JPanel encargado de renderizar el contenido del
-     * lienzo.
-     *
-     * @param g Objeto Graphics proporcionado por el sistema para dibujar.
+     * Trae la figura seleccionada una posición hacia adelante en el orden de
+     * dibujo (la intercambia con la figura inmediatamente siguiente).
      */
+    public void traerAdelante() {
+        if (figuraSeleccionada == null) {
+            return;
+        }
+        int indice = figuras.indexOf(figuraSeleccionada);
+        // Si es válida y no está ya en la última posición (encima de todas)
+        if (indice >= 0 && indice < figuras.size() - 1) {
+            java.util.Collections.swap(figuras, indice, indice + 1);
+            repaint();
+        }
+    }
+
+    public void setAlCrearFigura(Runnable alCrearFigura) {
+        this.alCrearFigura = alCrearFigura;
+    }
+
+    public void deseleccionarFigura() {
+        this.figuraSeleccionada = null;
+        this.nodoArrastrado = -1;
+        setCursor(Cursor.getDefaultCursor());
+        repaint();
+    }
+
+    private Point limitarPuntoAlLienzo(Point p) {
+        int maxX = Math.max(0, getWidth() - 1);
+        int maxY = Math.max(0, getHeight() - 1);
+        int xLimitada = Math.max(0, Math.min(p.x, maxX));
+        int yLimitada = Math.max(0, Math.min(p.y, maxY));
+        return new Point(xLimitada, yLimitada);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
-
-        // Llama a la implementación base para limpiar el fondo del panel adecuadamente
         super.paintComponent(g);
-
-        // Convertimos Graphics a Graphics2D para habilitar opciones avanzadas de renderizado
         Graphics2D g2 = (Graphics2D) g;
 
         if (imagenFondo != null) {
             g2.drawImage(imagenFondo, 0, 0, null);
         }
 
-        // Definimos el área de recorte (clip) exactamente al tamaño actual del lienzo
-        // Esto garantiza que ningún trazo o figura se pinte fuera de los bordes visibles
         g2.clipRect(0, 0, getWidth(), getHeight());
-
-        // Activamos el suavizado de bordes (Antialiasing) para mejorar la calidad visual de los trazos
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Iteramos sobre la lista dinámica y dibujamos cada figura aplicando su recorte destructivo
         for (Figura figura : figuras) {
-            // Guardamos el recorte gráfico global actual del lienzo
             Shape clipAnterior = g2.getClip();
-
-            // Si la figura tiene un área de recorte registrada, intersectamos el clip con dicha área
             Area areaPermitida = recortesFiguras.get(figura);
             if (areaPermitida != null) {
                 g2.clip(areaPermitida);
             }
-
-            // Dibujamos la figura (solo se pintará dentro de su área no recortada)
             figura.dibujar(g2);
-
-            // Restauramos el clip global del lienzo para la siguiente figura
             g2.setClip(clipAnterior);
+        }
+
+        dibujarSeleccionSiExiste(g2);
+    }
+
+    public void dibujarSeleccionSiExiste(Graphics2D g2) {
+        if (figuraSeleccionada != null) {
+            dibujarMarcoSeleccion(g2, figuraSeleccionada.getBounds());
         }
     }
 
-    /**
-     * Establece el tipo de figura/herramienta que se creará con el ratón.
-     *
-     * @param tipo TipoFigura seleccionado.
-     */
+    private void dibujarMarcoSeleccion(Graphics2D g2, Rectangle r) {
+        Graphics2D gSel = (Graphics2D) g2.create();
+        float[] dash = {4f, 4f};
+        gSel.setColor(new Color(0, 120, 215));
+        gSel.setStroke(new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, dash, 0f));
+        gSel.drawRect(r.x, r.y, r.width, r.height);
+
+        gSel.setStroke(new BasicStroke(1f));
+        int s = 7;
+        int[][] puntos = {
+            {r.x, r.y},
+            {r.x + r.width, r.y},
+            {r.x + r.width, r.y + r.height},
+            {r.x, r.y + r.height}
+        };
+        for (int[] pt : puntos) {
+            gSel.setColor(Color.WHITE);
+            gSel.fillRect(pt[0] - s / 2, pt[1] - s / 2, s, s);
+            gSel.setColor(new Color(0, 120, 215));
+            gSel.drawRect(pt[0] - s / 2, pt[1] - s / 2, s, s);
+        }
+        gSel.dispose();
+    }
+
+    private int detectarNodo(Point p, Rectangle r) {
+        int tol = 8;
+        if (p.distance(r.x, r.y) <= tol) {
+            return 0;
+        }
+        if (p.distance(r.x + r.width, r.y) <= tol) {
+            return 1;
+        }
+        if (p.distance(r.x + r.width, r.y + r.height) <= tol) {
+            return 2;
+        }
+        if (p.distance(r.x, r.y + r.height) <= tol) {
+            return 3;
+        }
+        if (r.contains(p)) {
+            return 4;
+        }
+        return -1;
+    }
+
+    private void redimensionarOMover(Point p) {
+        Rectangle r = figuraSeleccionada.getBounds();
+        int x1 = r.x;
+        int y1 = r.y;
+        int x2 = r.x + r.width;
+        int y2 = r.y + r.height;
+
+        switch (nodoArrastrado) {
+            case 0:
+                x1 = p.x;
+                y1 = p.y;
+                break;
+            case 1:
+                x2 = p.x;
+                y1 = p.y;
+                break;
+            case 2:
+                x2 = p.x;
+                y2 = p.y;
+                break;
+            case 3:
+                x1 = p.x;
+                y2 = p.y;
+                break;
+            case 4:
+                int dx = p.x - puntoArrastreAnterior.x;
+                int dy = p.y - puntoArrastreAnterior.y;
+                x1 += dx;
+                y1 += dy;
+                x2 += dx;
+                y2 += dy;
+                puntoArrastreAnterior = p;
+                break;
+        }
+
+        figuraSeleccionada.setLimites(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1));
+        recortesFiguras.put(figuraSeleccionada, new Area(new Rectangle(0, 0, getWidth(), getHeight())));
+    }
+
     public void setTipoActual(TipoFigura tipo) {
-        tipoActual = java.util.Objects.requireNonNull(tipo);
+        tipoActual = Objects.requireNonNull(tipo);
+        deseleccionarFigura();
     }
 
-    /**
-     * Define si las figuras a dibujar tendrán relleno sólido.
-     *
-     * @param rellenar boolean true para rellenar, false para solo borde.
-     */
     public void setRellenarFigura(boolean rellenar) {
-        rellenarFigura = rellenar;
+        this.rellenarFigura = rellenar;
+        if (figuraSeleccionada != null) {
+            figuraSeleccionada.setRelleno(rellenar);
+            repaint();
+        }
     }
 
-    /**
-     * Limpia completamente el lienzo de dibujo. Vacía el historial de figuras
-     * almacenadas, reinicia la figura en progreso y solicita el repintado de la
-     * interfaz gráfica.
-     */
     public void limpiarLienzo() {
-
-        // Vacía la lista dinámica que contiene todas las figuras y trazos dibujados
         this.figuras.clear();
-
-        // Vacía también el historial de rehacer
         this.figurasRehacer.clear();
-
-        // Vacía el Mapa que almacena el área máxima permitida (recorte destructivo) para cada figura dibujada
         this.recortesFiguras.clear();
-
-        // Reinicia la referencia de la figura actual para evitar incongruencias
         this.figuraActual = null;
-
-        //BORRAR LA IMAGEN DE FONDO ⬇️
+        this.figuraSeleccionada = null;
         this.imagenFondo = null;
-
-        // Invalida la vista actual y solicita a Swing la ejecución de paintComponent
         this.repaint();
     }
 
-    /**
-     * Método de compatibilidad para mantener soporte con las llamadas
-     * existentes. Redirige la ejecución hacia limpiarLienzo().
-     */
     public void Limpiar() {
         limpiarLienzo();
     }
 
-    /**
-     * Establece el grosor del trazo o contorno de las próximas figuras.
-     *
-     * @param grosor Valor numérico del grosor.
-     */
     public void setGrosorActual(int grosor) {
         this.grosorActual = grosor;
+        if (figuraSeleccionada != null) {
+            figuraSeleccionada.setGrosor(grosor);
+            repaint();
+        }
     }
 
-    /**
-     * Deshace la última figura dibujada en el lienzo.
-     */
     public void deshacer() {
         if (figuras != null && !figuras.isEmpty()) {
             Figura ultimaFigura = figuras.remove(figuras.size() - 1);
+            if (ultimaFigura == figuraSeleccionada) {
+                figuraSeleccionada = null;
+            }
             figurasRehacer.add(ultimaFigura);
             repaint();
         }
     }
 
-    /**
-     * Restaura la última figura que fue deshecha.
-     */
     public void rehacer() {
         if (figurasRehacer != null && !figurasRehacer.isEmpty()) {
             Figura figuraARestaurar = figurasRehacer.remove(figurasRehacer.size() - 1);
             figuras.add(figuraARestaurar);
+            figuraSeleccionada = null;
             repaint();
         }
     }
 
-    /**
-     * Establece la opacidad porcentual (0 a 100) para las nuevas figuras.
-     *
-     * @param opacidad Entero entre 0 y 100.
-     */
     public void setOpacidad(int opacidad) {
         this.opacidadActual = opacidad / 100.0f;
+        if (figuraSeleccionada != null) {
+            figuraSeleccionada.setOpacidad(this.opacidadActual);
+            repaint();
+        }
     }
 
-    /**
-     * Aplica un recorte destructivo (estilo MS Paint clásico) sobre todas las
-     * figuras existentes cuando el lienzo cambia de tamaño. Todo lo que quede
-     * fuera de las nuevas dimensiones se elimina permanentemente y no reaparece
-     * al volver a expandir.
-     *
-     * @param nuevoAncho Nuevo ancho del lienzo en píxeles.
-     * @param nuevoAlto Nuevo alto del lienzo en píxeles.
-     */
     public void recortarAlTamano(int nuevoAncho, int nuevoAlto) {
-        // Creamos el rectángulo que representa los nuevos límites válidos del lienzo
         Area nuevoLimite = new Area(new Rectangle(0, 0, Math.max(0, nuevoAncho), Math.max(0, nuevoAlto)));
 
-        // Intersectamos el área de cada figura existente con el nuevo límite del lienzo
         for (Figura figura : figuras) {
             Area areaFigura = recortesFiguras.get(figura);
             if (areaFigura == null) {
                 areaFigura = new Area(nuevoLimite);
                 recortesFiguras.put(figura, areaFigura);
             } else {
-                // La intersección recorta de forma permanente cualquier parte fuera del nuevo tamaño
                 areaFigura.intersect(nuevoLimite);
             }
         }
 
-        // Aplicamos también el recorte a las figuras en la pila de rehacer por coherencia
         for (Figura figura : figurasRehacer) {
             Area areaFigura = recortesFiguras.get(figura);
             if (areaFigura != null) {
@@ -385,13 +463,14 @@ public class PanelDeDibujo extends JPanel {
             }
         }
     }
-    // --- Nuevo campo ---
-    private Color colorActual = Color.BLACK;
 
-// --- Nuevo método público ---
     public void setColor(Color color) {
         if (color != null) {
             this.colorActual = color;
+            if (figuraSeleccionada != null) {
+                figuraSeleccionada.setColor(color);
+                repaint();
+            }
         }
     }
 
@@ -399,26 +478,22 @@ public class PanelDeDibujo extends JPanel {
         return colorActual;
     }
 
-    /**
-     * Carga una imagen en el fondo del lienzo.
-     */
     public void cargarImagen(java.awt.image.BufferedImage imagen) {
         if (imagen != null) {
             this.imagenFondo = imagen;
-            this.repaint(); // Refresca el lienzo para que se vea la imagen
+            this.repaint();
         }
     }
 
-    // Devuelve una copia de la lista de figuras actuales
     public ArrayList<Figura> obtenerCopiaFiguras() {
         return new ArrayList<>(this.figuras);
     }
 
-    // Restaura una lista de figuras guardada
     public void restaurarFiguras(ArrayList<Figura> figurasGuardadas) {
         this.figuras.clear();
         this.figuras.addAll(figurasGuardadas);
         this.figurasRehacer.clear();
+        this.figuraSeleccionada = null;
         this.repaint();
     }
 
