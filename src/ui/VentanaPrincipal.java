@@ -41,7 +41,14 @@ public class VentanaPrincipal extends JFrame {
 
     private void cambiarColor(Color nuevoColor) {
         gestorColor.cambiarColor(nuevoColor);
-        estado.setColorActivo(nuevoColor);
+
+        colorActual = gestorColor.getColorActual();
+        colorAnterior = gestorColor.getColorAnterior();
+
+        panelColorActual1.setBackground(colorActual);
+        panelColorAnterior1.setBackground(colorAnterior);
+
+        estado.setColorActivo(colorActual);
     }
 
     public VentanaPrincipal() {
@@ -70,12 +77,26 @@ public class VentanaPrincipal extends JFrame {
         btnCeleste.addActionListener(e -> cambiarColor(btnCeleste.getBackground()));
         btnLavanda.addActionListener(e -> cambiarColor(btnLavanda.getBackground()));
         btnMarronClaro.addActionListener(e -> cambiarColor(btnMarronClaro.getBackground()));
+        gestorColor.conectarCuadros(panelColorActual1, panelColorAnterior1);
+        panelColorActual1.setBackground(colorActual);
+        panelColorAnterior1.setBackground(colorAnterior);
+
         btnSelectorColores.addActionListener(e -> {
             if (gestorColor.abrirSelector(this)) {
-                // Si eligen un color nuevo, el botón 18 (el que marcaste) se pinta de ese color
-                btnSelectorColor.setBackground(gestorColor.getColorActual());
-                //Actualiza el color elegido en BarraEstado
-                estado.setColorActivo(gestorColor.getColorActual());
+
+                // Sincronizar los colores
+                colorActual = gestorColor.getColorActual();
+                colorAnterior = gestorColor.getColorAnterior();
+
+                // Actualizar los dos cuadros
+                panelColorActual1.setBackground(colorActual);
+                panelColorAnterior1.setBackground(colorAnterior);
+
+                // Actualizar el botón del selector
+                btnSelectorColor.setBackground(colorActual);
+
+                // Actualizar la barra de estado
+                estado.setColorActivo(colorActual);
             }
         });
 
@@ -209,6 +230,7 @@ public class VentanaPrincipal extends JFrame {
         btnSelectorColor = new javax.swing.JButton();
         btnSelectorColores = new javax.swing.JButton();
         jButton21 = new javax.swing.JButton();
+        jSeparador5 = new javax.swing.JSeparator();
         zonaEstadoColor1 = new javax.swing.JPanel();
         panelColorActual1 = new javax.swing.JPanel();
         panelColorAnterior1 = new javax.swing.JPanel();
@@ -432,6 +454,7 @@ public class VentanaPrincipal extends JFrame {
         btnMarron.setPreferredSize(new java.awt.Dimension(25, 25));
         panelBotones.add(btnMarron);
 
+        btnBlanco.setBackground(null);
         btnBlanco.setToolTipText("Blanco");
         btnBlanco.setPreferredSize(new java.awt.Dimension(25, 25));
         panelBotones.add(btnBlanco);
@@ -493,12 +516,17 @@ public class VentanaPrincipal extends JFrame {
         jButton21.setToolTipText("Marrón Claro");
         jButton21.setPreferredSize(new java.awt.Dimension(20, 24));
 
+        jSeparador5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparador5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout zonaColoresLayout = new javax.swing.GroupLayout(zonaColores);
         zonaColores.setLayout(zonaColoresLayout);
         zonaColoresLayout.setHorizontalGroup(
             zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(zonaColoresLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
+                .addComponent(jSeparador5, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(zonaColoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(zonaColoresLayout.createSequentialGroup()
                         .addComponent(btnSelectorColores, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -516,19 +544,23 @@ public class VentanaPrincipal extends JFrame {
                     .addComponent(btnSelectorColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSelectorColores, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparador5)
         );
 
         panelBotones.getAccessibleContext().setAccessibleDescription("");
 
         panelDerecho.add(zonaColores, java.awt.BorderLayout.CENTER);
 
+        zonaEstadoColor1.setBackground(new java.awt.Color(255, 255, 255));
         zonaEstadoColor1.setMinimumSize(new java.awt.Dimension(20, 22));
         zonaEstadoColor1.setPreferredSize(new java.awt.Dimension(100, 90));
 
         panelColorActual1.setBackground(new java.awt.Color(0, 0, 0));
+        panelColorActual1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelColorActual1.setPreferredSize(new java.awt.Dimension(35, 35));
 
         panelColorAnterior1.setBackground(new java.awt.Color(255, 255, 255));
+        panelColorAnterior1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelColorAnterior1.setPreferredSize(new java.awt.Dimension(35, 35));
 
         javax.swing.GroupLayout zonaEstadoColor1Layout = new javax.swing.GroupLayout(zonaEstadoColor1);
@@ -732,6 +764,7 @@ public class VentanaPrincipal extends JFrame {
     private javax.swing.JSeparator jSeparador2;
     private javax.swing.JSeparator jSeparador3;
     private javax.swing.JSeparator jSeparador4;
+    private javax.swing.JSeparator jSeparador5;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelColorActual;
     private javax.swing.JPanel panelColorActual1;

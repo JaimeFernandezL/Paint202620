@@ -35,6 +35,34 @@ public class GestorColor {
         return colorAnterior;
     }
 
+    public void seleccionarColorAnterior() {
+        Color temporal = colorActual;
+        colorActual = colorAnterior;
+        colorAnterior = temporal;
+        aplicar();
+    }
+
+    public void conectarCuadros(javax.swing.JPanel actual,
+        javax.swing.JPanel anterior) {
+
+    actual.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            cambiarColor(actual.getBackground());
+        }
+    });
+
+    anterior.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            seleccionarColorAnterior();
+
+            actual.setBackground(colorActual);
+            anterior.setBackground(colorAnterior);
+        }
+    });
+}
+
     /**
      * Cambia el color actual. Si es igual al actual, no hace nada. Si es
      * distinto, guarda el anterior y lo aplica al lienzo.
