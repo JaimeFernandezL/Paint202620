@@ -20,18 +20,31 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 public class PanelFiguras extends JPanel {
 
     private final PanelDeDibujo panelDeDibujo;
     private final ButtonGroup grupoHerramientas;
-
+    private final Cursor cursorFiguras;
+    
     public PanelFiguras(PanelDeDibujo panelDeDibujo,
             ButtonGroup grupoHerramientas) {
 
         this.panelDeDibujo = panelDeDibujo;
         this.grupoHerramientas = grupoHerramientas;
 
+        cursorFiguras = crearCursor(
+        "/cursores/cursorCruz.png",
+        new Point(16, 16),
+        "Cursor de figuras"
+);
+        
+        
         setLayout(new GridLayout(2, 0, 5, 5));
         setBackground(Color.WHITE);
         setOpaque(true);
@@ -50,6 +63,27 @@ public class PanelFiguras extends JPanel {
         agregarBoton("Paralelogramo", PanelDeDibujo.TipoFigura.PARALELOGRAMO);
     }
 
+    // Crea el cursor personalizado para las figuras
+private Cursor crearCursor(String ruta, Point punto, String nombre) {
+
+    URL imagenURL = getClass().getResource(ruta);
+
+    if (imagenURL == null) {
+        throw new IllegalArgumentException(
+                "No se encontró la imagen: " + ruta
+        );
+    }
+
+    ImageIcon imagen = new ImageIcon(imagenURL);
+
+    return Toolkit.getDefaultToolkit().createCustomCursor(
+            imagen.getImage(),
+            punto,
+            nombre
+    );
+}
+    
+    
     private void agregarBoton(String texto,
             PanelDeDibujo.TipoFigura tipo) {
 
@@ -104,8 +138,10 @@ public class PanelFiguras extends JPanel {
         boton.setMargin(new Insets(2, 2, 2, 2));
 
         boton.addActionListener(e
-                -> panelDeDibujo.setTipoActual(tipo)
-        );
+                -> {
+            panelDeDibujo.setTipoActual(tipo);
+            panelDeDibujo.setCursor(cursorFiguras);
+        });
 
         grupoHerramientas.add(boton);
         add(boton);

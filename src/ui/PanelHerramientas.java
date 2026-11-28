@@ -34,6 +34,11 @@ import javax.swing.UIManager;
 import java.awt.GridLayout;
 import herramientaborrador.Borrador;
 import java.util.ArrayList;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 /**
  * Grupo "Herramientas" al estilo del Paint de Windows: iconos arriba y la
@@ -145,8 +150,21 @@ public class PanelHerramientas extends JPanel {
      */
     public void conectar(PanelDeDibujo lienzo) {
         // Lápiz = trazo libre
-        btnLapiz.addActionListener(e
-                -> lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO));
+        // Cursor inicial: lápiz
+Cursor cursorLapiz = crearCursor(
+        "/cursores/lapiz32x32.png",
+        new Point(2, 29),
+        "Lapiz"
+);
+
+lienzo.setCursor(cursorLapiz);
+
+// Acción del botón lápiz
+btnLapiz.addActionListener(e -> {
+    lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
+    activarCursorLapiz(lienzo);
+});
+
 
         // Guardar (servicio del Equipo 4)
         btnGuardar.addActionListener(e -> new ServicioGuardarImagen()
@@ -220,22 +238,47 @@ public class PanelHerramientas extends JPanel {
 
         //Otro metodo para el borrador
         //// Borrador (Ahora es un trazo blanco para que se pueda Deshacer/Rehacer)
-        //btnBorrador.addActionListener(e -> {
-        //    if (btnBorrador.isSelected()) {
-        //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
-        //        lienzo.setColor(java.awt.Color.WHITE); // Pinta blanco
-        //    }
-        //});
-        //
-        //btnLapiz.addActionListener(e -> {
-        //    if (btnLapiz.isSelected()) {
-        //        lienzo.setTipoActual(PanelDeDibujo.TipoFigura.TRAZO);
-        //        lienzo.setColor(java.awt.Color.BLACK); // Vuelve al negro
-        //    }
-        //});
+        btnBorrador.addItemListener(e -> {
+            if (btnBorrador.isSelected()) {
+                lienzo.setCursor(Cursor.getDefaultCursor());
+            }
+        });
     }
+    public void activarCursorLapiz(PanelDeDibujo lienzo) {
+
+    Cursor cursorLapiz = crearCursor(
+            "/cursores/lapiz32x32.png",
+            new Point(2, 29),
+            "Lapiz"
+    );
+
+    lienzo.setCursor(cursorLapiz);
+}
+    
     // Activa la función del lápiz
 
+ 
+    
+    private Cursor crearCursor(String ruta, Point punto, String nombre) {
+
+    URL imagenURL = getClass().getResource(ruta);
+
+    if (imagenURL == null) {
+        throw new IllegalArgumentException("No se encontró la imagen: " + ruta);
+    }
+
+    ImageIcon imagen = new ImageIcon(imagenURL);
+
+    return Toolkit.getDefaultToolkit().createCustomCursor(
+            imagen.getImage(),
+            punto,
+            nombre
+    );
+}
+    
+    
+    
+    
     public void activarLapiz() {
         btnLapiz.setSelected(true);
         btnLapiz.doClick();
